@@ -76,7 +76,7 @@ public class mcPlayerListener extends PlayerListener {
 	
 	
 	private String parseMsg(String msg, String pName) {
-		return msg.replace("%pName", pName);
+		return msg.replace("%pName", pName).replaceAll("(&([a-f0-9]))", "\u00A7$2");
 	}
 	
 }

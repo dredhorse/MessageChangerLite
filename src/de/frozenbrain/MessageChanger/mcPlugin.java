@@ -41,10 +41,10 @@ public class mcPlugin extends JavaPlugin {
 		msgKickBanned = config.getString("KICK_BANNED", "You are banned from this server!");
 		msgKickWhitelist = config.getString("KICK_WHITELIST", "You are not white-listed on this server!");
 		msgKickFull = config.getString("KICK_FULL", "The server is full!");
-		msgJoin = config.getString("PLAYER_JOIN", "%pName joined the game.");
+		msgJoin = config.getString("PLAYER_JOIN", "&e%pName joined the game.");
 		msgKickReason = config.getString("KICK_KICK_REASON", "Kicked by admin");
-		msgKickLeave = config.getString("KICK_KICK_LEAVEMSG", "%pName left the game.");
-		msgPlayerQuit = config.getString("PLAYER_QUIT", "%pName left the game.");
+		msgKickLeave = config.getString("KICK_KICK_LEAVEMSG", "&e%pName left the game.");
+		msgPlayerQuit = config.getString("PLAYER_QUIT", "&e%pName left the game.");
 		config.save();
 	}
 	
