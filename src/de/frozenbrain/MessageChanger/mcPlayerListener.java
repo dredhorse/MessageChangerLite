@@ -32,16 +32,28 @@ public class mcPlayerListener extends PlayerListener {
 	}
 	
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		event.setJoinMessage(parseMsg(plugin.msgJoin, event));
+		if(parseMsg(plugin.msgJoin, event).equals("")) {
+			event.setJoinMessage(null);
+		} else {
+			event.setJoinMessage(parseMsg(plugin.msgJoin, event));
+		}
 	}
 	
 	public void onPlayerKick(PlayerKickEvent event) {
-		event.setLeaveMessage(parseMsg(plugin.msgKickLeave, event));
+		if(parseMsg(plugin.msgKickLeave, event).equals("")) {
+			event.setLeaveMessage(null);
+		} else {
+			event.setLeaveMessage(parseMsg(plugin.msgKickLeave, event));
+		}
 		event.setReason(parseMsg(plugin.msgKickReason, event));
 	}
 	
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		event.setQuitMessage(parseMsg(plugin.msgPlayerQuit, event));
+		if(parseMsg(plugin.msgPlayerQuit, event).equals("")) {
+			event.setQuitMessage(null);
+		} else {
+			event.setQuitMessage(parseMsg(plugin.msgPlayerQuit, event));
+		}
 	}
 	
 	
