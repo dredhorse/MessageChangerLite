@@ -1,11 +1,12 @@
 package de.frozenbrain.MessageChanger;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.util.config.ConfigurationNode;
 
 public class mcPlayerListener extends PlayerListener {
 	
@@ -20,63 +21,62 @@ public class mcPlayerListener extends PlayerListener {
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		switch(event.getResult()) {
 		case KICK_BANNED:
-			event.disallow(Result.KICK_BANNED, parseMsg(plugin.msgKickBanned, event));
+			event.setKickMessage(getMessage("KICK_BANNED", event.getPlayer(), event.getKickMessage()));
 			break;
 		case KICK_WHITELIST:
-			event.disallow(Result.KICK_WHITELIST, parseMsg(plugin.msgKickWhitelist, event));
+			event.setKickMessage(getMessage("KICK_WHITELIST", event.getPlayer(), event.getKickMessage()));
 			break;
 		case KICK_FULL:
-			event.disallow(Result.KICK_FULL, parseMsg(plugin.msgKickFull, event));
+			event.setKickMessage(getMessage("KICK_FULL", event.getPlayer(), event.getKickMessage()));
 			break;
 		}
 	}
 	
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		if(parseMsg(plugin.msgJoin, event).equals("")) {
+		if(getMessage("PLAYER_JOIN", event.getPlayer(), event.getJoinMessage()).equals("")) {
 			event.setJoinMessage(null);
 		} else {
-			event.setJoinMessage(parseMsg(plugin.msgJoin, event));
+			event.setJoinMessage(getMessage("PLAYER_JOIN", event.getPlayer(), event.getJoinMessage()));
 		}
 	}
 	
 	public void onPlayerKick(PlayerKickEvent event) {
-		if(parseMsg(plugin.msgKickLeave, event).equals("")) {
+		if(getMessage("KICK_KICK_LEAVEMSG", event.getPlayer(), event.getLeaveMessage()).equals("")) {
 			event.setLeaveMessage(null);
 		} else {
-			event.setLeaveMessage(parseMsg(plugin.msgKickLeave, event));
+			event.setLeaveMessage(getMessage("KICK_KICK_LEAVEMSG", event.getPlayer(), event.getLeaveMessage()));
 		}
-		event.setReason(parseMsg(plugin.msgKickReason, event));
+		event.setReason(getMessage("KICK_KICK_REASON", event.getPlayer(), event.getReason()));
 	}
 	
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if(parseMsg(plugin.msgPlayerQuit, event).equals("")) {
+		if(getMessage("PLAYER_QUIT", event.getPlayer(), event.getQuitMessage()).equals("")) {
 			event.setQuitMessage(null);
 		} else {
-			event.setQuitMessage(parseMsg(plugin.msgPlayerQuit, event));
+			event.setQuitMessage(getMessage("PLAYER_QUIT", event.getPlayer(), event.getQuitMessage()));
 		}
 	}
 	
-	
-	
-	private String parseMsg(String msg, PlayerQuitEvent event) {
-		return parseMsg(msg, event.getPlayer().getName());
-	}
-	
-	private String parseMsg(String msg, PlayerJoinEvent event) {
-		return parseMsg(msg, event.getPlayer().getName());
-	}
-	
-	private String parseMsg(String msg, PlayerKickEvent event) {
-		return parseMsg(msg, event.getPlayer().getName());
-	}
-	
-	private String parseMsg(String msg, PlayerLoginEvent event) {
-		return parseMsg(msg, event.getPlayer().getName());
-	}
-	
-	
-	private String parseMsg(String msg, String pName) {
-		return msg.replace("%pName", pName).replaceAll("(&([a-f0-9]))", "\u00A7$2");
+	private String getMessage(String msg, Player player, String defMsg) {
+		String pName = player.getName();
+		String world = player.getWorld().getName();
+		ConfigurationNode node = plugin.config.getNode(world);
+		if(node != null) {
+			if(plugin.Permissions != null) {
+				String group = plugin.Permissions.getGroup(world, pName);
+				if(group != null) {
+					ConfigurationNode nodeGroup = plugin.config.getNode(world).getNode(group);
+					if((nodeGroup != null) && (plugin.config.getNode(world).getNode(group).getString(msg) != null)) {
+						return plugin.config.getNode(world).getNode(group).getString(msg).replace("%pName", pName).replace("%msg", defMsg).replaceAll("(&([a-f0-9]))", "\u00A7$2");
+					}
+				}
+			}
+			ConfigurationNode nodeWild = plugin.config.getNode(world).getNode("*");
+			if((nodeWild != null) && (plugin.config.getNode(world).getNode("*").getString(msg) != null)) {
+				return plugin.config.getNode(world).getNode("*").getString(msg).replace("%pName", pName).replace("%msg", defMsg).replaceAll("(&([a-f0-9]))", "\u00A7$2");
+			}
+		}
+		return plugin.config.getString(msg).replace("%pName", pName).replace("%msg", defMsg).replaceAll("(&([a-f0-9]))", "\u00A7$2");
 	}
 	
 }

@@ -1,22 +1,24 @@
 package de.frozenbrain.MessageChanger;
 
+import java.util.HashMap;
+
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
+
 public class mcPlugin extends JavaPlugin {
 	
 	private final mcPlayerListener playerListener = new mcPlayerListener(this);
-	public String msgKickBanned;
-	public String msgKickWhitelist;
-	public String msgKickFull;
-	public String msgJoin;
-	public String msgKickReason;
-	public String msgKickLeave;
-	public String msgPlayerQuit;
+	public PermissionHandler Permissions;
+	public HashMap<String, HashMap<String, String>> groups = new HashMap<String, HashMap<String, String>>();
+	Configuration config;
 	
 	public void onEnable() {
 		PluginManager pm = getServer().getPluginManager();
@@ -25,6 +27,7 @@ public class mcPlugin extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
 		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
 		
+		setupPermissions();
 		reloadConfig();
 		
 		PluginDescriptionFile pdfFile = this.getDescription();
@@ -35,16 +38,29 @@ public class mcPlugin extends JavaPlugin {
 		System.out.println("MessageChanger disabled.");
 	}
 	
+	private void setupPermissions() {
+	      Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
+
+	      if (this.Permissions == null) {
+	          if (test != null) {
+	              this.Permissions = ((Permissions)test).getHandler();
+	              System.out.println("[MessageChanger] Permission system detected.");
+	          } else {
+	              System.out.println("[MessageChanger] Permission system not detected, using global values.");
+	          }
+	      }
+	  }
+	
 	public void reloadConfig() {
-		Configuration config = getConfiguration();
+		config = getConfiguration();
 		config.load();
-		msgKickBanned = config.getString("KICK_BANNED", "You are banned from this server!");
-		msgKickWhitelist = config.getString("KICK_WHITELIST", "You are not white-listed on this server!");
-		msgKickFull = config.getString("KICK_FULL", "The server is full!");
-		msgJoin = config.getString("PLAYER_JOIN", "&e%pName joined the game.");
-		msgKickReason = config.getString("KICK_KICK_REASON", "Kicked by admin");
-		msgKickLeave = config.getString("KICK_KICK_LEAVEMSG", "&e%pName left the game.");
-		msgPlayerQuit = config.getString("PLAYER_QUIT", "&e%pName left the game.");
+		config.getString("KICK_BANNED", "%msg");
+		config.getString("KICK_WHITELIST", "%msg");
+		config.getString("KICK_FULL", "%msg");
+		config.getString("PLAYER_JOIN", "%msg");
+		config.getString("KICK_KICK_REASON", "%msg");
+		config.getString("KICK_KICK_LEAVEMSG", "%msg");
+		config.getString("PLAYER_QUIT", "%msg");
 		config.save();
 	}
 	
