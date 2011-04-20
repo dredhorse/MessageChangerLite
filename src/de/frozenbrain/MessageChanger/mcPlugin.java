@@ -1,7 +1,5 @@
 package de.frozenbrain.MessageChanger;
 
-import java.util.HashMap;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
@@ -17,7 +15,6 @@ public class mcPlugin extends JavaPlugin {
 	
 	private final mcPlayerListener playerListener = new mcPlayerListener(this);
 	public PermissionHandler Permissions;
-	public HashMap<String, HashMap<String, String>> groups = new HashMap<String, HashMap<String, String>>();
 	Configuration config;
 	
 	public void onEnable() {
