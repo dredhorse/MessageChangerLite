@@ -1,4 +1,4 @@
 name: MessageChanger
 main: de.frozenbrain.MessageChanger.mcPlugin
-version: 0.21
+version: 0.22
 commands:
