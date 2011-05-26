@@ -73,6 +73,8 @@ public class mcPlugin extends JavaPlugin {
 	}
 	
 	public String getMessage(String msg, Player player, String defMsg) {
+		if(msg == null) return null;
+		if(defMsg == null) defMsg = "";
 		String pName = player.getName();
 		String world = player.getWorld().getName();
 		ConfigurationNode node = config.getNode(world);
