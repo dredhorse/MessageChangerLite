@@ -34,14 +34,22 @@ public class mcPlugin extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		Player[] players = getServer().getOnlinePlayers();
-		String kickMsg = "";
-		for (Player player: players) {
-			kickMsg = getMessage("SERVER_STOP", player, "");
-			if(!kickMsg.equals("")) {
-				player.kickPlayer(kickMsg);
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		for(int i=0;i<st.length;i++) {
+			if(st[i].getMethodName().equals("stop")) {
+				Player[] players = getServer().getOnlinePlayers();
+				String kickMsg = "";
+				for (Player player: players) {
+					kickMsg = getMessage("SERVER_STOP", player, "");
+					if(!kickMsg.equals("")) {
+						player.kickPlayer(kickMsg);
+					}
+				}
+				return;
 			}
 		}
+	
+		
 		System.out.println("MessageChanger disabled.");
 	}
 	
