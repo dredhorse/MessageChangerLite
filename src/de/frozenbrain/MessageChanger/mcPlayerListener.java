@@ -31,7 +31,8 @@ public class mcPlayerListener extends PlayerListener {
 	}
 	
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		if(plugin.getMessage("PLAYER_JOIN", event.getPlayer(), event.getJoinMessage()).equals("")) {
+		String msg = plugin.getMessage("PLAYER_JOIN", event.getPlayer(), event.getJoinMessage());
+		if(msg.equals("")) {
 			event.setJoinMessage(null);
 		} else {
 			event.setJoinMessage(plugin.getMessage("PLAYER_JOIN", event.getPlayer(), event.getJoinMessage()));
@@ -39,19 +40,26 @@ public class mcPlayerListener extends PlayerListener {
 	}
 	
 	public void onPlayerKick(PlayerKickEvent event) {
-		if(plugin.getMessage("KICK_KICK_LEAVEMSG", event.getPlayer(), event.getLeaveMessage()).equals("")) {
+		if(plugin.ignore) {
+			plugin.ignore = false;
+			return;
+		}
+		
+		String msg = plugin.getMessage("KICK_KICK_LEAVEMSG", event.getPlayer(), event.getReason());
+		if(msg.equals("")) {
 			event.setLeaveMessage(null);
 		} else {
-			event.setLeaveMessage(plugin.getMessage("KICK_KICK_LEAVEMSG", event.getPlayer(), event.getLeaveMessage()));
+			event.setLeaveMessage(msg);
 		}
 		event.setReason(plugin.getMessage("KICK_KICK_REASON", event.getPlayer(), event.getReason()));
 	}
 	
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if(plugin.getMessage("PLAYER_QUIT", event.getPlayer(), event.getQuitMessage()).equals("")) {
+		String msg = plugin.getMessage("PLAYER_QUIT", event.getPlayer(), event.getQuitMessage());
+		if(msg.equals("")) {
 			event.setQuitMessage(null);
 		} else {
-			event.setQuitMessage(plugin.getMessage("PLAYER_QUIT", event.getPlayer(), event.getQuitMessage()));
+			event.setQuitMessage(msg);
 		}
 	}
 	
