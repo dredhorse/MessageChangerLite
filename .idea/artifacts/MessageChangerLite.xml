@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MessageChangerLite">
+    <output-path>$PROJECT_DIR$/../CraftBukkit/plugins</output-path>
+    <root id="archive" name="MessageChanger.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/src/plugin.yml" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="MessageChangerLite" />
+    </root>
+  </artifact>
+</component>
