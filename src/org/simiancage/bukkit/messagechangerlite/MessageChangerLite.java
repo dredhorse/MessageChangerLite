@@ -76,7 +76,7 @@ public class MessageChangerLite extends JavaPlugin {
         if(msg == null) return null;
         if(defMsg == null) defMsg = "";
 
-        String pName = player.getName();
+        String pName = player.getDisplayName();
         String world = player.getWorld().getName();
 
         return config.getString(msg).replace("%pName", pName).replace("%msg", defMsg).replaceAll("(&([a-f0-9]))", "\u00A7$2");

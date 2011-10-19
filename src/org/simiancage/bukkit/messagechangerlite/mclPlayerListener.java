@@ -1,16 +1,17 @@
-package de.frozenbrain.MessageChanger;
+package org.simiancage.bukkit.messagechangerlite;
 
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.simiancage.bukkit.messagechangerlite.MessageChangerLite;
 
-public class mcPlayerListener extends PlayerListener {
+public class mclPlayerListener extends PlayerListener {
 	
-	private final mcPlugin plugin;
+	private final MessageChangerLite plugin;
 	
-	public mcPlayerListener(mcPlugin plugin) {
+	public mclPlayerListener(MessageChangerLite plugin) {
 		
 		this.plugin = plugin;
 		
