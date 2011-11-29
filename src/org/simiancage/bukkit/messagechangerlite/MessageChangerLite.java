@@ -12,7 +12,7 @@ import org.bukkit.util.config.Configuration;
 
 public class MessageChangerLite extends JavaPlugin {
 	
-	private final mclPlayerListener playerListener = new mclPlayerListener(this);
+	private final PlayerListenerMCL playerListener = new PlayerListenerMCL(this);
 	Configuration config;
 	public boolean ignore = false;
 	
@@ -79,7 +79,7 @@ public class MessageChangerLite extends JavaPlugin {
         String pName = player.getDisplayName();
         String world = player.getWorld().getName();
 
-        return config.getString(msg).replace("%pName", pName).replace("%msg", defMsg).replaceAll("(&([a-f0-9]))", "\u00A7$2");
+        return config.getString(msg).replace("%pName", pName).replace("%msg", defMsg).replace("%world", world).replaceAll("(&([a-f0-9]))", "\u00A7$2");
     }
 
 
