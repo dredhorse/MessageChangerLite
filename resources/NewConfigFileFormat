@@ -1,0 +1,64 @@
+message-category:
+    default:
+        SERVER_STOP: Testing the server..
+        KICK_FULL: '%msg'
+        PLAYER_QUIT: '%msg'
+        KICK_WHITELIST: '%msg'
+        KICK_KICK_LEAVEMSG: '%msg'
+        KICK_KICK_REASON: '%msg'
+        PLAYER_JOIN: Hello &b%pName&f  in world %world
+        KICK_BANNED: '%msg'
+    permnode1:
+        SERVER_STOP: Oh well...
+    permnode2:
+        PLAYER_JOIN: Welcome the admin
+
+
+where permnode1 is messagechanger.message.permnode1 and permnode2 is messagechanger.message.permnode2
+
+code like this:
+
+
+
+
+private static List<String> readStringList(String root) {
+    YamlConfiguration config = load();
+    List<String> list = new ArrayList<String>();
+    for (String key : config.getConfigurationSection(root).getKeys(false)) {
+        list.add(key);
+    }
+    return list;
+}
+
+private static HashMap<String, List<String>> messages = new HashMap<String, List<String>>();
+private static List<String> messageCategory;
+
+messageCategory = readStringList("message-category");
+Iterator<String> it = messageCategory.iterator();
+String next = null;
+while (it.hasNext()) {
+    next = it.next();
+    messages.put(next, readStringList("message-category."+next);
+}
+
+
+retrieval of data via
+
+Iterator<String> it = messageCategory.iterator();
+String permNnode;
+String msg;
+while (it.hasNext()) {
+    permNode = it.next();
+    if (player.hasPermission("messagechanger.message."+ permNode)) {
+        msg = getMessage(permNode, event);
+    }
+}
+if (msg == null) {
+    msg = getMessage("default", event);
+}
+sendMessage(msg, event);
+
+
+where getMessages uses String permNode to get the message for the specific Event event, if the message is empty because permNode doesn't exist it returns null
+
+where sendMessage will send the String msg via the correct Handler for the Event event
