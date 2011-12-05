@@ -68,9 +68,11 @@ public class MessageChangerLite extends JavaPlugin {
 
         String pName = player.getDisplayName();
         String world = player.getWorld().getName();
-
-        String message = config.getMessages(config.getCategory(player), msg);
-
+        String perm = config.getCategory(player);
+        log.debug("perm", perm);
+        log.debug("msg", msg);
+        String message = config.getMessages(perm, msg);
+        log.debug("message", message);
         return message.replace("%pName", pName).replace("%msg", defMsg).replace("%world", world).replaceAll("(&([a-f0-9]))", "\u00A7$2");
     }
 

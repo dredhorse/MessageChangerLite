@@ -1,0 +1,55 @@
+# MessageChangerLite 2.0 by [Don Redhorse]
+#
+# Configuration File for MessageChangerLite.
+#
+# For detailed assistance please visit: http://dev.bukkit.org/server-mods/messagechangerlite/
+
+#------- Default Configuration
+
+# Configuration Version
+configVer: '2.0'
+
+# Error Log Enabled
+# Enable logging to server console
+# Warning and Severe will still be logged.
+errorLogEnabled: true
+
+# Debug Log Enabled
+# Enable more logging.. could be messy!
+DebugLogEnabled: false
+
+# Check for Update
+# Will check if there is a new version of the plugin out.
+checkForUpdate: true
+
+# Auto Update Config
+# This will overwrite any changes outside the configuration parameters!
+autoUpdateConfig: false
+
+# Save Config
+# This will overwrite any changes outside the configuration parameters!
+# Only needed if you use ingame commands to change the configuration.
+saveConfig: false
+
+#-------- Plugin Configuration
+
+# You can use the following variables:
+# %pName = DisplayName of the Player
+# %world = World the player is in
+# %msg = default message
+
+message-category:
+    default:
+        KICK_FULL: '%msg'
+        SERVER_STOP: 'Testing the server...'
+        KICK_WHITELIST: '%msg'
+        PLAYER_QUIT: '%msg'
+        KICK_KICK_LEAVEMSG: '%msg'
+        KICK_KICK_REASON: '%msg'
+        PLAYER_JOIN: 'Hello &b%pName&f  in world %world'
+        KICK_BANNED: '%msg'
+    permnode1:
+        SERVER_STOP: 'Oh well...'
+    permnode2:
+        PLAYER_JOIN: 'Welcome the admin'
+

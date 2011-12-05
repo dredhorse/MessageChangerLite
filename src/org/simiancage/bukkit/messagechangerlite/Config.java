@@ -16,10 +16,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -65,7 +62,7 @@ public class Config {
     /**
      * Enable more logging.. could be messy!
      */
-    private boolean debugLogEnabled = true;
+    private boolean debugLogEnabled = false;
     /**
      * Check if there is a new version of the plugin out.
      */
@@ -132,7 +129,7 @@ public class Config {
 
 // Default Config Variables start here!
 
-    private HashMap<String, String> messagesPerCategory = new HashMap<String, String>();
+    private HashMap<String, String> messagesPerCategory;
     private HashMap<String, HashMap<String, String>> messages = new HashMap<String, HashMap<String, String>>();
     private HashMap<String, String> defaultMessages = new HashMap<String, String>();
     private HashMap<String, String> permnode1Messages = new HashMap<String, String>();
@@ -160,7 +157,7 @@ afterwards parsable again from the configuration class of bukkit
         defaultMessages.put("PLAYER_QUIT", "'%msg'");
         defaultMessages.put("KICK_WHITELIST", "'%msg'");
         defaultMessages.put("KICK_KICK_LEAVEMSG", "'%msg'");
-        defaultMessages.put("KICK_KICK.REASON", "'%msg'");
+        defaultMessages.put("KICK_KICK_REASON", "'%msg'");
         defaultMessages.put("PLAYER_JOIN", "'Hello &b%pName&f  in world %world'");
         defaultMessages.put("KICK_BANNED", "'%msg'");
         log.debug("defaultMessages", defaultMessages);
@@ -199,27 +196,31 @@ afterwards parsable again from the configuration class of bukkit
         for (String key : config.getConfigurationSection("message-category").getKeys(false)) {
             messageCategories.add(key);
         }
-
+        log.debug("messageCategories", messageCategories);
         Iterator<String> it = messageCategories.iterator();
         String next = null;
         while (it.hasNext()) {
+            messagesPerCategory = new HashMap<String, String>();
             next = it.next();
-            List<String> loadMessages = new ArrayList<String>();
-            loadMessages = config.getList("message-category." + next);
+            log.debug("next", next);
+            Set<String> loadMessages;
+            loadMessages = config.getConfigurationSection("message-category." + next).getKeys(true);
             log.debug("loadMessages", loadMessages);
             Iterator<String> itm = loadMessages.iterator();
             String event = null;
             while (itm.hasNext()) {
                 event = itm.next();
-                String[] split = event.split(":");
-                String eventName = split[0];
-                String eventMessage = split[1];
-                messagesPerCategory.put(eventName, eventMessage);
+                log.debug("event", event);
+                String eventMessage = config.getString("message-category." + next + "." + event);
+                log.debug("eventMessage", eventMessage);
+                messagesPerCategory.put(event, eventMessage);
                 log.debug("messagesPerCategory", messagesPerCategory);
             }
             messages.put(next, messagesPerCategory);
-            messagesPerCategory.clear();
+            log.debug("messages", messages);
+
         }
+        log.debug("messages", messages);
     }
 
 
@@ -267,7 +268,15 @@ afterwards parsable again from the configuration class of bukkit
 
 
     public String getMessages(String perm, String event) {
-        return messages.get(perm).get(event);
+        HashMap<String, String> categorieMessages = messages.get(perm);
+        log.debug("categorieMessages", categorieMessages);
+        String msg = categorieMessages.get(event);
+        if (msg == null) {
+            log.debug("no message for " + event + " found");
+            msg = messages.get("default").get(event);
+        }
+        log.debug("msg", msg);
+        return msg;
     }
 
     public String getCategory(Player player) {
@@ -568,7 +577,7 @@ afterwards parsable again from the configuration class of bukkit
             pluginVersion = pdfFile.getVersion();
             stream = new PrintWriter(pluginPath + configFile);
 //Let's write our config ;)
-            stream.println("# " + pluginName + " " + pdfFile.getVersion() + " by " + pdfFile.getAuthors().toString());
+            stream.println("# " + pluginName + " " + pluginVersion + " by " + pdfFile.getAuthors().toString());
             stream.println("#");
             stream.println("# Configuration File for " + pluginName + ".");
             stream.println("#");
