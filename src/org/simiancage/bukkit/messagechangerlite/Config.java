@@ -30,6 +30,10 @@ import java.util.*;
 @SuppressWarnings({"UnusedDeclaration"})
 public class Config {
 
+    private enum EVENTS {
+        SERVER_STOP, KICK_FULL, PLAYER_QUIT, KICK_WHITELIST, KICK_KICK_LEAVEMSG, KICK_KICK_REASON, PLAYER_JOIN, CHANGED_WORLD, KICK_BANNED
+    }
+
     /**
      * Instance of the Configuration Class
      */
@@ -115,11 +119,11 @@ public class Config {
     /**
      * This is the internal config version
      */
-    private final String configCurrent = "2.0";
+    private final String configCurrent = "2.1";
     /**
      * This is the DEFAULT for the config file version, should be the same as configCurrent. Will afterwards be changed
      */
-    private String configVer = "2.0";
+    private String configVer = "2.1";
 
 
 // and now the real stuff
@@ -159,6 +163,7 @@ afterwards parsable again from the configuration class of bukkit
         defaultMessages.put("KICK_KICK_LEAVEMSG", "'%msg'");
         defaultMessages.put("KICK_KICK_REASON", "'%msg'");
         defaultMessages.put("PLAYER_JOIN", "'Hello &b%pName&f  in world %world'");
+        defaultMessages.put("CHANGED_WORLD", "'Welcome traveler from %fromWorld in %world'");
         defaultMessages.put("KICK_BANNED", "'%msg'");
         log.debug("defaultMessages", defaultMessages);
 
@@ -240,6 +245,7 @@ afterwards parsable again from the configuration class of bukkit
         stream.println("# You can use the following variables:");
         stream.println("# %pName = DisplayName of the Player");
         stream.println("# %world = World the player is in");
+        stream.println("# %fromWorld = World the player was in (Only CHANGED_WORLD Message)");
         stream.println("# %msg = default message");
         stream.println();
         stream.println("message-category:");
@@ -249,11 +255,18 @@ afterwards parsable again from the configuration class of bukkit
             category = categories.next();
             stream.println("    " + category + ":");
             HashMap<String, String> messagesPerCategory = messages.get(category);
-            Iterator<String> events = messagesPerCategory.keySet().iterator();
-            String event;
-            while (events.hasNext()) {
-                event = events.next();
-                stream.println("        " + event + ": " + messagesPerCategory.get(event));
+            if (category.equalsIgnoreCase("default")) {
+                for (EVENTS event : EVENTS.values()) {
+                    stream.println("        " + event.toString() + ": \"" + messagesPerCategory.get(event.toString()) + "\"");
+                }
+            } else {
+
+                Iterator<String> events = messagesPerCategory.keySet().iterator();
+                String event;
+                while (events.hasNext()) {
+                    event = events.next();
+                    stream.println("        " + event + ": \"" + messagesPerCategory.get(event) + "\"");
+                }
             }
         }
     }
