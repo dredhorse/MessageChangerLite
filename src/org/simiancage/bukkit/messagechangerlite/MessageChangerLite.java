@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+
 
 public class MessageChangerLite extends JavaPlugin {
 
@@ -22,6 +24,16 @@ public class MessageChangerLite extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(playerListener, this);
 		log.enableMsg();
+
+		try {
+			// create a new metrics object
+			Metrics metrics = new Metrics();
+
+			// 'this' in this context is the Plugin object
+			metrics.beginMeasuringPlugin(this);
+		} catch (IOException e) {
+			// Failed to submit the stats :-(
+		}
 	}
 
 	public void onDisable() {
