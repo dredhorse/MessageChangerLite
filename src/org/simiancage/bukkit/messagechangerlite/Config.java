@@ -157,21 +157,21 @@ afterwards parsable again from the configuration class of bukkit
 
 	private void setupCustomDefaultVariables() {
 
-		defaultMessages.put("SERVER_STOP", "'Testing the server...'");
-		defaultMessages.put("KICK_FULL", "'%msg'");
-		defaultMessages.put("PLAYER_QUIT", "'%msg'");
-		defaultMessages.put("KICK_WHITELIST", "'%msg'");
-		defaultMessages.put("KICK_KICK_LEAVEMSG", "'%msg'");
-		defaultMessages.put("KICK_KICK_REASON", "'%msg'");
-		defaultMessages.put("PLAYER_JOIN", "'Hello &b%pName&f  in world %world'");
-		defaultMessages.put("CHANGED_WORLD", "'Welcome traveler from %fromWorld in %world'");
-		defaultMessages.put("KICK_BANNED", "'%msg'");
+		defaultMessages.put("SERVER_STOP", "Testing the server...");
+		defaultMessages.put("KICK_FULL", "%msg");
+		defaultMessages.put("PLAYER_QUIT", "%msg");
+		defaultMessages.put("KICK_WHITELIST", "%msg");
+		defaultMessages.put("KICK_KICK_LEAVEMSG", "%msg");
+		defaultMessages.put("KICK_KICK_REASON", "%msg");
+		defaultMessages.put("PLAYER_JOIN", "Hello &b%pName&f  in world %world");
+		defaultMessages.put("CHANGED_WORLD", "Welcome traveler from %fromWorld in %world");
+		defaultMessages.put("KICK_BANNED", "%msg");
 		log.debug("defaultMessages", defaultMessages);
 
-		permnode1Messages.put("SERVER_STOP", "'Oh well...'");
+		permnode1Messages.put("SERVER_STOP", "Oh well...");
 		log.debug("permnode1Messages", permnode1Messages);
 
-		permnode2Messages.put("PLAYER_JOIN", "'Welcome the admin'");
+		permnode2Messages.put("PLAYER_JOIN", "Welcome the admin");
 		log.debug("permnode2Messages", permnode2Messages);
 
 		messages.put("default", defaultMessages);
@@ -228,7 +228,7 @@ afterwards parsable again from the configuration class of bukkit
 		}
 		log.debug("messages", messages);
 		if (config.contains("categoryOrder")) {
-			categoryOrder = config.getList("categoryOrder", categoryOrder);
+			categoryOrder = config.getStringList("categoryOrder");
 		} else {
 			categoryOrder = new ArrayList<String>(messages.keySet());
 		}
@@ -292,7 +292,7 @@ afterwards parsable again from the configuration class of bukkit
 
 	public String getMessages(String perm, String event) {
 		HashMap<String, String> categorieMessages = messages.get(perm);
-		log.debug("categorieMessages", categorieMessages);
+		log.debug("categoryMessages", categorieMessages);
 		String msg = categorieMessages.get(event);
 		if (msg == null) {
 			log.debug("no message for " + event + " found");
