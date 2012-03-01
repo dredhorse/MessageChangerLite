@@ -1,5 +1,4 @@
 name: MessageChangerLite
 main: org.simiancage.bukkit.messagechangerlite.MessageChangerLite
-version: 2.5
+version: 2.6
 author: Don Redhorse
-commands:
