@@ -303,20 +303,11 @@ afterwards parsable again from the configuration class of bukkit
 	}
 
 	public String getCategory(Player player) {
-		/*Iterator<String> categories = messages.keySet().iterator();
-				String category;
-				while (categories.hasNext()) {
-					category = categories.next();
-					if (player.hasPermission("messagechanger.message." + category)) {
-						return category;
-					}
-				}*/
 		for (String category : categoryOrder) {
-			if (player.hasPermission("messagechange.message." + category)) {
+			if (player.hasPermission("messagechange.message." + category) || player.hasPermission("messagechanger.message." + category)) {
 				return category;
 			}
 		}
-
 		return "default";
 	}
 
