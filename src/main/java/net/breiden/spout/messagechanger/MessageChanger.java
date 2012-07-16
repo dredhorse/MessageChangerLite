@@ -1,3 +1,29 @@
+/******************************************************************************
+ * This file is part of MessageChanger (http://www.spout.org/).               *
+ *                                                                            *
+ * MessageChanger is licensed under the SpoutDev License Version 1.           *
+ *                                                                            *
+ * MessageChanger is free software: you can redistribute it and/or modify     *
+ * it under the terms of the GNU Lesser General Public License as published by*
+ * the Free Software Foundation, either version 3 of the License, or          *
+ * (at your option) any later version.                                        *
+ *                                                                            *
+ * In addition, 180 days after any changes are published, you can use the     *
+ * software, incorporating those changes, under the terms of the MIT license, *
+ * as described in the SpoutDev License Version 1.                            *
+ *                                                                            *
+ * MessageChanger is distributed in the hope that it will be useful,          *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              *
+ * GNU Lesser General Public License for more details.                        *
+ *                                                                            *
+ * You should have received a copy of the GNU Lesser General Public License,  *
+ * the MIT license and the SpoutDev License Version 1 along with this program.*
+ * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
+ * including the MIT license.                                                 *
+ ******************************************************************************/
+
 package net.breiden.spout.messagechanger;
 
 //~--- non-JDK imports --------------------------------------------------------
@@ -5,7 +31,6 @@ package net.breiden.spout.messagechanger;
 import net.breiden.spout.messagechanger.commands.EnumMessageChanger;
 import net.breiden.spout.messagechanger.config.CONFIG;
 import net.breiden.spout.messagechanger.exceptions.ConfigNotAvailableException;
-import net.breiden.spout.messagechanger.exceptions.WrongClassException;
 import net.breiden.spout.messagechanger.helper.Logger;
 import net.breiden.spout.messagechanger.helper.Metrics;
 import net.breiden.spout.messagechanger.helper.commands.EnumAnnotatedCommandRegistrationFactory;
@@ -15,51 +40,36 @@ import net.breiden.spout.messagechanger.helper.config.CommentConfiguration;
 import net.breiden.spout.messagechanger.helper.config.Configuration;
 import net.breiden.spout.messagechanger.helper.file.CommandsLoadAndSave;
 import net.breiden.spout.messagechanger.helper.file.MessagesLoadAndSave;
-import net.breiden.spout.messagechanger.permissions.PERMISSIONS;
+import net.breiden.spout.messagechanger.messages.GAME_TYPES;
 import org.spout.api.Engine;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.plugin.CommonPlugin;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
 
 import static net.breiden.spout.messagechanger.helper.file.CommandsLoadAndSave.commandsInit;
-import static net.breiden.spout.messagechanger.helper.file.MessagesLoadAndSave.messageInit;
 
 //~--- JDK imports ------------------------------------------------------------
 
 //~--- classes ----------------------------------------------------------------
 
 /**
- * Simple test plugin to demonstrate the MessageChanger
+ * MessageChanger is a plugin allowing you to change the default messages of Spout / Vanilla / and other games (hopefully)
+ * based on permissions. It also allows changing of the default deathmessages with random ones based on the deathcause.
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
 public class MessageChanger extends CommonPlugin {
+
+    private GAME_TYPES game_type;
+
     /**
      * Instance of the plugin
      */
     private static MessageChanger instance;
 
-    /**
-     * Use this together with the {@code log = Logger.getLogger(this);} in <br>
-     * {@see #onLoad()} to get all the data from the properties.yml
-     * This doesn't need later calls to the <br>
-     * {@see Logger#setPluginName},<br>
-     * {@see Logger#setPluginVersion},<br>
-     * {@see Logger#setPluginDirectory},<br>
-     * {@see Logger#setLogDirectory}<br>
-     * to configure the Logger correctly.
-     * <br>
-     * Use {@code Logger log = Logger.getLogger();} to use generated defaults from the Class Name. <br>
-     * NOTE: This can mean that information goes into the wrong directory if you not set the correct values later in onLoad()
-     * Use the methods  setPluginName, setPluginVersion, setPluginDirectory, setLogDirectory to set the correct values.
-     */
-    private static Logger log;
 
     //~--- fields -------------------------------------------------------------
 
@@ -89,10 +99,10 @@ public class MessageChanger extends CommonPlugin {
         instance = this;
 
         /** Logger.getLogger (this) is required if you use Logger log; */
-        log = Logger.getLogger(this);
+        Logger.getLogger(this);
 
         /** from here onwards you can use log.whatever or Logger.whatever, see for yourself */
-        log.debug("Loading");
+        Logger.debug("Loading");
         engine = getEngine();
     }
 
@@ -107,14 +117,10 @@ public class MessageChanger extends CommonPlugin {
     @Override
     public void onEnable() {
 
-         /**
-         * Most of the following IS necessary... except of course the logging and it depends on what you need.
-         *
-         */
 
         // creating the new configuration for this plugin
         configuration = new Configuration(this);
-        Logger.info("Adding configuration not directly generated via the ENUMS");
+        Logger.debug("Adding configuration not directly generated via the ENUMS");
 
         /**
          * From here onwards it is really up to you.. depending on what configuration options you integrated
@@ -130,13 +136,13 @@ public class MessageChanger extends CommonPlugin {
         try {
             configuration.initializeConfig();
         } catch (ConfigNotAvailableException e) {
-            Logger.info("Well...no config.");
+            Logger.warning("Well...no config.");
         }
 
-        /*
-         * Now let's read the translations for the messages in game
+        /**
+         * Now let's init the messages
          */
-        messageInit(this);
+        // todo adapt to MessageChangerHandler
 
         /*
          * Now let's read the translations for the commands in game
@@ -166,7 +172,7 @@ public class MessageChanger extends CommonPlugin {
 
 
         // and now we are done..
-        log.enableMsg();
+        Logger.enableMsg();
     }
 
     /**
@@ -187,13 +193,14 @@ public class MessageChanger extends CommonPlugin {
             } else {
                 Logger.config("There was a problem saving the commands.");
             }
+            // todo adapt to MessageChangerHandler
             if (MessagesLoadAndSave.reload()){
                 Logger.debug("Messages saved");
             } else {
                 Logger.config("There was a problem saving the Messages.");
             }
         }
-        log.disableMsg();
+        Logger.disableMsg();
     }
 
     /**
@@ -205,6 +212,7 @@ public class MessageChanger extends CommonPlugin {
         configuration.reloadConfig();
         configuration.loadConfig();
         CommandsLoadAndSave.reload();
+        // todo adapt to MessageChangerHandler
         MessagesLoadAndSave.reload();
     }
 
@@ -240,5 +248,13 @@ public class MessageChanger extends CommonPlugin {
 
     public CommentConfiguration getConfig() {
         return configuration;
+    }
+
+    public void setGame_type( GAME_TYPES game_type){
+        this.game_type = game_type;
+    }
+
+    public GAME_TYPES getGame_type(){
+        return game_type;
     }
 }

@@ -1,3 +1,29 @@
+/******************************************************************************
+ * This file is part of MessageChanger (http://www.spout.org/).               *
+ *                                                                            *
+ * MessageChanger is licensed under the SpoutDev License Version 1.           *
+ *                                                                            *
+ * MessageChanger is free software: you can redistribute it and/or modify     *
+ * it under the terms of the GNU Lesser General Public License as published by*
+ * the Free Software Foundation, either version 3 of the License, or          *
+ * (at your option) any later version.                                        *
+ *                                                                            *
+ * In addition, 180 days after any changes are published, you can use the     *
+ * software, incorporating those changes, under the terms of the MIT license, *
+ * as described in the SpoutDev License Version 1.                            *
+ *                                                                            *
+ * MessageChanger is distributed in the hope that it will be useful,          *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              *
+ * GNU Lesser General Public License for more details.                        *
+ *                                                                            *
+ * You should have received a copy of the GNU Lesser General Public License,  *
+ * the MIT license and the SpoutDev License Version 1 along with this program.*
+ * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
+ * including the MIT license.                                                 *
+ ******************************************************************************/
+
 package net.breiden.spout.messagechanger.helper;
 
 //~--- non-JDK imports --------------------------------------------------------
@@ -68,7 +94,7 @@ public final class Messenger {
      * @return toString expression of the Object with wrapped colours
      */
     public static String wrap(Object toString) {
-        return wrap(Chat_Styles.YELLOW, toString.toString(), Chat_Styles.BRIGHT_GREEN);
+        return wrap(COLOR.YELLOW, toString.toString(), COLOR.BRIGHT_GREEN);
     }
 
     /**
@@ -79,7 +105,7 @@ public final class Messenger {
      * @param trail    @CHAT_STYLES which is added at the end of the string
      * @return toString expression of the Object with wrapped colours
      */
-    public static String wrap(Chat_Styles wrap, Object toString, Chat_Styles trail) {
+    public static String wrap(COLOR wrap, Object toString, COLOR trail) {
         return wrap(wrap, toString.toString(), trail);
     }
 
@@ -93,7 +119,7 @@ public final class Messenger {
      * @param trail  @CHAT_STYLES which is added at the end of the string
      * @return string expression of the Object with wrapped colours
      */
-    public static String wrap(Chat_Styles wrap, String string, Chat_Styles trail) {
+    public static String wrap(COLOR wrap, String string, COLOR trail) {
         return wrap + string + trail;
     }
 
@@ -116,7 +142,7 @@ public final class Messenger {
      * @param error
      */
     public static void sendError(Player player, String error) {
-        send(player, Chat_Styles.RED + error);
+        send(player, COLOR.RED + error);
     }
 
     /**
@@ -126,7 +152,7 @@ public final class Messenger {
      * @param error
      */
     public static void sendError(CommandSource sender, String error) {
-        send(sender, Chat_Styles.RED + error);
+        send(sender, COLOR.RED + error);
     }
 
     /**
@@ -151,7 +177,7 @@ public final class Messenger {
      * @param header
      */
     public static void sendHeader(final CommandSource sender, String header) {
-        header = Chat_Styles.BRIGHT_GREEN + "----------" + Chat_Styles.WHITE + " [" + Chat_Styles.CYAN + header + Chat_Styles.WHITE + "] " + Chat_Styles.BRIGHT_GREEN + "----------";
+        header = COLOR.BRIGHT_GREEN + "----------" + COLOR.WHITE + " [" + COLOR.CYAN + header + COLOR.WHITE + "] " + COLOR.BRIGHT_GREEN + "----------";
         send(sender, header);
         send(sender, "");
     }
@@ -353,7 +379,7 @@ public final class Messenger {
      * Creates a bullet ( - ) list with the first part in the color provided
      */
 
-    public static String makeBulletPoint(String string, Chat_Styles wrap, Chat_Styles trail) {
+    public static String makeBulletPoint(String string, COLOR wrap, COLOR trail) {
         return trail + "- " + wrap(wrap, string, trail);
     }
 

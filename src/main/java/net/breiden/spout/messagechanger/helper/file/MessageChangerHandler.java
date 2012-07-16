@@ -1,9 +1,9 @@
 /******************************************************************************
- * This file is part of MessageChanger (http://www.spout.org/).                *
+ * This file is part of MessageChanger (http://www.spout.org/).               *
  *                                                                            *
- * MessageChanger is licensed under the SpoutDev License Version 1.            *
+ * MessageChanger is licensed under the SpoutDev License Version 1.           *
  *                                                                            *
- * MessageChanger is free software: you can redistribute it and/or modify      *
+ * MessageChanger is free software: you can redistribute it and/or modify     *
  * it under the terms of the GNU Lesser General Public License as published by*
  * the Free Software Foundation, either version 3 of the License, or          *
  * (at your option) any later version.                                        *
@@ -12,7 +12,7 @@
  * software, incorporating those changes, under the terms of the MIT license, *
  * as described in the SpoutDev License Version 1.                            *
  *                                                                            *
- * MessageChanger is distributed in the hope that it will be useful,           *
+ * MessageChanger is distributed in the hope that it will be useful,          *
  * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              *
  * GNU Lesser General Public License for more details.                        *
@@ -24,14 +24,14 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper;
+package net.breiden.spout.messagechanger.helper.file;
 
-public enum Chat_Styles {
-        BLACK, DARK_BLUE, DARK_GREEN, DARK_CYAN, DARK_RED, PURPLE, GOLD, GRAY, DARK_GRAY, BLUE, BRIGHT_GREEN, CYAN, RED, PINK, YELLOW, WHITE,
-        CONCEAL, BOLD, STRIKE_THROUGH, UNDERLINE, ITALIC, RESET;
+/**
+ * Handels the general management of the loading / saving the messages used to display during the events.
+ *
+ * @author $Author: dredhorse$
+ * @version $FullVersion$
+ */
+public class MessageChangerHandler {
 
-        public String toString() {
-            return "{{" + super.toString() + "}}";
-        }
-    }
-
+}

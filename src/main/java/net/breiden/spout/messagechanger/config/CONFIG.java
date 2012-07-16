@@ -1,3 +1,29 @@
+/******************************************************************************
+ * This file is part of MessageChanger (http://www.spout.org/).               *
+ *                                                                            *
+ * MessageChanger is licensed under the SpoutDev License Version 1.           *
+ *                                                                            *
+ * MessageChanger is free software: you can redistribute it and/or modify     *
+ * it under the terms of the GNU Lesser General Public License as published by*
+ * the Free Software Foundation, either version 3 of the License, or          *
+ * (at your option) any later version.                                        *
+ *                                                                            *
+ * In addition, 180 days after any changes are published, you can use the     *
+ * software, incorporating those changes, under the terms of the MIT license, *
+ * as described in the SpoutDev License Version 1.                            *
+ *                                                                            *
+ * MessageChanger is distributed in the hope that it will be useful,          *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              *
+ * GNU Lesser General Public License for more details.                        *
+ *                                                                            *
+ * You should have received a copy of the GNU Lesser General Public License,  *
+ * the MIT license and the SpoutDev License Version 1 along with this program.*
+ * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
+ * including the MIT license.                                                 *
+ ******************************************************************************/
+
 package net.breiden.spout.messagechanger.config;
 
 //~--- JDK imports ------------------------------------------------------------
@@ -21,8 +47,6 @@ import java.util.regex.Pattern;
  * You may want to keep the options DEBUG_LOG_ENABLED, DEBUG_LOG_TO_FILE, CHECK_FOR_UPDATE, CONFIG_AUTO_UPDATE, CONFIG_AUTO_SAVE, CONFIG_LOG_ENABLED
  * and use DEBUG_LOG_ENABLED, DEBUG_LOG_TO_FILE and CONFIG_LOG_ENABLED in your classes for better logging.
  * <br>
- * If you don't want to use those enums you will need to edit  {@link net.breiden.spout.messagechanger.helper.config.CommentConfiguration#customInit()}  and remove the line which correspond to those enums!
- * <br>
  * If you directly change the enum values there is no flagging or automatic saving during running the server.
  * If you change the enums via {@link net.breiden.spout.messagechanger.helper.config.CommentConfiguration#set} the enum is updated, configuration is flagged dirty and
  * if CONFIG_AUTO_SAVE is enabled will force the config to file directly.
@@ -34,6 +58,7 @@ import java.util.regex.Pattern;
  */
 
 public enum CONFIG {
+
     // you should really keep the following lines ==>>>
     DEBUG_LOG_ENABLED("Enable more logging.. could be messy!", false),
     DEBUG_LOG_TO_FILE("When debug logging, log into separate file", true),

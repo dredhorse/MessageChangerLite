@@ -24,59 +24,77 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.commands;
+package net.breiden.spout.messagechanger.messages;
 
-import org.spout.api.command.Command;
-import org.spout.api.command.CommandContext;
-import org.spout.api.command.CommandExecutor;
-import org.spout.api.command.CommandSource;
-import org.spout.api.exception.CommandException;
-import org.spout.api.exception.WrappedCommandException;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
- * Amended class to handle Enums, based on {@link org.spout.api.command.annotated.AnnotatedCommandExecutor}
+ * Type Save enum for handling the different Game Types the plugin supports
+ *
+ * @todo Additional Game Types needs to be added here
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public abstract class EnumAnnotatedCommandExecutor implements CommandExecutor {
-    private final Object instance;
-    private final Method method;
+public final class GAME_TYPES implements Comparable{
 
-    public EnumAnnotatedCommandExecutor(Object instance, Method method) {
-        this.instance = instance;
-        this.method = method;
+
+
+
+    /**
+     * Enumeration elements are constructed once upon class loading.
+     * Order of appearance here determines the order of compareTo.
+     */
+    public static final GAME_TYPES SPOUT = new GAME_TYPES("Spout") ;
+    public static final GAME_TYPES VANILLA = new GAME_TYPES("Vanilla");
+
+
+    public String toString() {
+        return fName;
     }
 
-    public boolean processCommand(CommandSource source, Command command, CommandContext args) throws CommandException {
-        try {
-            List<Object> commandArgs = new ArrayList<Object>(4);
-            commandArgs.add(args);
-            commandArgs.add(source);
-            commandArgs.addAll(getAdditionalArgs(source, command));
-            method.invoke(instance, commandArgs.toArray());
-        } catch (IllegalAccessException e) {
-            throw new WrappedCommandException(e);
-        } catch (InvocationTargetException e) {
-            if (e.getCause() == null) {
-                throw new WrappedCommandException(e);
+    /**
+     * Parse text into an element of this enumeration.
+     *
+     * @param aText takes one of the values 'Spout', 'Vanilla'.
+     */
+    public static GAME_TYPES valueOf(String aText){
+        Iterator iter = VALUES.iterator();
+        while (iter.hasNext()) {
+            GAME_TYPES type = (GAME_TYPES)iter.next();
+            if ( aText.equals(type.toString()) ){
+                return type;
             }
-
-            Throwable cause = e.getCause();
-            if (cause instanceof CommandException) {
-                throw (CommandException) cause;
-            }
-
-            throw new WrappedCommandException(cause);
         }
-        return true;
+        //this method is unusual in that IllegalArgumentException is
+        //possibly thrown not at its beginning, but at its end.
+        throw new IllegalArgumentException(
+                "Cannot parse into an element of Type : '" + aText + "'"
+        );
     }
 
-    public abstract List<Object> getAdditionalArgs(CommandSource source, Command command);
+    public int compareTo(Object that) {
+        return fOrdinal - ( (GAME_TYPES)that ).fOrdinal;
+    }
 
+    private final String fName;
+    private static int fNextOrdinal = 0;
+    private final int fOrdinal = fNextOrdinal++;
+
+    /**
+     * Private constructor prevents construction outside of this class.
+     */
+    private GAME_TYPES(String aName) {
+        fName = aName;
+    }
+
+    /**
+     * These two lines are all that's necessary to export a List of VALUES.
+     */
+    private static final GAME_TYPES[] F_VALUEs = {SPOUT , VANILLA};
+    //VALUES needs to be located here, otherwise illegal forward reference
+    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(F_VALUEs));
 }

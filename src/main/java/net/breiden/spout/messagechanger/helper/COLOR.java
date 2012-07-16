@@ -50,102 +50,14 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.config;
+package net.breiden.spout.messagechanger.helper;
 
-import net.breiden.spout.messagechanger.config.CONFIG;
-import net.breiden.spout.messagechanger.helper.Logger;
-import org.spout.api.plugin.Plugin;
+public enum COLOR {
+        BLACK, DARK_BLUE, DARK_GREEN, DARK_CYAN, DARK_RED, PURPLE, GOLD, GRAY, DARK_GRAY, BLUE, BRIGHT_GREEN, CYAN, RED, PINK, YELLOW, WHITE,
+        CONCEAL, BOLD, STRIKE_THROUGH, UNDERLINE, ITALIC, RESET;
 
-/**
- * Here you will find all the information you will normally want to change to your liking. If you make changes to the
- * {@link CONFIG} enums increase the {@link #configCurrent} number and the plugin will handle autoupdating if configured.<br>
- * <br>
- * The following is the default configuration of the plugin if you don't change it via the corresponding setters or the enums TILL the config is loaded:
- * <ul>
- *     <li>configFile = config.yml
- *     <li>debugLogEnabled = false
- *     <li>debugLogToFile = true
- *     <li>checkForUpdate = true
- *     <li>configAutoUpdate = true
- *     <li>configAutoSave = true
- *     <li>configLogEnabled = true
- *     <li>disableOnOlderBuilds = false
- * </ul>
- *
- * </p>
- *
- * @author $Author: dredhorse$
- * @version $FullVersion$
- */
-public class Configuration extends CommentConfiguration {
-
-
-    /**
-     * This is the internal config version, which is being used if no Version is supplied from the plugin itself
-     * use {@link CommentConfiguration#alterConfigCurrent(String conCurr)} for this
-     */
-
-    String configCurrent = "1.0";
-
-
-    /**
-     * Link to the location of the plugin website
-     * Note: This can be overwritten by {@link CommentConfiguration#alterPluginSlug(String plugSlug)}
-     */
-
-    String pluginSlug = "https://github.com/dredhorse/MessageChanger";
-
-    /**
-     * Link to the location of the recent version number, the file should be a text with {@code <version> x.y.rb-Bb}
-     * for example your pom.yml <br>
-     * For a better explanation of the version number scheme please look here: <A HREF=https://github.com/dredhorse/MessageChanger/wiki/Versioning>Wiki</A> <br>
-     * For those people who are interested what the version number means, e.g 3.5.1597-20  <br>
-     * x.y.rb-Bb<br>
-     * <br>
-     * x = Major Version = Major new stuff or internal rework<br>
-     * y = Minor Version = Minor new stuff and bug fixes<br>
-     * rb = Recommended Build of Spout<br>
-     * b = Development Build Version = if you have development builds for example B7<br>
-     */
-
-    String versionURL = "https://raw.github.com/dredhorse/MessageChanger/master/pom.xml";
-
-
-    /**
-        * Method which will use the DEBUG_LOG_ENABLED, DEBUG_LOG_TO_FILE, CHECK_FOR_UPDATE, CONFIG_AUTO_UPDATE, CONFIG_AUTO_SAVE, CONFIG_LOG_ENABLED
-        * enums to overwrite the default values configured in here.
-        * <br>
-        * If you don't want to use those enums make sure that you delete the corresponding references here!
-        */
-
-
-       void defaultInit() {
-           // delete the corresponding lines if you delete the enums from the config! Default values will be used instead.
-           debugLogEnabled = CONFIG.DEBUG_LOG_ENABLED.getBoolean();
-           Logger.debug("debugLogEnabled [" + debugLogEnabled + "]");
-           debugLogToFile = CONFIG.DEBUG_LOG_TO_FILE.getBoolean();
-           checkForUpdate =  CONFIG.CHECK_FOR_UPDATE.getBoolean();
-           configAutoUpdate =  CONFIG.CONFIG_AUTO_UPDATE.getBoolean();
-           configAutoSave =  CONFIG.CONFIG_AUTO_SAVE.getBoolean();
-           configLogEnabled = CONFIG.CONFIG_LOG_ENABLED.getBoolean();
-           Logger.config("configLogEnabled [" + configLogEnabled + "]");
-
-       }
-
-
-    /**
-     * Constructor for CommentConfiguration, you will still need perhaps to configure some stuff.
-     *
-     * @param plugin the main plugin class as reference
-     * @see #initializeConfig() for more information
-     */
-    public Configuration(Plugin plugin) {
-        super(plugin);
-        super.alterConfigCurrent(configCurrent);
-        super.alterPluginSlug(pluginSlug);
-        super.alterVersionUrl(versionURL);
+        public String toString() {
+            return "{{" + super.toString() + "}}";
+        }
     }
 
-
-
-}
