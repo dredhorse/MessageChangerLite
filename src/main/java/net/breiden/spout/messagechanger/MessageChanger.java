@@ -30,6 +30,9 @@ package net.breiden.spout.messagechanger;
 
 import net.breiden.spout.messagechanger.commands.EnumMessageChanger;
 import net.breiden.spout.messagechanger.config.CONFIG;
+import net.breiden.spout.messagechanger.enums.GAME_TYPES;
+import net.breiden.spout.messagechanger.enums.TYPES;
+import net.breiden.spout.messagechanger.events.SpoutPluginEvents;
 import net.breiden.spout.messagechanger.exceptions.ConfigNotAvailableException;
 import net.breiden.spout.messagechanger.helper.Logger;
 import net.breiden.spout.messagechanger.helper.Metrics;
@@ -39,14 +42,16 @@ import net.breiden.spout.messagechanger.helper.commands.EnumSimpleInjector;
 import net.breiden.spout.messagechanger.helper.config.CommentConfiguration;
 import net.breiden.spout.messagechanger.helper.config.Configuration;
 import net.breiden.spout.messagechanger.helper.file.CommandsLoadAndSave;
-import net.breiden.spout.messagechanger.helper.file.MessagesLoadAndSave;
-import net.breiden.spout.messagechanger.messages.GAME_TYPES;
+import net.breiden.spout.messagechanger.messages.SpoutMessages;
 import org.spout.api.Engine;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandRegistrationsFactory;
+import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import static net.breiden.spout.messagechanger.helper.file.CommandsLoadAndSave.commandsInit;
 
@@ -63,7 +68,17 @@ import static net.breiden.spout.messagechanger.helper.file.CommandsLoadAndSave.c
  */
 public class MessageChanger extends CommonPlugin {
 
-    private GAME_TYPES game_type;
+
+    private HashSet<TYPES> NULL_TYPES = new HashSet<TYPES>(0);
+
+    /**
+     * Needed during shutdown event to think the player is kicked
+     */
+    private boolean ignoreKick = false;
+
+    SpoutMessages spoutMessages;
+
+    private HashMap<GAME_TYPES,HashSet<TYPES>> types = new HashMap<GAME_TYPES, HashSet<TYPES>>();
 
     /**
      * Instance of the plugin
@@ -140,9 +155,14 @@ public class MessageChanger extends CommonPlugin {
         }
 
         /**
-         * Now let's init the messages
+         * Now let's init the Spout messages
          */
-        // todo adapt to MessageChangerHandler
+        spoutMessages = new SpoutMessages(this);
+
+        /**
+         * Let's init the Plugin Listener to handle the rest of the messages
+         */
+        new SpoutPluginEvents(this);
 
         /*
          * Now let's read the translations for the commands in game
@@ -181,6 +201,7 @@ public class MessageChanger extends CommonPlugin {
      */
     @Override
     public void onDisable() {
+        ServerDownEvent();
         if (CONFIG.CONFIG_AUTO_SAVE.getBoolean()) {
             Logger.config("Saving configuration");
             if (configuration.saveConfig()){
@@ -194,11 +215,11 @@ public class MessageChanger extends CommonPlugin {
                 Logger.config("There was a problem saving the commands.");
             }
             // todo adapt to MessageChangerHandler
-            if (MessagesLoadAndSave.reload()){
+            /*if (MessagesLoadAndSave.reload()){
                 Logger.debug("Messages saved");
             } else {
                 Logger.config("There was a problem saving the Messages.");
-            }
+            }*/
         }
         Logger.disableMsg();
     }
@@ -213,7 +234,7 @@ public class MessageChanger extends CommonPlugin {
         configuration.loadConfig();
         CommandsLoadAndSave.reload();
         // todo adapt to MessageChangerHandler
-        MessagesLoadAndSave.reload();
+        // MessagesLoadAndSave.reload();
     }
 
 
@@ -250,11 +271,70 @@ public class MessageChanger extends CommonPlugin {
         return configuration;
     }
 
-    public void setGame_type( GAME_TYPES game_type){
-        this.game_type = game_type;
+    public void addGameType ( GAME_TYPES gameType){
+        if (!types.containsKey(gameType)){
+            types.put(gameType,NULL_TYPES);
+        }
     }
 
-    public GAME_TYPES getGame_type(){
-        return game_type;
+    public void addPluginType ( GAME_TYPES gameType, TYPES pluginType){
+        if (types.containsKey(gameType)){
+            HashSet<TYPES> temp = types.get(gameType);
+            temp.add(pluginType);
+            types.put(gameType, temp);
+        } else {
+            HashSet<TYPES> temp = new HashSet<TYPES>();
+            temp.add(pluginType);
+            types.put(gameType, temp);
+        }
+    }
+
+    public void removePluginType (GAME_TYPES gameType, TYPES pluginType){
+        if (types.containsKey(gameType)){
+            HashSet<TYPES> temp = types.get(gameType);
+            temp.remove(pluginType);
+            types.put(gameType,temp);
+        }
+    }
+
+    public void removeGameType (GAME_TYPES gameType){
+        if (types.containsKey(gameType)){
+            types.remove(gameType);
+        }
+    }
+
+    public boolean getIgnoreKick(){
+        return ignoreKick;
+    }
+
+    public void enableIgnoreKick(){
+        ignoreKick = true;
+    }
+
+    public void disableIgnoreKick(){
+        ignoreKick = false;
+    }
+
+    private void ServerDownEvent(){
+        // There's no easy way :/
+        StackTraceElement[] st = new Throwable().getStackTrace();
+        for (int i = 0; i < st.length; i++) {
+            // Go through the stack trace and look for the stop method
+            if (st[i].getMethodName().equals("stop")) {
+                // Yay, stop method found
+                Player[] players = getEngine().getOnlinePlayers();
+                String kickMsg = "";
+                for (Player player : players) {
+                    // Let's kick 'em!
+                    kickMsg = spoutMessages.getNewMessage ("SERVER_STOP", player, "");
+                    if (!kickMsg.equals("")) {
+                        // We don't want to override the SERVER_STOP message
+                        this.ignoreKick = true;
+                        // Cya!
+                        player.kick(kickMsg);
+                    }
+                }
+            }
+        }
     }
 }

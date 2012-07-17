@@ -50,77 +50,26 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.messages;
+package net.breiden.spout.messagechanger.events;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import org.spout.api.event.Listener;
+import org.spout.api.plugin.CommonPlugin;
 
 /**
- * Type Save enum for handling the different Vanilla Message Types the plugin supports
- *
- * @todo Additional Game Types needs to be added here
+ * Checks for plugin loading so that
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public final class VANILLA_TYPES implements Comparable{
+public class SpoutPluginEvents implements Listener {
 
+    private final CommonPlugin main;
 
+    public SpoutPluginEvents(CommonPlugin main) {
+        this.main = main;
+        // todo implement the triggering of additional Messages
 
-
-    /**
-     * Enumeration elements are constructed once upon class loading.
-     * Order of appearance here determines the order of compareTo.
-     */
-    public static final VANILLA_TYPES DEFAULT = new VANILLA_TYPES("Default") ;
-    public static final VANILLA_TYPES MORE_MOBS = new VANILLA_TYPES("MoreMobs");
-
-
-    public String toString() {
-        return fName;
     }
 
-    /**
-     * Parse text into an element of this enumeration.
-     *
-     * @param aText takes one of the values 'Default', 'MoreMobs'.
-     */
-    public static VANILLA_TYPES valueOf(String aText){
-        Iterator iter = VALUES.iterator();
-        while (iter.hasNext()) {
-            VANILLA_TYPES type = (VANILLA_TYPES)iter.next();
-            if ( aText.equals(type.toString()) ){
-                return type;
-            }
-        }
-        //this method is unusual in that IllegalArgumentException is
-        //possibly thrown not at its beginning, but at its end.
-        throw new IllegalArgumentException(
-                "Cannot parse into an element of Type : '" + aText + "'"
-        );
-    }
 
-    public int compareTo(Object that) {
-        return fOrdinal - ( (VANILLA_TYPES)that ).fOrdinal;
-    }
-
-    private final String fName;
-    private static int fNextOrdinal = 0;
-    private final int fOrdinal = fNextOrdinal++;
-
-    /**
-     * Private constructor prevents construction outside of this class.
-     */
-    private VANILLA_TYPES(String aName) {
-        fName = aName;
-    }
-
-    /**
-     * These two lines are all that's necessary to export a List of VALUES.
-     */
-    private static final VANILLA_TYPES[] F_VALUEs = {DEFAULT , MORE_MOBS};
-    //VALUES needs to be located here, otherwise illegal forward reference
-    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(F_VALUEs));
 }

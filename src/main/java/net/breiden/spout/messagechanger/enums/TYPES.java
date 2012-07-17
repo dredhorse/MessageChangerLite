@@ -24,14 +24,15 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.file;
+package net.breiden.spout.messagechanger.enums;
 
 /**
- * Handels the general management of the loading / saving the messages used to display during the events.
+ * Interface for the different Game and Plugin Types
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public class MessageChangerHandler {
+public interface TYPES {
 
+    void dontUseThis();
 }

@@ -27,11 +27,12 @@
 package net.breiden.spout.messagechanger.events;
 
 import net.breiden.spout.messagechanger.MessageChanger;
+import net.breiden.spout.messagechanger.enums.DEFAULT_EVENTS;
+import net.breiden.spout.messagechanger.messages.SpoutMessages;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
-import org.spout.api.event.player.PlayerJoinEvent;
-import org.spout.api.event.player.PlayerKickEvent;
-import org.spout.api.event.player.PlayerLoginEvent;
+import org.spout.api.event.player.*;
+import org.spout.api.plugin.CommonPlugin;
 
 /**
  * Contains all the Spout Player events monitored by this plugin
@@ -43,15 +44,27 @@ public class SpoutPlayerEvents implements Listener {
 
 	private final MessageChanger plugin;
 
-	public SpoutPlayerEvents(MessageChanger plugin) {
+    private final SpoutMessages spoutMessages;
 
-		this.plugin = plugin;
+	public SpoutPlayerEvents(CommonPlugin plugin) {
+
+		this.plugin = (MessageChanger) plugin;
+        spoutMessages = SpoutMessages.getInstance();
 
 	}
 
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent event) {
-		switch (event..getResult()) {
+        if (event.isCancelled()){
+            return;
+        }
+        String message = event.getMessage();
+        // Is the server full?
+        if (!event.isAllowed()){
+            event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.KICK_FULL.toString(),event.getPlayer(),message));
+        }
+      // todo waiting for PlayerWhiteList event
+    	/*switch (event.g) {
 			case KICK_BANNED:
 				event.setKickMessage(plugin.getMessage("KICK_BANNED", event.getPlayer(), event.getKickMessage()));
 				break;
@@ -61,46 +74,47 @@ public class SpoutPlayerEvents implements Listener {
 			case KICK_FULL:
 				event.setKickMessage(plugin.getMessage("KICK_FULL", event.getPlayer(), event.getKickMessage()));
 				break;
-		}
+		}*/
 	}
+
+    @EventHandler
+    public void onPlayerBan(PlayerBanKickEvent event){
+        if (event.isCancelled()){
+            return;
+        }
+        event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.KICK_BANNED.toString(),event.getPlayer(),event.getMessage()));
+    }
+
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		String msg = plugin.getMessage("PLAYER_JOIN", event.getPlayer(), event.getJoinMessage());
-		if (msg.equals("")) {
-			event.setJoinMessage(null);
-		} else {
-			event.setJoinMessage(plugin.getMessage("PLAYER_JOIN", event.getPlayer(), event.getJoinMessage()));
-		}
+        if (event.isCancelled()){
+            return;
+        }
+        event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.PLAYER_JOIN.toString(),event.getPlayer(),event.getMessage()));
 	}
 
 	@EventHandler
 	public void onPlayerKick(PlayerKickEvent event) {
-		if (plugin.ignore) {
-			plugin.ignore = false;
+        if (event.isCancelled()){
+            return;
+        }
+        if (plugin.getIgnoreKick()) {
+			plugin.disableIgnoreKick();
 			return;
 		}
-
-		String msg = plugin.getMessage("KICK_KICK_LEAVEMSG", event.getPlayer(), event.getReason());
-		if (msg.equals("")) {
-			event.setLeaveMessage(null);
-		} else {
-			event.setLeaveMessage(msg);
-		}
-		event.setReason(plugin.getMessage("KICK_KICK_REASON", event.getPlayer(), event.getReason()));
+        event.setKickReason(spoutMessages.getNewMessage(DEFAULT_EVENTS.KICK_KICK_REASON.toString(),event.getPlayer(),event.getKickReason()));
+		event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage()));
 	}
 
 	@EventHandler
-	public void onPlayerQuit(PlayerQuitEvent event) {
-		String msg = plugin.getMessage("PLAYER_QUIT", event.getPlayer(), event.getQuitMessage());
-		if (msg.equals("")) {
-			event.setQuitMessage(null);
-		} else {
-			event.setQuitMessage(msg);
-		}
+	public void onPlayerQuit(PlayerLeaveEvent event) {
+        event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.PLAYER_QUIT.toString(),event.getPlayer(), event.getMessage()));
 	}
 
-	@EventHandler
+
+    // todo wait for implementation of PlayerChangedWorldEvent
+/*	@EventHandler
 	public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
 		String msg = plugin.getMessage("CHANGED_WORLD", event.getPlayer(), "");
 		if (msg.equals("")) {
@@ -112,7 +126,7 @@ public class SpoutPlayerEvents implements Listener {
 		}
 		msg = msg.replace("%fromWorld", fromWorld);
 		event.getPlayer().sendMessage(msg);
-	}
+	}*/
 
 
 }

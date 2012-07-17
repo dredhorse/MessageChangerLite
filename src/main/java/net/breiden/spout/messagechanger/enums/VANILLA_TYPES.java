@@ -50,74 +50,82 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.messages;
+package net.breiden.spout.messagechanger.enums;
 
-import net.breiden.spout.messagechanger.enums.DEFAULT_EVENTS;
-import net.breiden.spout.messagechanger.events.SpoutPlayerEvents;
-import net.breiden.spout.messagechanger.helper.Messenger;
-import net.breiden.spout.messagechanger.helper.file.DefaultMessagesHandler;
-import org.spout.api.chat.style.ChatStyle;
-import org.spout.api.player.Player;
-import org.spout.api.plugin.CommonPlugin;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * Contains code to handle the Spout specific messages
+ * Type Save enum for handling the different Vanilla Message Types the plugin supports
+ *
+ * @todo Additional Game Types needs to be added here
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public class SpoutMessages implements MessagesInterface {
+public final class VANILLA_TYPES implements Comparable, TYPES {
 
-    private DefaultMessagesHandler defaultMessagesHandler;
 
-    private static SpoutMessages instance;
 
-    public SpoutMessages (CommonPlugin main){
-         instance = this;
-         defaultMessagesHandler = new DefaultMessagesHandler(main);
-        new SpoutPlayerEvents(main);
-        // todo init the event handlers
+
+    /**
+     * Enumeration elements are constructed once upon class loading.
+     * Order of appearance here determines the order of compareTo.
+     */
+    public static final VANILLA_TYPES DEFAULT = new VANILLA_TYPES("Default") ;
+    public static final VANILLA_TYPES MORE_MOBS = new VANILLA_TYPES("MoreMobs");
+
+
+    public String toString() {
+        return fName;
     }
 
-    public static SpoutMessages getInstance(){
-        return instance;
+    /**
+     * Parse text into an element of this enumeration.
+     *
+     * @param aText takes one of the values 'Default', 'MoreMobs'.
+     */
+    public static VANILLA_TYPES valueOf(String aText){
+        Iterator iter = VALUES.iterator();
+        while (iter.hasNext()) {
+            VANILLA_TYPES type = (VANILLA_TYPES)iter.next();
+            if ( aText.equals(type.toString()) ){
+                return type;
+            }
+        }
+        //this method is unusual in that IllegalArgumentException is
+        //possibly thrown not at its beginning, but at its end.
+        throw new IllegalArgumentException(
+                "Cannot parse into an element of Type : '" + aText + "'"
+        );
     }
 
+    public int compareTo(Object that) {
+        return fOrdinal - ( (VANILLA_TYPES)that ).fOrdinal;
+    }
+
+    private final String fName;
+    private static int fNextOrdinal = 0;
+    private final int fOrdinal = fNextOrdinal++;
+
+    /**
+     * Private constructor prevents construction outside of this class.
+     */
+    private VANILLA_TYPES(String aName) {
+        fName = aName;
+    }
+
+    /**
+     * These two lines are all that's necessary to export a List of VALUES.
+     */
+    private static final VANILLA_TYPES[] F_VALUEs = {DEFAULT , MORE_MOBS};
+    //VALUES needs to be located here, otherwise illegal forward reference
+    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(F_VALUEs));
 
     @Override
-    public String getNewMessage(String event, Player player, String defaultMessage) {
-        DEFAULT_EVENTS defaultEvent = DEFAULT_EVENTS.valueOf(event);
-        String message = defaultMessage;
-        if (defaultEvent != null){
-            message = defaultMessagesHandler.getMessage(getCategory(player),defaultEvent);
-            if (message == null || message.equals("%(msg)")){
-                message = defaultMessage;
-            }
-
-        }
-        return Messenger.dictFormat(player, message);
+    public void dontUseThis() {
+        //will never be called
     }
-
-    public String getNewMessage(String event, Player player, Object[] defaultMessage){
-        String message = "";
-        for (Object obj : defaultMessage){
-            if (obj instanceof ChatStyle){
-                message = message + ((ChatStyle) obj).getName();
-            } else {
-                message = message + (String) obj;
-            }
-        }
-        return getNewMessage(event, player, message);
-    }
-
-
-    private String getCategory(Player player) {
-    		for (String category : defaultMessagesHandler.getCategoryOrder()) {
-    			if (player.hasPermission("messagechanger.message." + category)) {
-    				return category;
-    			}
-    		}
-    		return "default";
-    	}
-
 }

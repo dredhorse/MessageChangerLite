@@ -26,11 +26,17 @@
 
 package net.breiden.spout.messagechanger.helper.file;
 
+import org.spout.api.plugin.CommonPlugin;
+
 /**
- * Handels loading and saving of the original Spout messages
+ * Handels loading and saving of the Vanilla messages
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public class SpoutMessagesHandler extends MessageChangerHandler{
+public class VanillaMessagesHandler {
+
+    public VanillaMessagesHandler(CommonPlugin main) {
+
+    }
 }

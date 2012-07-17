@@ -24,7 +24,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.messages;
+package net.breiden.spout.messagechanger.enums;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,7 +39,7 @@ import java.util.List;
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public final class GAME_TYPES implements Comparable{
+public final class GAME_TYPES implements Comparable, TYPES {
 
 
 
@@ -97,4 +97,9 @@ public final class GAME_TYPES implements Comparable{
     private static final GAME_TYPES[] F_VALUEs = {SPOUT , VANILLA};
     //VALUES needs to be located here, otherwise illegal forward reference
     public static final List VALUES = Collections.unmodifiableList(Arrays.asList(F_VALUEs));
+
+    @Override
+    public void dontUseThis() {
+        //not being called
+    }
 }
