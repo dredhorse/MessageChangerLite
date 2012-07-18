@@ -90,10 +90,10 @@ public class DefaultMessagesHandler {
         temp.put(DEFAULT_EVENTS.PLAYER_QUIT,"%(msg)");
         temp.put(DEFAULT_EVENTS.SERVER_STOP,"Testing the server...");
         defaultMessages.put("default",temp);
-        temp.clear();
+        temp = new HashMap<DEFAULT_EVENTS, String>();
         temp.put(DEFAULT_EVENTS.PLAYER_JOIN,"Welcome the admin");
         defaultMessages.put("permnode1",temp);
-        temp.clear();
+        temp = new HashMap<DEFAULT_EVENTS, String>();
         temp.put(DEFAULT_EVENTS.SERVER_STOP,"Oh well...");
         defaultMessages.put("permnode2",temp);
 
@@ -125,7 +125,7 @@ public class DefaultMessagesHandler {
      */
     public String getMessage (String permNode, DEFAULT_EVENTS event){
         if (defaultMessages.containsKey(permNode.toLowerCase())){
-            return defaultMessages.get(permNode).get(event);
+            return defaultMessages.get(permNode.toLowerCase()).get(event);
         }
         return getMessage(event);
     }

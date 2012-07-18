@@ -73,11 +73,11 @@ import java.util.List;
 public enum COMMANDS {
 
     // Keep the stuff below if you want to keep the default commands
-    HELPERCLASSES("helper", "reload, save, info or help", "Admin root command for the Plugin", PERMISSIONS.HLP_CLS_USER,0,0),
-    HELPERCLASSES_INFO("info", "info", "Information about the plugin", PERMISSIONS.HLP_CLS_USER,0,0),
-    HELPERCLASSES_HELP("help", "help", "Help / Usage information", PERMISSIONS.HLP_CLS_USER,0,0),
-    HELPERCLASSES_SAVE("save", "save", "Save any changes made to the config", PERMISSIONS.HLP_CLS_ADMIN,0,0),
-    HELPERCLASSES_RELOAD("reload", "reload", "Reload the configuration", PERMISSIONS.HLP_CLS_ADMIN,0,0);
+    MESSAGECHANGER("msgchange", "reload, save, info or help", "Admin root command for the Plugin", PERMISSIONS.MESSAGECHANGER,0,0),
+    MESSAGECHANGER_INFO("info", "info", "Information about the plugin", PERMISSIONS.MESSAGECHANGER,0,0),
+    MESSAGECHANGER_HELP("help", "help", "Help / Usage information", PERMISSIONS.MESSAGECHANGER_ADMIN,0,0),
+    MESSAGECHANGER_SAVE("save", "save", "Save any changes made to the config", PERMISSIONS.MESSAGECHANGER_ADMIN,0,0),
+    MESSAGECHANGER_RELOAD("reload", "reload", "Reload the configuration", PERMISSIONS.MESSAGECHANGER_ADMIN,0,0);
 
 
     // NO CHANGES BELOW HERE!!!!!
@@ -255,7 +255,7 @@ public enum COMMANDS {
 
 
     /**
-     * Turns commands into root and child commands, from HELPERCLASSES_HELP in HELPERCLASSES.HELP
+     * Turns commands into root and child commands, from MESSAGECHANGER_HELP in HELPERCLASSES.HELP
      *
      * @return string with commands in node from
      */
@@ -265,7 +265,7 @@ public enum COMMANDS {
     }
 
     /**
-     * Turns commands into root and child commands, from HELPERCLASSES_HELP in HELPERCLASSES.HELP
+     * Turns commands into root and child commands, from MESSAGECHANGER_HELP in HELPERCLASSES.HELP
      *
      * @param command
      * @return  string with commands in node from

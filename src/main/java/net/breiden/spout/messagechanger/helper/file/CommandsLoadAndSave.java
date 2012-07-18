@@ -186,9 +186,7 @@ public final class CommandsLoadAndSave {
             final File folder = plugin.getDataFolder();
 
             if (folder != null) {
-                if (!folder.mkdirs()){
-                 Logger.debug("There was an issue during creation of the plugin directory");
-                }
+                folder.mkdirs();
             }
 
             final File commandProperties = new File(pluginPath + PROPERTY_FILENAME);

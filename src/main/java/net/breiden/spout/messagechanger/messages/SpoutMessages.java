@@ -54,11 +54,15 @@ package net.breiden.spout.messagechanger.messages;
 
 import net.breiden.spout.messagechanger.enums.DEFAULT_EVENTS;
 import net.breiden.spout.messagechanger.events.SpoutPlayerEvents;
+import net.breiden.spout.messagechanger.helper.Logger;
 import net.breiden.spout.messagechanger.helper.Messenger;
 import net.breiden.spout.messagechanger.helper.file.DefaultMessagesHandler;
+import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
+
+import java.util.List;
 
 /**
  * Contains code to handle the Spout specific messages
@@ -75,7 +79,8 @@ public class SpoutMessages implements MessagesInterface {
     public SpoutMessages (CommonPlugin main){
          instance = this;
          defaultMessagesHandler = new DefaultMessagesHandler(main);
-        new SpoutPlayerEvents(main);
+        main.getEngine().getEventManager().registerEvents(new SpoutPlayerEvents(main), main);
+
         // todo init the event handlers
     }
 
@@ -86,10 +91,14 @@ public class SpoutMessages implements MessagesInterface {
 
     @Override
     public String getNewMessage(String event, Player player, String defaultMessage) {
+        Logger.debug("NewMessage for: " + event);
         DEFAULT_EVENTS defaultEvent = DEFAULT_EVENTS.valueOf(event);
         String message = defaultMessage;
         if (defaultEvent != null){
+            String category = getCategory(player);
+            Logger.debug("Category",category);
             message = defaultMessagesHandler.getMessage(getCategory(player),defaultEvent);
+            Logger.debug("message",message);
             if (message == null || message.equals("%(msg)")){
                 message = defaultMessage;
             }
@@ -98,16 +107,16 @@ public class SpoutMessages implements MessagesInterface {
         return Messenger.dictFormat(player, message);
     }
 
-    public String getNewMessage(String event, Player player, Object[] defaultMessage){
+    public List<Object> getNewMessageFromObjects(String event, Player player, Object[] defaultMessage){
         String message = "";
         for (Object obj : defaultMessage){
             if (obj instanceof ChatStyle){
-                message = message + ((ChatStyle) obj).getName();
+                message = message + "{{"+((ChatStyle) obj).getName() +"}}";
             } else {
-                message = message + (String) obj;
+                message = message + obj;
             }
         }
-        return getNewMessage(event, player, message);
+        return ChatArguments.fromString(getNewMessage(event, player, message)).getArguments();
     }
 
 

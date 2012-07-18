@@ -54,7 +54,7 @@ public class EnumMessageChanger {
         plugin = instance;
     }
 
-    @EnumCommand(command = COMMANDS.HELPERCLASSES)
+    @EnumCommand(command = COMMANDS.MESSAGECHANGER)
     @NestedCommand(EnumMessageChangerCMDS.class)
     public void helperClasses(CommandContext args, CommandSource source) throws CommandException {
     }

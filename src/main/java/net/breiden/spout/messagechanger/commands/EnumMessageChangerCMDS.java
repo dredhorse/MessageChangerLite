@@ -46,7 +46,6 @@ import org.spout.api.plugin.CommonPlugin;
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
- * @todo make sure that you use your own commands in these two classes
  */
 public class EnumMessageChangerCMDS {
 
@@ -64,13 +63,13 @@ public class EnumMessageChangerCMDS {
      * @throws CommandException
      */
 
-    @EnumCommand(command = COMMANDS.HELPERCLASSES_HELP)
+    @EnumCommand(command = COMMANDS.MESSAGECHANGER_HELP)
     public void help(CommandContext args, CommandSource source) throws CommandException {
         Messenger.sendHeader(source, plugin.getName());
-        Messenger.send(source, COLOR.BRIGHT_GREEN + "- " + COLOR.CYAN + "/" + COMMANDS.HELPERCLASSES.getRootCommand() + " " + COMMANDS.HELPERCLASSES_HELP.getChildCommand() + COLOR.BRIGHT_GREEN + " : " + COMMANDS.HELPERCLASSES_HELP.getCmdDescription());
-        Messenger.send(source, COLOR.BRIGHT_GREEN + "- " + COLOR.CYAN + "/" + COMMANDS.HELPERCLASSES.getRootCommand() + " " + COMMANDS.HELPERCLASSES_INFO.getChildCommand() + COLOR.BRIGHT_GREEN + " : " + COMMANDS.HELPERCLASSES_INFO.getCmdDescription());
-        Messenger.send(source, COLOR.BRIGHT_GREEN + "- " + COLOR.CYAN + "/" + COMMANDS.HELPERCLASSES.getRootCommand() + " " + COMMANDS.HELPERCLASSES_RELOAD.getChildCommand() + COLOR.BRIGHT_GREEN + " : " + COMMANDS.HELPERCLASSES_RELOAD.getCmdDescription());
-        Messenger.send(source, COLOR.BRIGHT_GREEN + "- " + COLOR.CYAN + "/" + COMMANDS.HELPERCLASSES.getRootCommand() + " " + COMMANDS.HELPERCLASSES_SAVE.getChildCommand() + COLOR.BRIGHT_GREEN + " : " + COMMANDS.HELPERCLASSES_SAVE.getCmdDescription());
+        Messenger.send(source, COLOR.BRIGHT_GREEN + "- " + COLOR.CYAN + "/" + COMMANDS.MESSAGECHANGER.getRootCommand() + " " + COMMANDS.MESSAGECHANGER_HELP.getChildCommand() + COLOR.BRIGHT_GREEN + " : " + COMMANDS.MESSAGECHANGER_HELP.getCmdDescription());
+        Messenger.send(source, COLOR.BRIGHT_GREEN + "- " + COLOR.CYAN + "/" + COMMANDS.MESSAGECHANGER.getRootCommand() + " " + COMMANDS.MESSAGECHANGER_INFO.getChildCommand() + COLOR.BRIGHT_GREEN + " : " + COMMANDS.MESSAGECHANGER_INFO.getCmdDescription());
+        Messenger.send(source, COLOR.BRIGHT_GREEN + "- " + COLOR.CYAN + "/" + COMMANDS.MESSAGECHANGER.getRootCommand() + " " + COMMANDS.MESSAGECHANGER_RELOAD.getChildCommand() + COLOR.BRIGHT_GREEN + " : " + COMMANDS.MESSAGECHANGER_RELOAD.getCmdDescription());
+        Messenger.send(source, COLOR.BRIGHT_GREEN + "- " + COLOR.CYAN + "/" + COMMANDS.MESSAGECHANGER.getRootCommand() + " " + COMMANDS.MESSAGECHANGER_SAVE.getChildCommand() + COLOR.BRIGHT_GREEN + " : " + COMMANDS.MESSAGECHANGER_SAVE.getCmdDescription());
     }
 
     /**
@@ -80,7 +79,7 @@ public class EnumMessageChangerCMDS {
      * @param source
      * @throws CommandException
      */
-    @EnumCommand(command = COMMANDS.HELPERCLASSES_INFO)
+    @EnumCommand(command = COMMANDS.MESSAGECHANGER_INFO)
     public void info(CommandContext args, CommandSource source) throws CommandException {
         Messenger.sendHeader(source, plugin.getName());
         Messenger.send(source, COLOR.BRIGHT_GREEN + plugin.getDescription().getName() + " " + plugin.getDescription().getVersion());
@@ -107,7 +106,7 @@ public class EnumMessageChangerCMDS {
      * @param source
      * @throws CommandException
      */
-    @EnumCommand(command = COMMANDS.HELPERCLASSES_RELOAD)
+    @EnumCommand(command = COMMANDS.MESSAGECHANGER_RELOAD)
     public void reload(CommandContext args, CommandSource source) throws CommandException {
         Messenger.sendHeader(source, plugin.getName());
         Messenger.send(source, "Reloading config");
@@ -134,7 +133,7 @@ public class EnumMessageChangerCMDS {
      * @param source
      * @throws CommandException
      */
-    @EnumCommand(command = COMMANDS.HELPERCLASSES_SAVE)
+    @EnumCommand(command = COMMANDS.MESSAGECHANGER_SAVE)
     public void save(CommandContext args, CommandSource source) throws CommandException {
         Messenger.sendHeader(source, plugin.getName());
         Messenger.send(source, "Saving config");

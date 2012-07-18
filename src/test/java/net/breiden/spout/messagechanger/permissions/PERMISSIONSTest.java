@@ -27,8 +27,8 @@ public class PERMISSIONSTest {
      */
     @Test
     public void testGetComment() throws Exception {
-        PERMISSIONS.HLP_CLS_ADMIN.setComment("This is a test");
-        Assert.assertEquals("This is a test", PERMISSIONS.HLP_CLS_ADMIN.getComment());
+        PERMISSIONS.MESSAGECHANGER_ADMIN.setComment("This is a test");
+        Assert.assertEquals("This is a test", PERMISSIONS.MESSAGECHANGER_ADMIN.getComment());
 
     }
 
@@ -37,7 +37,7 @@ public class PERMISSIONSTest {
      */
     @Test
     public void testToString() throws Exception {
-        Assert.assertEquals(PERMISSIONS.HLP_CLS_TEST.toString(), "hlp.cls.test");
+        Assert.assertEquals(PERMISSIONS.MESSAGECHANGER.toString(), "messagechanger");
     }
 
 

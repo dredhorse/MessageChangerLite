@@ -60,7 +60,7 @@ import java.util.regex.Pattern;
 public enum CONFIG {
 
     // you should really keep the following lines ==>>>
-    DEBUG_LOG_ENABLED("Enable more logging.. could be messy!", false),
+    DEBUG_LOG_ENABLED("Enable more logging.. could be messy!", true),
     DEBUG_LOG_TO_FILE("When debug logging, log into separate file", true),
     CHECK_FOR_UPDATE("Do you want to check if there is a new version available?", true),
     CONFIG_AUTO_UPDATE("Should the configuration automatically be updated \n#   when there is a new version available?", true),

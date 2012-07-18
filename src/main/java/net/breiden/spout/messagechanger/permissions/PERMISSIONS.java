@@ -74,13 +74,13 @@ public enum PERMISSIONS {
 
 
     /**
-     * Example Permission HLP_CLS_TEST which will be turned into hlp.cls.test, </p>
-     * has a description of "Base permission for the HelperClass" and an RequireAll permissions of false
+     * Example Permission MESSAGECHANGER which will be turned into messagechanger, </p>
+     * has a description of "Base permission for MessageChanger" and an RequireAll permissions of false
      */
 
-    HLP_CLS_TEST("Base permission for the HelperClass", false),
-    HLP_CLS_USER("User permission", false, HLP_CLS_TEST),
-    HLP_CLS_ADMIN("Admin permission, will also be used for broadcasting messages to admins", false, HLP_CLS_TEST, HLP_CLS_USER);
+    MESSAGECHANGER("Base permission for MessageChanger", false),
+    MESSAGECHANGER_MESSAGE("Base permission for the messages", false, MESSAGECHANGER),
+    MESSAGECHANGER_ADMIN("Admin permission, will also be used for broadcasting messages to admins", false, MESSAGECHANGER, MESSAGECHANGER_MESSAGE);
 
 
     // NO CHANGES BELOW HERE!!!!!

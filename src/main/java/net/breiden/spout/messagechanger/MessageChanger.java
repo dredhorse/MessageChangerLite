@@ -28,6 +28,7 @@ package net.breiden.spout.messagechanger;
 
 //~--- non-JDK imports --------------------------------------------------------
 
+import net.breiden.spout.messagechanger.commands.COMMANDS;
 import net.breiden.spout.messagechanger.commands.EnumMessageChanger;
 import net.breiden.spout.messagechanger.config.CONFIG;
 import net.breiden.spout.messagechanger.enums.GAME_TYPES;
@@ -43,10 +44,10 @@ import net.breiden.spout.messagechanger.helper.config.CommentConfiguration;
 import net.breiden.spout.messagechanger.helper.config.Configuration;
 import net.breiden.spout.messagechanger.helper.file.CommandsLoadAndSave;
 import net.breiden.spout.messagechanger.messages.SpoutMessages;
+import net.breiden.spout.messagechanger.permissions.PERMISSIONS;
 import org.spout.api.Engine;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandRegistrationsFactory;
-import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
 
 import java.io.IOException;
@@ -162,7 +163,8 @@ public class MessageChanger extends CommonPlugin {
         /**
          * Let's init the Plugin Listener to handle the rest of the messages
          */
-        new SpoutPluginEvents(this);
+
+        engine.getEventManager().registerEvents(new SpoutPluginEvents(this), this);
 
         /*
          * Now let's read the translations for the commands in game
@@ -191,6 +193,9 @@ public class MessageChanger extends CommonPlugin {
         }
 
 
+        PERMISSIONS.dumpPermissions(this);
+        COMMANDS.dumpCommands(this);
+
         // and now we are done..
         Logger.enableMsg();
     }
@@ -201,7 +206,6 @@ public class MessageChanger extends CommonPlugin {
      */
     @Override
     public void onDisable() {
-        ServerDownEvent();
         if (CONFIG.CONFIG_AUTO_SAVE.getBoolean()) {
             Logger.config("Saving configuration");
             if (configuration.saveConfig()){
@@ -315,26 +319,5 @@ public class MessageChanger extends CommonPlugin {
         ignoreKick = false;
     }
 
-    private void ServerDownEvent(){
-        // There's no easy way :/
-        StackTraceElement[] st = new Throwable().getStackTrace();
-        for (int i = 0; i < st.length; i++) {
-            // Go through the stack trace and look for the stop method
-            if (st[i].getMethodName().equals("stop")) {
-                // Yay, stop method found
-                Player[] players = getEngine().getOnlinePlayers();
-                String kickMsg = "";
-                for (Player player : players) {
-                    // Let's kick 'em!
-                    kickMsg = spoutMessages.getNewMessage ("SERVER_STOP", player, "");
-                    if (!kickMsg.equals("")) {
-                        // We don't want to override the SERVER_STOP message
-                        this.ignoreKick = true;
-                        // Cya!
-                        player.kick(kickMsg);
-                    }
-                }
-            }
-        }
-    }
+
 }

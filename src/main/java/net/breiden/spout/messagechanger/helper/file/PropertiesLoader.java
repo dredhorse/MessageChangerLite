@@ -130,7 +130,7 @@ public final class PropertiesLoader {
 
         // For simplicity...
         String key = split[0];
-        String val = split[1];
+        String val = split[1].replaceAll("\"","");
 
         msg.put(key, val);
     }

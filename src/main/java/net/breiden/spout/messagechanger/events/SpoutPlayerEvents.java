@@ -28,10 +28,12 @@ package net.breiden.spout.messagechanger.events;
 
 import net.breiden.spout.messagechanger.MessageChanger;
 import net.breiden.spout.messagechanger.enums.DEFAULT_EVENTS;
+import net.breiden.spout.messagechanger.helper.Logger;
 import net.breiden.spout.messagechanger.messages.SpoutMessages;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.player.*;
+import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
 
 /**
@@ -50,14 +52,18 @@ public class SpoutPlayerEvents implements Listener {
 
 		this.plugin = (MessageChanger) plugin;
         spoutMessages = SpoutMessages.getInstance();
+        Logger.debug("PlayerEvent Listener Activated");
 
 	}
 
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent event) {
+
         if (event.isCancelled()){
+            Logger.debug("PlayerLoginEvent was cancelled");
             return;
         }
+        Logger.debug("PlayerLoginEvent executed");
         String message = event.getMessage();
         // Is the server full?
         if (!event.isAllowed()){
@@ -89,27 +95,38 @@ public class SpoutPlayerEvents implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
         if (event.isCancelled()){
+            Logger.debug("PlayerJoinEvent was cancelled");
             return;
         }
-        event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.PLAYER_JOIN.toString(),event.getPlayer(),event.getMessage()));
+        Logger.debug("PlayerJoinEvent executed");
+        event.setMessage(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_JOIN.toString(),event.getPlayer(),event.getMessage()));
 	}
 
 	@EventHandler
 	public void onPlayerKick(PlayerKickEvent event) {
         if (event.isCancelled()){
+            Logger.debug("PlayerKickEvent was cancelled");
             return;
         }
         if (plugin.getIgnoreKick()) {
+            Logger.debug("PlayerKickEvent was ignored");
 			plugin.disableIgnoreKick();
 			return;
 		}
-        event.setKickReason(spoutMessages.getNewMessage(DEFAULT_EVENTS.KICK_KICK_REASON.toString(),event.getPlayer(),event.getKickReason()));
-		event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage()));
+        Logger.debug("PlayerKickEvent executed");
+        event.setKickReason(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_REASON.toString(),event.getPlayer(),event.getKickReason()));
+		event.setMessage(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage()));
 	}
 
 	@EventHandler
 	public void onPlayerQuit(PlayerLeaveEvent event) {
-        event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.PLAYER_QUIT.toString(),event.getPlayer(), event.getMessage()));
+        Logger.debug("PlayerLeaveEvent executed");
+        if (plugin.getIgnoreKick()) {
+            Logger.debug("PlayerKickEvent was ignored");
+            event.setMessage(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.SERVER_STOP.toString(),event.getPlayer(), event.getMessage()));
+			return;
+		}
+        event.setMessage(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_QUIT.toString(),event.getPlayer(), event.getMessage()));
 	}
 
 
@@ -128,5 +145,31 @@ public class SpoutPlayerEvents implements Listener {
 		event.getPlayer().sendMessage(msg);
 	}*/
 
+
+    private void ServerDownEvent(){
+
+        //todo wait for implementation
+        // There's no easy way :/
+        StackTraceElement[] st = new Throwable().getStackTrace();
+        for (int i = 0; i < st.length; i++) {
+            // Go through the stack trace and look for the stop method
+            if (st[i].getMethodName().equals("stop")) {
+                //this.enableIgnoreKick();
+                // Yay, stop method found
+                Player[] players = plugin.getEngine().getOnlinePlayers();
+                String kickMsg = "";
+                for (Player player : players) {
+                    // Let's kick 'em!
+                    kickMsg = spoutMessages.getNewMessage ("SERVER_STOP", player, "");
+                    if (!kickMsg.equals("")) {
+                        // We don't want to override the SERVER_STOP message
+                        //this.ignoreKick = true;
+                        // Cya!
+                        player.kick(kickMsg);
+                    }
+                }
+            }
+        }
+    }
 
 }

@@ -44,8 +44,8 @@ public class CONFIGTest {
      */
     @Test
     public void testGetConfigOption() throws Exception {
-        boolean bool = (Boolean) CONFIG.DEBUG_LOG_ENABLED.getConfigOption();
-        Assert.assertEquals(bool, false);
+        boolean bool = (Boolean) CONFIG.DEBUG_LOG_TO_FILE.getConfigOption();
+        Assert.assertEquals(bool, true);
     }
 
     /**
@@ -53,8 +53,8 @@ public class CONFIGTest {
      */
     @Test
     public void testSetConfigOption() throws Exception {
-        CONFIG.DEBUG_LOG_ENABLED.setConfigOption(false);
-        boolean bool = (Boolean) CONFIG.DEBUG_LOG_ENABLED.getConfigOption();
+        CONFIG.DEBUG_LOG_TO_FILE.setConfigOption(false);
+        boolean bool = (Boolean) CONFIG.DEBUG_LOG_TO_FILE.getConfigOption();
         Assert.assertEquals(bool, false);
     }
 
@@ -63,8 +63,8 @@ public class CONFIGTest {
      */
     @Test
     public void testSetConfigurationOption() throws Exception {
-        CONFIG.DEBUG_LOG_ENABLED.setConfigurationOption(false);
-        boolean bool = (Boolean) CONFIG.DEBUG_LOG_ENABLED.getConfigOption();
+        CONFIG.DEBUG_LOG_TO_FILE.setConfigurationOption(false);
+        boolean bool = (Boolean) CONFIG.DEBUG_LOG_TO_FILE.getConfigOption();
         Assert.assertEquals(bool, false);
     }
 
@@ -82,7 +82,7 @@ public class CONFIGTest {
     @Test
     public void testGetBoolean() throws Exception {
         // must be false because we did set it this way before!
-        Assert.assertEquals(CONFIG.DEBUG_LOG_ENABLED.getBoolean(), false);
+        Assert.assertEquals(CONFIG.DEBUG_LOG_TO_FILE.getBoolean(), false);
     }
 
     /**
