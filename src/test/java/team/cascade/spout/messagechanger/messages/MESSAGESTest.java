@@ -1,7 +1,7 @@
 package team.cascade.spout.messagechanger.messages;
 
 import junit.framework.Assert;
-import net.breiden.spout.messagechanger.messages.MESSAGES;
+import team.cascade.spout.messagechanger.messages.MESSAGES;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

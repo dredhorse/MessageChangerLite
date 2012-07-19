@@ -24,14 +24,14 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.config;
+package team.cascade.spout.messagechanger.config;
 
 //~--- JDK imports ------------------------------------------------------------
 
 //~--- enums ------------------------------------------------------------------
 
 
-import net.breiden.spout.messagechanger.exceptions.WrongClassException;
+import team.cascade.spout.messagechanger.exceptions.WrongClassException;
 import org.spout.api.inventory.ItemStack;
 
 import java.util.*;
@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
  * and use DEBUG_LOG_ENABLED, DEBUG_LOG_TO_FILE and CONFIG_LOG_ENABLED in your classes for better logging.
  * <br>
  * If you directly change the enum values there is no flagging or automatic saving during running the server.
- * If you change the enums via {@link net.breiden.spout.messagechanger.helper.config.CommentConfiguration#set} the enum is updated, configuration is flagged dirty and
+ * If you change the enums via {@link team.cascade.spout.messagechanger.helper.config.CommentConfiguration#set} the enum is updated, configuration is flagged dirty and
  * if CONFIG_AUTO_SAVE is enabled will force the config to file directly.
  *
  * @todo You need to add all your configuration parameters here.

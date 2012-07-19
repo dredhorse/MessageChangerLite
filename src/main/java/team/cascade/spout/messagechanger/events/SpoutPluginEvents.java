@@ -50,7 +50,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.events;
+package team.cascade.spout.messagechanger.events;
 
 import org.spout.api.event.Listener;
 import org.spout.api.plugin.CommonPlugin;

@@ -24,13 +24,14 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper;
+package team.cascade.spout.messagechanger.helper;
 
 //~--- non-JDK imports --------------------------------------------------------
 
 import com.google.common.base.Splitter;
-import net.breiden.spout.messagechanger.messages.MESSAGES;
-import net.breiden.spout.messagechanger.permissions.PERMISSIONS;
+import org.spout.api.chat.style.ChatStyle;
+import team.cascade.spout.messagechanger.messages.MESSAGES;
+import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.CommandSource;
@@ -65,7 +66,7 @@ import java.util.regex.Pattern;
  */
 public final class Messenger {
 
-     /**
+    /**
      * Wrap / Split position
      */
     private static final int WRAP_POS = 60;
@@ -375,7 +376,7 @@ public final class Messenger {
         return defaultDict;
     }
 
-     /**
+    /**
      * Creates a bullet ( - ) list with the first part in the color provided
      */
 
@@ -459,6 +460,25 @@ public final class Messenger {
             }
         }
         return authors.substring(2);
+    }
+
+    /**
+     * Allows parsing a list of Objects which contains ChatStyles and other Objects and returns a string.
+     * The ChatStyle Objects will be replaced by their String expressions.
+     *
+     * @param messageObjects
+     * @return String where the ChatStyles are replaced with their String expression
+     */
+    public static String getStringFromObjects( Object[] messageObjects){
+        StringBuffer message = new StringBuffer("");
+        for (Object obj : messageObjects){
+            if (obj instanceof ChatStyle){
+                message.append("{{"+((ChatStyle) obj).getName() +"}}");
+            } else {
+                message.append(obj.toString());
+            }
+        }
+        return message.toString();
     }
 
 

@@ -50,74 +50,49 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.messages;
+package team.cascade.spout.messagechanger.helper.file;
 
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.player.Player;
-import org.spout.api.plugin.CommonPlugin;
-import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
-import team.cascade.spout.messagechanger.events.SpoutPlayerEvents;
 import team.cascade.spout.messagechanger.helper.Logger;
-import team.cascade.spout.messagechanger.helper.Messenger;
-import team.cascade.spout.messagechanger.helper.file.SpoutMessagesHandler;
 
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
- * Contains code to handle the Spout specific messages
+ * The default header which is used in the messages files.
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public class SpoutMessages implements MessagesInterface {
+public final class MessagesHeader {
 
-    private SpoutMessagesHandler spoutMessagesHandler;
 
-    private static SpoutMessages instance;
+    private static String translationHeader = null;
 
-    public SpoutMessages (CommonPlugin main){
-         instance = this;
-         spoutMessagesHandler = new SpoutMessagesHandler(main);
-        main.getEngine().getEventManager().registerEvents(new SpoutPlayerEvents(main), main);
-
-        // todo init the event handlers
-    }
-
-    public static SpoutMessages getInstance(){
-        return instance;
+    private MessagesHeader(){
+        // constructor is never called
     }
 
 
-    @Override
-    public String getNewMessage(String event, Player player, String defaultMessage) {
-        Logger.debug("NewMessage for: " + event);
-        DEFAULT_EVENTS defaultEvent = DEFAULT_EVENTS.valueOf(event);
-        String message = defaultMessage;
-        if (defaultEvent != null){
-            String category = getCategory(player);
-            Logger.debug("Category",category);
-            message = spoutMessagesHandler.getMessage(getCategory(player),defaultEvent);
-            Logger.debug("message",message);
-            if (message == null || message.equals("%(msg)")){
-                message = defaultMessage;
+    public static void saveTranslationHeader(File file, String messagesFor) {
+        if (translationHeader == null) {
+            // generate the default messageHeader once
+            translationHeader = "";
+            ArrayList<String> header = new ArrayList<String>();
+            header.add("\n# ------- Messages for "+messagesFor +"\n");
+            header.add("\n# \n");
+            header.add("# Please change to your liking.\n\n");
+            header.add("# The following variables can be used and will be replaced:\n");
+            header.add("# %(player), %(realName), %(world) and %(loc)\n");
+            header.add("\n\n");
+            for (String line : header) {
+                translationHeader = translationHeader + line;
             }
-
         }
-        return Messenger.dictFormat(player, message);
+        try {
+            UnicodeUtil.saveUTF8File(file, translationHeader, false);
+        } catch (IOException e) {
+            Logger.warning("Something happened during saving", e);
+        }
     }
-
-    public List<Object> getNewMessageFromObjects(String event, Player player, Object[] defaultMessage){
-        return ChatArguments.fromString(getNewMessage(event, player, Messenger.getStringFromObjects(defaultMessage))).getArguments();
-    }
-
-
-    private String getCategory(Player player) {
-    		for (String category : spoutMessagesHandler.getCategoryOrder()) {
-    			if (player.hasPermission("messagechanger.message." + category)) {
-    				return category;
-    			}
-    		}
-    		return "default";
-    	}
-
 }

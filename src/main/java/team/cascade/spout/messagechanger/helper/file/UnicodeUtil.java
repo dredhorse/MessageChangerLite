@@ -24,10 +24,10 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.file;
+package team.cascade.spout.messagechanger.helper.file;
 
 
-import net.breiden.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.helper.Logger;
 
 import java.io.*;
 

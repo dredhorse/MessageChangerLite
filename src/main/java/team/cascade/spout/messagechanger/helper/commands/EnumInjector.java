@@ -24,7 +24,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.commands;
+package team.cascade.spout.messagechanger.helper.commands;
 
 /**
  * Amended class to handle Enums, based on {@link org.spout.api.command.annotated.Injector}

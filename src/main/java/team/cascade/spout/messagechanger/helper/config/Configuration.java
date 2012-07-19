@@ -50,10 +50,10 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.config;
+package team.cascade.spout.messagechanger.helper.config;
 
-import net.breiden.spout.messagechanger.config.CONFIG;
-import net.breiden.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.config.CONFIG;
+import team.cascade.spout.messagechanger.helper.Logger;
 import org.spout.api.plugin.Plugin;
 
 /**

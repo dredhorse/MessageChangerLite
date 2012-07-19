@@ -24,7 +24,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.file;
+package team.cascade.spout.messagechanger.helper.file;
 
 import org.spout.api.plugin.CommonPlugin;
 

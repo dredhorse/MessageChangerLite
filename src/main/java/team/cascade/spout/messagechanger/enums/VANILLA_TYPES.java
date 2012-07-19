@@ -50,7 +50,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.enums;
+package team.cascade.spout.messagechanger.enums;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,7 +1,7 @@
 package team.cascade.spout.messagechanger.permissions;
 
 import junit.framework.Assert;
-import net.breiden.spout.messagechanger.permissions.PERMISSIONS;
+import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

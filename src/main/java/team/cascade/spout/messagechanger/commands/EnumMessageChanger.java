@@ -24,9 +24,9 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.commands;
+package team.cascade.spout.messagechanger.commands;
 
-import net.breiden.spout.messagechanger.helper.commands.EnumCommand;
+import team.cascade.spout.messagechanger.helper.commands.EnumCommand;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.NestedCommand;

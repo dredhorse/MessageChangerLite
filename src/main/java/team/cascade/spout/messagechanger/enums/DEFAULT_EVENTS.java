@@ -24,11 +24,11 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.enums;
+package team.cascade.spout.messagechanger.enums;
 
 /**
  * Server Default Events which messages will be replaced<br>
- * If new Events are added you also need to change the defaultMessages in {@link net.breiden.spout.messagechanger.helper.file.DefaultMessagesHandler}
+ * If new Events are added you also need to change the defaultMessages in {@link team.cascade.spout.messagechanger.helper.file.SpoutMessagesHandler}
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$

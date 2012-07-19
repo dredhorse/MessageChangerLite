@@ -24,12 +24,12 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.events;
+package team.cascade.spout.messagechanger.events;
 
-import net.breiden.spout.messagechanger.MessageChanger;
-import net.breiden.spout.messagechanger.enums.DEFAULT_EVENTS;
-import net.breiden.spout.messagechanger.helper.Logger;
-import net.breiden.spout.messagechanger.messages.SpoutMessages;
+import team.cascade.spout.messagechanger.MessageChanger;
+import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
+import team.cascade.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.messages.SpoutMessages;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.player.*;

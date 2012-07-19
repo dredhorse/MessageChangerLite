@@ -24,27 +24,27 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger;
+package team.cascade.spout.messagechanger;
 
 //~--- non-JDK imports --------------------------------------------------------
 
-import net.breiden.spout.messagechanger.commands.COMMANDS;
-import net.breiden.spout.messagechanger.commands.EnumMessageChanger;
-import net.breiden.spout.messagechanger.config.CONFIG;
-import net.breiden.spout.messagechanger.enums.GAME_TYPES;
-import net.breiden.spout.messagechanger.enums.TYPES;
-import net.breiden.spout.messagechanger.events.SpoutPluginEvents;
-import net.breiden.spout.messagechanger.exceptions.ConfigNotAvailableException;
-import net.breiden.spout.messagechanger.helper.Logger;
-import net.breiden.spout.messagechanger.helper.Metrics;
-import net.breiden.spout.messagechanger.helper.commands.EnumAnnotatedCommandRegistrationFactory;
-import net.breiden.spout.messagechanger.helper.commands.EnumSimpleAnnotatedCommandExecutorFactory;
-import net.breiden.spout.messagechanger.helper.commands.EnumSimpleInjector;
-import net.breiden.spout.messagechanger.helper.config.CommentConfiguration;
-import net.breiden.spout.messagechanger.helper.config.Configuration;
-import net.breiden.spout.messagechanger.helper.file.CommandsLoadAndSave;
-import net.breiden.spout.messagechanger.messages.SpoutMessages;
-import net.breiden.spout.messagechanger.permissions.PERMISSIONS;
+import team.cascade.spout.messagechanger.commands.COMMANDS;
+import team.cascade.spout.messagechanger.commands.EnumMessageChanger;
+import team.cascade.spout.messagechanger.config.CONFIG;
+import team.cascade.spout.messagechanger.enums.GAME_TYPES;
+import team.cascade.spout.messagechanger.enums.TYPES;
+import team.cascade.spout.messagechanger.events.SpoutPluginEvents;
+import team.cascade.spout.messagechanger.exceptions.ConfigNotAvailableException;
+import team.cascade.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.helper.Metrics;
+import team.cascade.spout.messagechanger.helper.commands.EnumAnnotatedCommandRegistrationFactory;
+import team.cascade.spout.messagechanger.helper.commands.EnumSimpleAnnotatedCommandExecutorFactory;
+import team.cascade.spout.messagechanger.helper.commands.EnumSimpleInjector;
+import team.cascade.spout.messagechanger.helper.config.CommentConfiguration;
+import team.cascade.spout.messagechanger.helper.config.Configuration;
+import team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave;
+import team.cascade.spout.messagechanger.messages.SpoutMessages;
+import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 import org.spout.api.Engine;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandRegistrationsFactory;
@@ -54,7 +54,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static net.breiden.spout.messagechanger.helper.file.CommandsLoadAndSave.commandsInit;
+import static team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave.commandsInit;
 
 //~--- JDK imports ------------------------------------------------------------
 

@@ -24,7 +24,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.enums;
+package team.cascade.spout.messagechanger.enums;
 
 /**
  * Interface for the different Game and Plugin Types

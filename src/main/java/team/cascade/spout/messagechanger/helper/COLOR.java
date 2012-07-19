@@ -50,7 +50,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper;
+package team.cascade.spout.messagechanger.helper;
 
 public enum COLOR {
         BLACK, DARK_BLUE, DARK_GREEN, DARK_CYAN, DARK_RED, PURPLE, GOLD, GRAY, DARK_GRAY, BLUE, BRIGHT_GREEN, CYAN, RED, PINK, YELLOW, WHITE,

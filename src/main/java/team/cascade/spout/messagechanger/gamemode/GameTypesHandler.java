@@ -24,10 +24,10 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.gamemode;
+package team.cascade.spout.messagechanger.gamemode;
 
-import net.breiden.spout.messagechanger.events.SpoutServerEvents;
 import org.spout.api.plugin.CommonPlugin;
+import team.cascade.spout.messagechanger.events.SpoutPluginEvents;
 
 /**
  * Handels the management of the Gamemodes
@@ -41,6 +41,6 @@ public class GameTypesHandler {
 
     public GameTypesHandler(CommonPlugin main){
         this.main = main;
-        main.getEngine().getEventManager().registerEvents(new SpoutServerEvents(main), main);
+        main.getEngine().getEventManager().registerEvents(new SpoutPluginEvents(main), main);
     }
 }

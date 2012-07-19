@@ -24,11 +24,11 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.permissions;
+package team.cascade.spout.messagechanger.permissions;
 //~--- non-JDK imports --------------------------------------------------------
 
-import net.breiden.spout.messagechanger.exceptions.NoPermissionException;
-import net.breiden.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.exceptions.NoPermissionException;
+import team.cascade.spout.messagechanger.helper.Logger;
 import org.spout.api.command.CommandSource;
 import org.spout.api.player.Player;
 import org.spout.api.plugin.Plugin;
@@ -247,7 +247,7 @@ public enum PERMISSIONS {
      * handle throws a NoPermissionException, which can be handled by the underlying command invoker.
      *
      * @param sender CommandSource
-     * @throws net.breiden.spout.messagechanger.exceptions.NoPermissionException
+     * @throws team.cascade.spout.messagechanger.exceptions.NoPermissionException
      *
      */
 

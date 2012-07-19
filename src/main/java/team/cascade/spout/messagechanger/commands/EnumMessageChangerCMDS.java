@@ -24,17 +24,17 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.commands;
+package team.cascade.spout.messagechanger.commands;
 
-import net.breiden.spout.messagechanger.config.CONFIG;
-import net.breiden.spout.messagechanger.exceptions.ConfigNotInitializedException;
-import net.breiden.spout.messagechanger.helper.COLOR;
-import net.breiden.spout.messagechanger.helper.Logger;
-import net.breiden.spout.messagechanger.helper.Messenger;
-import net.breiden.spout.messagechanger.helper.commands.EnumCommand;
-import net.breiden.spout.messagechanger.helper.config.CommentConfiguration;
-import net.breiden.spout.messagechanger.helper.file.CommandsLoadAndSave;
-import net.breiden.spout.messagechanger.helper.file.MessagesLoadAndSave;
+import team.cascade.spout.messagechanger.config.CONFIG;
+import team.cascade.spout.messagechanger.exceptions.ConfigNotInitializedException;
+import team.cascade.spout.messagechanger.helper.COLOR;
+import team.cascade.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.helper.Messenger;
+import team.cascade.spout.messagechanger.helper.commands.EnumCommand;
+import team.cascade.spout.messagechanger.helper.config.CommentConfiguration;
+import team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave;
+import team.cascade.spout.messagechanger.helper.file.MessagesLoadAndSave;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;

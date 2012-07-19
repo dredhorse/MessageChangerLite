@@ -24,10 +24,10 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.exceptions;
+package team.cascade.spout.messagechanger.exceptions;
 
-import net.breiden.spout.messagechanger.helper.Logger;
-import net.breiden.spout.messagechanger.permissions.PERMISSIONS;
+import team.cascade.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 import org.spout.api.exception.SpoutException;
 import org.spout.api.player.Player;
 

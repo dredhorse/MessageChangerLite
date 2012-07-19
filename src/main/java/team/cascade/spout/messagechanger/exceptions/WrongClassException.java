@@ -24,9 +24,9 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.exceptions;
+package team.cascade.spout.messagechanger.exceptions;
 
-import net.breiden.spout.messagechanger.config.CONFIG;
+import team.cascade.spout.messagechanger.config.CONFIG;
 import org.spout.api.exception.SpoutException;
 
 /**

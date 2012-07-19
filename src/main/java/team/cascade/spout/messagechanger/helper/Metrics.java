@@ -24,7 +24,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper;
+package team.cascade.spout.messagechanger.helper;
 
 /*
  * Copyright 2011 Tyler Blair. All rights reserved.

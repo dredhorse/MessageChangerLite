@@ -24,13 +24,13 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.file;
+package team.cascade.spout.messagechanger.helper.file;
 
 //~--- non-JDK imports --------------------------------------------------------
 
-import net.breiden.spout.messagechanger.commands.COMMANDS;
-import net.breiden.spout.messagechanger.config.CONFIG;
-import net.breiden.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.commands.COMMANDS;
+import team.cascade.spout.messagechanger.config.CONFIG;
+import team.cascade.spout.messagechanger.helper.Logger;
 import org.spout.api.plugin.CommonPlugin;
 
 import java.io.File;

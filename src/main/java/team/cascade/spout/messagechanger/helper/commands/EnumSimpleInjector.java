@@ -24,7 +24,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.commands;
+package team.cascade.spout.messagechanger.helper.commands;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

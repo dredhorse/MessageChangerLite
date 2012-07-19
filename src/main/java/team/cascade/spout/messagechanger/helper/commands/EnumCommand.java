@@ -24,9 +24,9 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.commands;
+package team.cascade.spout.messagechanger.helper.commands;
 
-import net.breiden.spout.messagechanger.commands.COMMANDS;
+import team.cascade.spout.messagechanger.commands.COMMANDS;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

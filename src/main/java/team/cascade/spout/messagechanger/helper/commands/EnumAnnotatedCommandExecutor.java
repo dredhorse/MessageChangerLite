@@ -24,7 +24,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.commands;
+package team.cascade.spout.messagechanger.helper.commands;
 
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandContext;

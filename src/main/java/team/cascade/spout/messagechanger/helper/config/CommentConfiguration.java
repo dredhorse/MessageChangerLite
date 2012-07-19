@@ -24,17 +24,17 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package net.breiden.spout.messagechanger.helper.config;
+package team.cascade.spout.messagechanger.helper.config;
 
 
-import net.breiden.spout.messagechanger.config.CONFIG;
-import net.breiden.spout.messagechanger.exceptions.ConfigNotAvailableException;
-import net.breiden.spout.messagechanger.exceptions.ConfigNotInitializedException;
-import net.breiden.spout.messagechanger.exceptions.WrongClassException;
-import net.breiden.spout.messagechanger.helper.Logger;
-import net.breiden.spout.messagechanger.helper.Messenger;
-import net.breiden.spout.messagechanger.helper.file.UnicodeUtil;
-import net.breiden.spout.messagechanger.permissions.PERMISSIONS;
+import team.cascade.spout.messagechanger.config.CONFIG;
+import team.cascade.spout.messagechanger.exceptions.ConfigNotAvailableException;
+import team.cascade.spout.messagechanger.exceptions.ConfigNotInitializedException;
+import team.cascade.spout.messagechanger.exceptions.WrongClassException;
+import team.cascade.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.helper.Messenger;
+import team.cascade.spout.messagechanger.helper.file.UnicodeUtil;
+import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 import org.spout.api.Spout;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.plugin.Plugin;
@@ -1029,8 +1029,8 @@ public abstract  class CommentConfiguration {
 
                 Logger.warning("is out of date!");
                 Logger.warning("This version: " + pluginVersion + "; latest version: " + newVersion + ".");
-                Spout.getEngine().broadcastMessage("A new Version of " + pluginName + " is available!", PERMISSIONS.HLP_CLS_ADMIN.asPermission());
-                Spout.getEngine().broadcastMessage("Your Version: " + pluginVersion + " New Version: " + newVersion, PERMISSIONS.HLP_CLS_ADMIN.asPermission());
+                Spout.getEngine().broadcastMessage("A new Version of " + pluginName + " is available!", PERMISSIONS.MESSAGECHANGER_ADMIN.asPermission());
+                Spout.getEngine().broadcastMessage("Your Version: " + pluginVersion + " New Version: " + newVersion, PERMISSIONS.MESSAGECHANGER_ADMIN.asPermission());
                 newVersionAvailable = true;
             }
             this.newVersion = newVersion;
@@ -1047,7 +1047,7 @@ public abstract  class CommentConfiguration {
      * Returns the instance of the configuration class
      *
      * @return configuration Class
-     * @throws net.breiden.spout.messagechanger.exceptions.ConfigNotInitializedException
+     * @throws team.cascade.spout.messagechanger.exceptions.ConfigNotInitializedException
      *          when configuration wasn't initialized
      */
 
