@@ -1,10 +1,11 @@
-package net.breiden.spout.messagechanger.helper;
+package team.cascade.spout.messagechanger.helper;
 
 import junit.framework.Assert;
+import net.breiden.spout.messagechanger.helper.Messenger;
+import net.breiden.spout.messagechanger.messages.MESSAGES;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import net.breiden.spout.messagechanger.messages.MESSAGES;
 
 import java.util.Hashtable;
 import java.util.List;

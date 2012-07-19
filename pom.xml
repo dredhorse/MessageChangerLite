@@ -2,16 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.breiden.spout</groupId>
+    <groupId>team.cascade.spout</groupId>
     <artifactId>MessageChanger</artifactId>
-    <version>1.0.1000-B0</version>
+    <version>1.0.1000-B1</version>
     <name>MessageChanger</name>
     <url>https://github.com/dredhorse/MessageChanger</url>
     <description>MessageChanger is a plugin allowing you to change the default messages of Spout / Vanilla / and other games (hopefully) based on permissions. It also allows changing of the default deathmessages with random ones based on the deathcause.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>net.breiden.spout.messagechanger.${project.name}</mainClass>
+        <mainClass>team.cascade.spout.messagechanger.${project.name}</mainClass>
         <spout.version>dev-SNAPSHOT</spout.version>
         <spoutapi.version>dev-SNAPSHOT</spoutapi.version>
         <vanillaVersion>1.2.5-SNAPSHOT</vanillaVersion>
@@ -21,8 +21,8 @@
 
     <!-- Organization -->
     <organization>
-        <name>DonRedhorse</name>
-        <url>https://github.com/dredhorse/MessageChanger</url>
+        <name>SpoutCascade</name>
+        <url>https://twitter.com/spoutcascade</url>
     </organization>
 
     <!-- License -->
@@ -40,9 +40,9 @@
             <id>dredhorse</id>
             <name>Don Redhorse</name>
             <email>http://www.google.com/recaptcha/mailhide/d?k\07501vI5RNkaRgVAhkgS7M-Or0Q\75\75\46c\75MvlEHENkrAZqwA9zVEWiqzS4M6AJh_kLUF5XWsc6knk\075</email>
-            <url>https://github.com/dredhorse/MessageChanger</url>
-            <organization>SimianCage</organization>
-            <organizationUrl>http://www.breiden.net</organizationUrl>
+            <url>https://twitter.com/spoutcascade</url>
+            <organization>SpoutCascade</organization>
+            <organizationUrl>https://twitter.com/spoutcascade</organizationUrl>
             <roles>
                 <role>architect</role>
                 <role>developer</role>
@@ -386,19 +386,19 @@
         </repository>
         <site>
             <id>github-project-site</id>
-            <url>gitsite:git@github.com:dredhorse/HelperClasses.git</url>
+            <url>gitsite:git@github.com:dredhorse/MessageChanger.git</url>
         </site>
     </distributionManagement>
 
     <packaging>jar</packaging>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/dredhorse/HelperClasses/issues</url>
+        <url>https://github.com/dredhorse/MessageChanger/issues</url>
     </issueManagement>
     <scm>
-        <connection>scm:git:git://github.com/dredhorse/HelperClasses.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/dredhorse/HelperClasses.git</developerConnection>
-        <url>https://github.com/dredhorse/HelperClasses</url>
+        <connection>scm:git:git://github.com/dredhorse/MessageChanger.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/dredhorse/MessageChanger.git</developerConnection>
+        <url>https://github.com/dredhorse/MessageChanger</url>
     </scm>
 
     <repositories>

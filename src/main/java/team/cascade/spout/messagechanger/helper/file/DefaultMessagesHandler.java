@@ -81,13 +81,12 @@ public class DefaultMessagesHandler {
         HashMap<DEFAULT_EVENTS,String> temp = new HashMap<DEFAULT_EVENTS, String>();
         temp.put(DEFAULT_EVENTS.CHANGED_WORLD,"Welcome traveler from %(fromWorld) in %(world)");
         temp.put(DEFAULT_EVENTS.KICK_BANNED,"%(msg)");
-        temp.put(DEFAULT_EVENTS.KICK_FULL,"%(msg)");
-        temp.put(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG,"%(msg)");
-        temp.put(DEFAULT_EVENTS.KICK_KICK_REASON,"%(msg)");
+        temp.put(DEFAULT_EVENTS.KICK_FULL,"Man... tight in here, we are full");
+        temp.put(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG,"%(player) was shown the door}");
         temp.put(DEFAULT_EVENTS.KICK_KICK_REASON,"%(msg)");
         temp.put(DEFAULT_EVENTS.KICK_WHITELIST,"%(msg)");
         temp.put(DEFAULT_EVENTS.PLAYER_JOIN,"Hello &b%(player)&f  in world %(world)");
-        temp.put(DEFAULT_EVENTS.PLAYER_QUIT,"%(msg)");
+        temp.put(DEFAULT_EVENTS.PLAYER_QUIT,"Say byebye to Player %(player)");
         temp.put(DEFAULT_EVENTS.SERVER_STOP,"Testing the server...");
         defaultMessages.put("default",temp);
         temp = new HashMap<DEFAULT_EVENTS, String>();
