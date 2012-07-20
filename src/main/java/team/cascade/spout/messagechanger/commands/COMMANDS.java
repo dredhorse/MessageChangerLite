@@ -142,7 +142,7 @@ public enum COMMANDS {
      * @return string with the command description
      */
     public String getCmdDescription() {
-        Logger.debug("Description for Command: " + toString(), desc);
+        //Logger.debug("Description for Command: " + toString(), desc);
         return desc;
     }
 
@@ -151,7 +151,7 @@ public enum COMMANDS {
      * @return PERMISSIONS of a command
      */
     public PERMISSIONS getPermissions() {
-        Logger.debug("Permission for Command: " + toString(), permissions);
+        //Logger.debug("Permission for Command: " + toString(), permissions);
         return permissions;
     }
 
@@ -160,7 +160,7 @@ public enum COMMANDS {
      * @return string representing the permission of the command
      */
     public String getPermString() {
-        Logger.debug("PermissionString for Command: " + toString(), permissions.asPermission());
+        //Logger.debug("PermissionString for Command: " + toString(), permissions.asPermission());
         return permissions.asPermission();
     }
 
@@ -170,7 +170,7 @@ public enum COMMANDS {
      */
     public String[] getAliases() {
         String[] simpleArray = new String[aliases.size()];
-        Logger.debug("Aliases for Command: " + toString(), aliases.toString());
+        //Logger.debug("Aliases for Command: " + toString(), aliases.toString());
         return aliases.toArray(simpleArray);
     }
 
@@ -179,7 +179,7 @@ public enum COMMANDS {
      * @return string with command usage
      */
     public String getUsage() {
-        Logger.debug("Usage for Command: " + toString(), usage);
+        //Logger.debug("Usage for Command: " + toString(), usage);
         return usage;
     }
 
@@ -277,7 +277,7 @@ public enum COMMANDS {
         for (String part : commands) {
             command = command + "." + toProperCase(part);
         }
-        Logger.debug("Command: ", command.substring(1));
+        //Logger.debug("Command: ", command.substring(1));
         return command.substring(1);
     }
 
@@ -303,7 +303,7 @@ public enum COMMANDS {
             String[] commands = command.split("_");
             command = commands[0];
         }
-        Logger.debug("Root Command for Command: " + toString(), command.toLowerCase());
+        //Logger.debug("Root Command for Command: " + toString(), command.toLowerCase());
         return command.toLowerCase();
     }
 
@@ -316,10 +316,10 @@ public enum COMMANDS {
         String command = super.toString();
         if (command.contains("_")) {
             String[] commands = command.split("_");
-            Logger.debug("Child Command for Command: " + toString(), commands[1].toLowerCase());
+            //Logger.debug("Child Command for Command: " + toString(), commands[1].toLowerCase());
             return commands[1].toLowerCase();
         }
-        Logger.debug("There is no Child Command for Command: " + toString());
+        //Logger.debug("There is no Child Command for Command: " + toString());
         return null;
     }
 
@@ -345,10 +345,10 @@ public enum COMMANDS {
      */
     public boolean isChildCommand() {
         if (super.toString().contains("_")) {
-            Logger.debug("Command " + toString() + " is a child command");
+            //Logger.debug("Command " + toString() + " is a child command");
             return true;
         } else {
-            Logger.debug("Command " + toString() + " is not a child command");
+            //Logger.debug("Command " + toString() + " is not a child command");
             return false;
         }
     }
