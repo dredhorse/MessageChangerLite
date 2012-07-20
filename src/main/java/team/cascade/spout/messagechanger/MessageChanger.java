@@ -237,6 +237,7 @@ public class MessageChanger extends CommonPlugin {
         configuration.reloadConfig();
         configuration.loadConfig();
         CommandsLoadAndSave.reload();
+        spoutMessages.reload();
         // todo adapt to MessageChangerHandler
         // MessagesLoadAndSave.reload();
     }

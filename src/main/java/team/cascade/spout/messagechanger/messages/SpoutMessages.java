@@ -78,13 +78,15 @@ public class SpoutMessages implements MessagesInterface {
     public SpoutMessages (CommonPlugin main){
          instance = this;
          spoutMessagesHandler = new SpoutMessagesHandler(main);
-        main.getEngine().getEventManager().registerEvents(new SpoutPlayerEvents(main), main);
-
-        // todo init the event handlers
+         main.getEngine().getEventManager().registerEvents(new SpoutPlayerEvents(main), main);
     }
 
     public static SpoutMessages getInstance(){
         return instance;
+    }
+
+    public void reload(){
+        spoutMessagesHandler.init();
     }
 
 

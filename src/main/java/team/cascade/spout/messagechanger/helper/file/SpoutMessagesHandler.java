@@ -26,17 +26,16 @@
 
 package team.cascade.spout.messagechanger.helper.file;
 
+import org.spout.api.exception.ConfigurationException;
 import org.spout.api.plugin.CommonPlugin;
+import org.spout.api.util.config.yaml.YamlConfiguration;
 import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
 import team.cascade.spout.messagechanger.helper.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Handels the general management of the loading / saving the messages used to display during the events.
@@ -68,9 +67,26 @@ public class SpoutMessagesHandler {
      */
     private List<String> categoryOrder = Arrays.asList("permnode1", "permnode2");
 
+    /**
+     * Path to the messages file
+     */
     private String messagesPath;
-    private static boolean success;
+
+    /**
+     * Message File Name
+     */
     private static final String SPOUTMESSAGES_FILENAME = "spoutmessages.yml";
+
+    /**
+     * Did we succeed?
+     */
+    private static boolean success;
+
+
+    /**
+     *
+     */
+    private final YamlConfiguration spoutMessagesConfig;
 
 
     /**
@@ -81,13 +97,16 @@ public class SpoutMessagesHandler {
         instance = this;
         this.main = main;
         messagesPath = main.getDataFolder() + System.getProperty("file.separator") + "messages"+ System.getProperty("file.separator");
+        spoutMessagesConfig = new YamlConfiguration(new File(messagesPath,SPOUTMESSAGES_FILENAME));
         init();
     }
 
 
 
-    private void init(){
+    public void init(){
+        success = true;
         // adding the default values
+        defaultMessages = new HashMap<String, HashMap<DEFAULT_EVENTS, String>>();
         HashMap<DEFAULT_EVENTS,String> temp = new HashMap<DEFAULT_EVENTS, String>();
         temp.put(DEFAULT_EVENTS.CHANGED_WORLD,"Welcome traveler from %(fromWorld) in %(world)");
         temp.put(DEFAULT_EVENTS.KICK_BANNED,"%(msg)");
@@ -105,11 +124,21 @@ public class SpoutMessagesHandler {
         temp = new HashMap<DEFAULT_EVENTS, String>();
         temp.put(DEFAULT_EVENTS.SERVER_STOP,"Oh well...");
         defaultMessages.put("permnode2",temp);
-         save();
-        //todo loading and saving the messages
+        File tempFile = (new File(messagesPath,SPOUTMESSAGES_FILENAME));
+        if (!tempFile.exists()){
 
-
+            if (!save()){
+                success = false;
+                Logger.config("There was an issue writing the spoutmessages file, using Internal defaults");
+            }
+        }
+        if (success){
+            if (!load()){
+                Logger.config("There was an issue reading the spoutmessages file, using Internal defaults");
+            }
+        }
     }
+
 
 
 
@@ -145,7 +174,7 @@ public class SpoutMessagesHandler {
 
 
     /**
-     * Will save the message translations to a file
+     * Will save the Spout Messages to a file
      *
      * @return false if there was a problem with saving
      */
@@ -203,6 +232,54 @@ public class SpoutMessagesHandler {
         }
 
         return success;
+    }
+
+
+    public boolean load(){
+        try {
+            spoutMessagesConfig.load();
+        } catch (ConfigurationException e) {
+            Logger.warning("There where problems loading the Spout Messages File",e);
+            return false;
+        }
+        List<String> messageCategories = new ArrayList<String>();
+        for (String key : spoutMessagesConfig.getNode("message-category").getKeys(false)) {
+            messageCategories.add(key);
+        }
+        Logger.debug("messageCategories", messageCategories);
+        Iterator<String> it = messageCategories.iterator();
+        HashMap<DEFAULT_EVENTS,String>messagesPerCategory;
+        String next = null;
+        while (it.hasNext()) {
+            messagesPerCategory = new HashMap<DEFAULT_EVENTS, String>();
+            next = it.next();
+            Logger.debug("next", next);
+            Set<String> loadMessages;
+            loadMessages = spoutMessagesConfig.getNode("message-category." + next).getKeys(true);
+            Logger.debug("loadMessages", loadMessages);
+            Iterator<String> itm = loadMessages.iterator();
+            DEFAULT_EVENTS event = null;
+            while (itm.hasNext()) {
+                event = event.valueOf(itm.next());
+                Logger.debug("event", event);
+                String eventMessage = spoutMessagesConfig.getNode("message-category." + next + "." + event).getString();
+                Logger.debug("eventMessage", eventMessage);
+                messagesPerCategory.put(event, eventMessage);
+                Logger.debug("messagesPerCategory", messagesPerCategory);
+            }
+            defaultMessages.put(next, messagesPerCategory);
+            Logger.debug("defaultMessages", defaultMessages);
+
+        }
+        Logger.debug("defaultMessage", defaultMessages);
+        if (spoutMessagesConfig.getNode("categoryOrder") != null) {
+            categoryOrder = spoutMessagesConfig.getNode("categoryOrder").getStringList();
+        } else {
+            categoryOrder = new ArrayList<String>(defaultMessages.keySet());
+        }
+        Logger.info("Order of Message Categories is: " + categoryOrder);
+
+        return true;
     }
 
 }
