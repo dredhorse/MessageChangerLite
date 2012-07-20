@@ -24,33 +24,9 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-/******************************************************************************
- * This file is part of MessageChanger (http://www.spout.org/).               *
- *                                                                            *
- * MessageChanger is licensed under the SpoutDev License Version 1.           *
- *                                                                            *
- * MessageChanger is free software: you can redistribute it and/or modify     *
- * it under the terms of the GNU Lesser General Public License as published by*
- * the Free Software Foundation, either version 3 of the License, or          *
- * (at your option) any later version.                                        *
- *                                                                            *
- * In addition, 180 days after any changes are published, you can use the     *
- * software, incorporating those changes, under the terms of the MIT license, *
- * as described in the SpoutDev License Version 1.                            *
- *                                                                            *
- * MessageChanger is distributed in the hope that it will be useful,          *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              *
- * GNU Lesser General Public License for more details.                        *
- *                                                                            *
- * You should have received a copy of the GNU Lesser General Public License,  *
- * the MIT license and the SpoutDev License Version 1 along with this program.*
- * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
- * including the MIT license.                                                 *
- ******************************************************************************/
-
 package team.cascade.spout.messagechanger.enums;
+
+import team.cascade.spout.messagechanger.helper.Logger;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -59,15 +35,13 @@ import java.util.List;
 
 /**
  * Vanilla Events which messages will be replaced<br>
- * If new Events are added you also need to change the defaultMessages in {@link team.cascade.spout.messagechanger.helper.file.VanillaMessagesHandler}
+ * If new Events are added you also need to change the defaultMessages in {@link team.cascade.spout.messagechanger.vanilla.VanillaMessages}
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
 
-public class VANILLA_DEATH_EVENTS implements Comparable, TYPES {
-
-
+public class VANILLA_DEATH_EVENTS implements Comparable{
 
 
     /**
@@ -154,7 +128,7 @@ public class VANILLA_DEATH_EVENTS implements Comparable, TYPES {
     /**
      * Parse text into an element of this enumeration.
      *
-     * @param aText takes one of the values 'Default', 'MoreMobs'.
+     * @param aText takes one of the values.
      */
     public static VANILLA_DEATH_EVENTS valueOf(String aText){
         Iterator iter = VALUES.iterator();
@@ -164,11 +138,9 @@ public class VANILLA_DEATH_EVENTS implements Comparable, TYPES {
                 return type;
             }
         }
-        //this method is unusual in that IllegalArgumentException is
-        //possibly thrown not at its beginning, but at its end.
-        throw new IllegalArgumentException(
-                "Cannot parse into an element of Type : '" + aText + "'"
-        );
+        // If we can't parse we return an Unknown cause.
+        Logger.debug("Unknown Vanilla Death Event",aText);
+        return UNKNOWN;
     }
 
     public int compareTo(Object that) {
@@ -189,12 +161,12 @@ public class VANILLA_DEATH_EVENTS implements Comparable, TYPES {
     /**
      * These two lines are all that's necessary to export a List of VALUES.
      */
-    private static final VANILLA_DEATH_EVENTS[] F_VALUEs = {DEFAULT , MORE_MOBS};
+    private static final VANILLA_DEATH_EVENTS[] F_VALUEs = {BLAZE, CAVE_SPIDER, CHICKEN, COW,CREEPER,ENDER_DRAGON,ENDER_MAN,
+            GHAST,GIANT, MAGMA_CUBE,MUSHROOM_COW,IRON_GOLEM,OCELOT,PIG,PIG_ZOMBIE,SHEEP,SILVERFISH,SKELETON,SLIME,SNOW_GOLEM,
+            SPIDER,SQUID,VILLAGER,WOLF,ZOMBIE, CONTACT,DROWNING,FALL,FIRE,FIRE_TICK,LAVA,LIGHTNING,SUFFOCATION,VOID,BLOCK_EXPLOSION,
+            ENTITY_EXPLOSION, SUICIDE, STARVATION, PVP_FISTS,PVP_TAMED,PVP,DISPENSER,POISON,MAGIC,UNKNOWN};
     //VALUES needs to be located here, otherwise illegal forward reference
-    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(F_VALUEs));
+    public static final List<VANILLA_DEATH_EVENTS> VALUES = Collections.unmodifiableList(Arrays.asList(F_VALUEs));
 
-    @Override
-    public void dontUseThis() {
-        //will never be called
-    }
+
 }

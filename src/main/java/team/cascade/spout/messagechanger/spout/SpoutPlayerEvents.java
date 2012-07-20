@@ -24,17 +24,16 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.events;
+package team.cascade.spout.messagechanger.spout;
 
-import team.cascade.spout.messagechanger.MessageChanger;
-import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
-import team.cascade.spout.messagechanger.helper.Logger;
-import team.cascade.spout.messagechanger.messages.SpoutMessages;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.player.*;
 import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
+import team.cascade.spout.messagechanger.MessageChanger;
+import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
+import team.cascade.spout.messagechanger.helper.Logger;
 
 /**
  * Contains all the Spout Player events monitored by this plugin
@@ -46,12 +45,12 @@ public class SpoutPlayerEvents implements Listener {
 
 	private final MessageChanger plugin;
 
-    private final SpoutMessages spoutMessages;
+    private final SpoutMessagesHandler spoutMessagesHandler;
 
 	public SpoutPlayerEvents(CommonPlugin plugin) {
 
 		this.plugin = (MessageChanger) plugin;
-        spoutMessages = SpoutMessages.getInstance();
+        spoutMessagesHandler = SpoutMessagesHandler.getInstance();
         Logger.debug("PlayerEvent Listener Activated");
 
 	}
@@ -67,7 +66,7 @@ public class SpoutPlayerEvents implements Listener {
         String message = event.getMessage();
         // Is the server full?
         if (!event.isAllowed()){
-            event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.KICK_FULL.toString(),event.getPlayer(),message));
+            event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.KICK_FULL.toString(),event.getPlayer(),message));
         }
       // todo waiting for PlayerWhiteList event
     	/*switch (event.g) {
@@ -88,7 +87,7 @@ public class SpoutPlayerEvents implements Listener {
         if (event.isCancelled()){
             return;
         }
-        event.setMessage(spoutMessages.getNewMessage(DEFAULT_EVENTS.KICK_BANNED.toString(),event.getPlayer(),event.getMessage()));
+        event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.KICK_BANNED.toString(),event.getPlayer(),event.getMessage()));
     }
 
 
@@ -99,7 +98,7 @@ public class SpoutPlayerEvents implements Listener {
             return;
         }
         Logger.debug("PlayerJoinEvent executed");
-        event.setMessage(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_JOIN.toString(),event.getPlayer(),event.getMessage()));
+        event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_JOIN.toString(),event.getPlayer(),event.getMessage()));
 	}
 
 	@EventHandler
@@ -114,8 +113,8 @@ public class SpoutPlayerEvents implements Listener {
 			return;
 		}
         Logger.debug("PlayerKickEvent executed");
-        event.setKickReason(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_REASON.toString(),event.getPlayer(),event.getKickReason()));
-		event.setMessage(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage()));
+        event.setKickReason(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_REASON.toString(),event.getPlayer(),event.getKickReason()));
+		event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage()));
 	}
 
 	@EventHandler
@@ -123,10 +122,10 @@ public class SpoutPlayerEvents implements Listener {
         Logger.debug("PlayerLeaveEvent executed");
         if (plugin.getIgnoreKick()) {
             Logger.debug("PlayerKickEvent was ignored");
-            event.setMessage(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.SERVER_STOP.toString(),event.getPlayer(), event.getMessage()));
+            event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.SERVER_STOP.toString(),event.getPlayer(), event.getMessage()));
 			return;
 		}
-        event.setMessage(spoutMessages.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_QUIT.toString(),event.getPlayer(), event.getMessage()));
+        event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_QUIT.toString(),event.getPlayer(), event.getMessage()));
 	}
 
 
@@ -160,7 +159,7 @@ public class SpoutPlayerEvents implements Listener {
                 String kickMsg = "";
                 for (Player player : players) {
                     // Let's kick 'em!
-                    kickMsg = spoutMessages.getNewMessage ("SERVER_STOP", player, "");
+                    kickMsg = spoutMessagesHandler.getNewMessage ("SERVER_STOP", player, "");
                     if (!kickMsg.equals("")) {
                         // We don't want to override the SERVER_STOP message
                         //this.ignoreKick = true;

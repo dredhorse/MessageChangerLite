@@ -50,45 +50,42 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.events;
+package team.cascade.spout.messagechanger.vanilla;
 
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
-import org.spout.api.event.server.PluginEnableEvent;
+import org.spout.api.plugin.CommonPlugin;
+import org.spout.vanilla.event.player.PlayerDeathEvent;
 import team.cascade.spout.messagechanger.MessageChanger;
-import team.cascade.spout.messagechanger.enums.GAME_TYPES;
 import team.cascade.spout.messagechanger.helper.Logger;
-import team.cascade.spout.messagechanger.vanilla.VanillaMessagesHandler;
 
 /**
- * Checks for plugin loading so that the additional support modules can be loaded
+ * Contains all the Vanilla Death events monitored by this plugin
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public class SpoutPluginEvents implements Listener {
+public class VanillaDeathEvents implements Listener {
 
-    private final MessageChanger main;
+	private final MessageChanger plugin;
 
-    public SpoutPluginEvents(MessageChanger main) {
-        this.main = main;
-        // todo implement the triggering of additional Messages
+    private final VanillaMessagesHandler vanillaMessagesHandler;
 
-    }
+	public VanillaDeathEvents(CommonPlugin plugin) {
 
-    /**
-     * Checks if a plugin was enabled which we support and configures the additional modules
-     */
+		this.plugin = (MessageChanger) plugin;
+        vanillaMessagesHandler = VanillaMessagesHandler.getInstance();
+        Logger.debug("VanillaDeathEvent Listener Activated");
 
-    @EventHandler
-    public void onPluginEnable ( PluginEnableEvent event){
-        String plugin = event.getPlugin().getName();
-        Logger.debug("PluginLoaded",plugin);
-        if (plugin.equals("Vanilla")){
-            main.addGameType(GAME_TYPES.VANILLA);
-            main.setVanillaMessagesHandler(new VanillaMessagesHandler(main));
+	}
+
+	@EventHandler
+	public void onPlayerLogin(PlayerDeathEvent event) {
+        if (event.isCancelled()){
+            Logger.debug("PlayerDeathEvent was cancelled");
         }
 
     }
+
 
 }

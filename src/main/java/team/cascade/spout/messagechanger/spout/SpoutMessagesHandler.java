@@ -50,45 +50,75 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.events;
+package team.cascade.spout.messagechanger.spout;
 
-import org.spout.api.event.EventHandler;
-import org.spout.api.event.Listener;
-import org.spout.api.event.server.PluginEnableEvent;
-import team.cascade.spout.messagechanger.MessageChanger;
-import team.cascade.spout.messagechanger.enums.GAME_TYPES;
+import org.spout.api.chat.ChatArguments;
+import org.spout.api.player.Player;
+import org.spout.api.plugin.CommonPlugin;
+import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
 import team.cascade.spout.messagechanger.helper.Logger;
-import team.cascade.spout.messagechanger.vanilla.VanillaMessagesHandler;
+import team.cascade.spout.messagechanger.helper.Messenger;
+import team.cascade.spout.messagechanger.messages.MessagesInterface;
+
+import java.util.List;
 
 /**
- * Checks for plugin loading so that the additional support modules can be loaded
+ * Contains code to handle the Spout specific messages
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public class SpoutPluginEvents implements Listener {
+public class SpoutMessagesHandler implements MessagesInterface {
 
-    private final MessageChanger main;
+    private SpoutMessages spoutMessages;
 
-    public SpoutPluginEvents(MessageChanger main) {
-        this.main = main;
-        // todo implement the triggering of additional Messages
+    private static SpoutMessagesHandler instance;
 
+    public SpoutMessagesHandler(CommonPlugin main){
+         instance = this;
+         spoutMessages = new SpoutMessages(main);
+         main.getEngine().getEventManager().registerEvents(new SpoutPlayerEvents(main), main);
     }
 
-    /**
-     * Checks if a plugin was enabled which we support and configures the additional modules
-     */
+    public static SpoutMessagesHandler getInstance(){
+        return instance;
+    }
 
-    @EventHandler
-    public void onPluginEnable ( PluginEnableEvent event){
-        String plugin = event.getPlugin().getName();
-        Logger.debug("PluginLoaded",plugin);
-        if (plugin.equals("Vanilla")){
-            main.addGameType(GAME_TYPES.VANILLA);
-            main.setVanillaMessagesHandler(new VanillaMessagesHandler(main));
+    public void reload(){
+        spoutMessages.init();
+    }
+
+
+    @Override
+    public String getNewMessage(String event, Player player, String defaultMessage) {
+        Logger.debug("NewMessage for: " + event);
+        DEFAULT_EVENTS defaultEvent = DEFAULT_EVENTS.valueOf(event);
+        String message = defaultMessage;
+        if (defaultEvent != null){
+            String category = getCategory(player);
+            Logger.debug("Category",category);
+            message = spoutMessages.getMessage(getCategory(player),defaultEvent);
+            Logger.debug("message",message);
+            if (message == null || message.equals("%(msg)")){
+                message = defaultMessage;
+            }
+
         }
-
+        return Messenger.dictFormat(player, message);
     }
+
+    public List<Object> getNewMessageFromObjects(String event, Player player, Object[] defaultMessage){
+        return ChatArguments.fromString(getNewMessage(event, player, Messenger.getStringFromObjects(defaultMessage))).getArguments();
+    }
+
+
+    private String getCategory(Player player) {
+    		for (String category : spoutMessages.getCategoryOrder()) {
+    			if (player.hasPermission("messagechanger.message." + category)) {
+    				return category;
+    			}
+    		}
+    		return "default";
+    	}
 
 }

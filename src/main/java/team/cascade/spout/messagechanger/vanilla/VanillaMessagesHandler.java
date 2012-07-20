@@ -24,19 +24,51 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.helper.file;
+package team.cascade.spout.messagechanger.vanilla;
 
-import org.spout.api.plugin.CommonPlugin;
+import org.spout.api.player.Player;
+import team.cascade.spout.messagechanger.MessageChanger;
+import team.cascade.spout.messagechanger.messages.MessagesInterface;
 
 /**
- * Handels loading and saving of the Vanilla messages
+ * Contains code to handle the vanilla specific messages
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public class VanillaMessagesHandler {
+public class VanillaMessagesHandler implements MessagesInterface {
 
-    public VanillaMessagesHandler(CommonPlugin main) {
+    private static VanillaMessagesHandler instance;
 
+    private VanillaMessages vanillaMessages;
+
+    private MessageChanger main;
+
+
+    public VanillaMessagesHandler(MessageChanger main) {
+        instance = this;
+        vanillaMessages = new VanillaMessages(main);
+        main.getEngine().getEventManager().registerEvents(new VanillaDeathEvents(main), main);
+        this.main = main;
+    }
+
+    public static VanillaMessagesHandler getInstance(){
+        return instance;
+    }
+
+
+    @Override
+    public String getNewMessage(String event, Player player, String defaultMessage) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    // *******************************************************************************************************************
+
+    public void reload(){
+        vanillaMessages.reloadDeathMessages();
+    }
+
+    public void save(){
+        vanillaMessages.saveDeathMessages();
     }
 }

@@ -28,7 +28,7 @@ package team.cascade.spout.messagechanger.enums;
 
 /**
  * Server Default Events which messages will be replaced<br>
- * If new Events are added you also need to change the defaultMessages in {@link team.cascade.spout.messagechanger.helper.file.SpoutMessagesHandler}
+ * If new Events are added you also need to change the defaultMessages in {@link team.cascade.spout.messagechanger.spout.SpoutMessages}
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$

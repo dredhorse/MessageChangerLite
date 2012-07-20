@@ -28,6 +28,10 @@ package team.cascade.spout.messagechanger;
 
 //~--- non-JDK imports --------------------------------------------------------
 
+import org.spout.api.Engine;
+import org.spout.api.Spout;
+import org.spout.api.command.CommandRegistrationsFactory;
+import org.spout.api.plugin.CommonPlugin;
 import team.cascade.spout.messagechanger.commands.COMMANDS;
 import team.cascade.spout.messagechanger.commands.EnumMessageChanger;
 import team.cascade.spout.messagechanger.config.CONFIG;
@@ -43,16 +47,14 @@ import team.cascade.spout.messagechanger.helper.commands.EnumSimpleInjector;
 import team.cascade.spout.messagechanger.helper.config.CommentConfiguration;
 import team.cascade.spout.messagechanger.helper.config.Configuration;
 import team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave;
-import team.cascade.spout.messagechanger.messages.SpoutMessages;
+import team.cascade.spout.messagechanger.spout.SpoutMessagesHandler;
+import team.cascade.spout.messagechanger.vanilla.VanillaMessagesHandler;
 import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
-import org.spout.api.Engine;
-import org.spout.api.Spout;
-import org.spout.api.command.CommandRegistrationsFactory;
-import org.spout.api.plugin.CommonPlugin;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 import static team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave.commandsInit;
 
@@ -77,7 +79,9 @@ public class MessageChanger extends CommonPlugin {
      */
     private boolean ignoreKick = false;
 
-    SpoutMessages spoutMessages;
+    SpoutMessagesHandler spoutMessagesHandler;
+
+    VanillaMessagesHandler vanillaMessagesHandler;
 
     private HashMap<GAME_TYPES,HashSet<TYPES>> types = new HashMap<GAME_TYPES, HashSet<TYPES>>();
 
@@ -158,7 +162,7 @@ public class MessageChanger extends CommonPlugin {
         /**
          * Now let's init the Spout messages
          */
-        spoutMessages = new SpoutMessages(this);
+        spoutMessagesHandler = new SpoutMessagesHandler(this);
 
         /**
          * Let's init the Plugin Listener to handle the rest of the messages
@@ -218,6 +222,9 @@ public class MessageChanger extends CommonPlugin {
             } else {
                 Logger.config("There was a problem saving the commands.");
             }
+            if (types.containsKey(GAME_TYPES.VANILLA)){
+                vanillaMessagesHandler.save();
+            }
             // todo adapt to MessageChangerHandler
             /*if (MessagesLoadAndSave.reload()){
                 Logger.debug("Messages saved");
@@ -237,7 +244,10 @@ public class MessageChanger extends CommonPlugin {
         configuration.reloadConfig();
         configuration.loadConfig();
         CommandsLoadAndSave.reload();
-        spoutMessages.reload();
+        spoutMessagesHandler.reload();
+        if (types.containsKey(GAME_TYPES.VANILLA)){
+            vanillaMessagesHandler.reload();
+        }
         // todo adapt to MessageChangerHandler
         // MessagesLoadAndSave.reload();
     }
@@ -320,5 +330,20 @@ public class MessageChanger extends CommonPlugin {
         ignoreKick = false;
     }
 
+    public void setVanillaMessagesHandler(VanillaMessagesHandler vaMeInst){
+        vanillaMessagesHandler = vaMeInst;
+    }
+
+    public VanillaMessagesHandler getVanillaMessagesHandler(){
+        return vanillaMessagesHandler;
+    }
+
+    public SpoutMessagesHandler getSpoutMessagesHandler(){
+        return spoutMessagesHandler;
+    }
+
+    public Set<GAME_TYPES> getGAME_TYPES(){
+        return types.keySet();
+    }
 
 }
