@@ -85,7 +85,7 @@ public class Configuration extends CommentConfiguration {
      * use {@link CommentConfiguration#alterConfigCurrent(String conCurr)} for this
      */
 
-    String configCurrent = "1.0";
+    String configCurrent = CONFIG.CONFIG_VERSION.getString();
 
 
     /**

@@ -58,17 +58,20 @@ import java.util.regex.Pattern;
  */
 
 public enum CONFIG {
-
     // you should really keep the following lines ==>>>
+    CONFIG_VERSION("Version of the configuration","1.1"),
     DEBUG_LOG_ENABLED("Enable more logging.. could be messy!", true),
     DEBUG_LOG_TO_FILE("When debug logging, log into separate file", true),
     CHECK_FOR_UPDATE("Do you want to check if there is a new version available?", true),
     CONFIG_AUTO_UPDATE("Should the configuration automatically be updated \n#   when there is a new version available?", true),
     CONFIG_AUTO_SAVE("Should we automatically save any changes issued by commands to disc?", true),
     CONFIG_LOG_ENABLED("Enable logging of the config.. this could be lot's of info", true),
-    CONFIG_END("End of Default Configuration"),
-    PLUGIN_START("Begin of Plugin Configuration\n");
+    CONFIG_END("End of Default Configuration\n"),
+    CONFIG_END_LINE("####################################################################\n"),
+    PLUGIN_START("Begin of Plugin Configuration\n"),
+
     // <<<====== from here on onwards it is all yours don't forget tor replace the ; on top with a ,
+    USE_DISPLAYNAME_FOR_BROADCAST("Use the displayname for broadcasts, can cause issue with special characters",false);
 
 
 

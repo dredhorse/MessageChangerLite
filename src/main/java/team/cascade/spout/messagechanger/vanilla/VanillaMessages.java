@@ -27,18 +27,20 @@
 package team.cascade.spout.messagechanger.vanilla;
 
 import org.spout.api.exception.ConfigurationException;
-import org.spout.api.plugin.PluginDescriptionFile;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.enums.VANILLA_DEATH_EVENTS;
 import team.cascade.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.helper.Messenger;
+import team.cascade.spout.messagechanger.helper.file.MessagesHeader;
+import team.cascade.spout.messagechanger.helper.file.UnicodeUtil;
 
-import java.io.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 
 /**
  * Handels loading and saving of the Vanilla messages
@@ -53,12 +55,6 @@ public class VanillaMessages {
     * Default Death Message
     */
     private static final String DEFAULT_DEATH_MESSAGE = "%n died from unknown causes";
-
-
-    /**
-     * Configuration File Name
-     */
-    private static String VANILLA_DEATHMESSAGES = "vanilla_deathmessages.yml";
 
     /**
      * Configuration File
@@ -88,154 +84,228 @@ public class VanillaMessages {
 
     // Helper Variables
 
-    /**
-     * Array which holds default fall messages
-     */
+/*
+    */
+/**
+ * Array which holds default fall messages
+ *//*
+
     private String[] defaultFallMessages;
-    /**
-     * Array which holds default drowning messages
-     */
+    */
+/**
+ * Array which holds default drowning messages
+ *//*
+
     private String[] defaultDrowningMessages;
-    /**
-     * Array which holds default fire messages
-     */
+    */
+/**
+ * Array which holds default fire messages
+ *//*
+
     private String[] defaultFireMessages;
-    /**
-     * Array which holds default fire_tick messages
-     */
+    */
+/**
+ * Array which holds default fire_tick messages
+ *//*
+
     private String[] defaultFireTickMessages;
-    /**
-     * Array which holds default Lava Messages
-     */
+    */
+/**
+ * Array which holds default Lava Messages
+ *//*
+
     private String[] defaultLavaMessages;
-    /**
-     * Array which holds default creeper messages
-     */
+    */
+/**
+ * Array which holds default creeper messages
+ *//*
+
     private String[] defaultCreeperMessages;
-    /**
-     * Array which holds default skeleton messages
-     */
+    */
+/**
+ * Array which holds default skeleton messages
+ *//*
+
     private String[] defaultSkeletonMessages;
-    /**
-     * Array which holds default spider messages
-     */
+    */
+/**
+ * Array which holds default spider messages
+ *//*
+
     private String[] defaultSpiderMessages;
-    /**
-     * Array which holds default zombie messages
-     */
+    */
+/**
+ * Array which holds default zombie messages
+ *//*
+
     private String[] defaultZombieMessages;
-    /**
-     * Array which holds default PVP messages
-     */
+    */
+/**
+ * Array which holds default PVP messages
+ *//*
+
     private String[] defaultPVPMessages;
-    /**
-     * Array which holds default PVP-Fist messages
-     */
+    */
+/**
+ * Array which holds default PVP-Fist messages
+ *//*
+
     private String[] defaultPVPFistMessages;
-    /**
-     * Array which holds default block_explosion messages
-     */
+    */
+/**
+ * Array which holds default block_explosion messages
+ *//*
+
     private String[] defaultBlockExplosionMessages;
-    /**
-     * Array which holds default contact messages
-     */
+    */
+/**
+ * Array which holds default contact messages
+ *//*
+
     private String[] defaultContactMessages;
-    /**
-     * Array which holds default ghast messages
-     */
+    */
+/**
+ * Array which holds default ghast messages
+ *//*
+
     private String[] defaultGhastMessages;
-    /**
-     * Array which holds default slime messages
-     */
+    */
+/**
+ * Array which holds default slime messages
+ *//*
+
     private String[] defaultSlimeMessages;
-    /**
-     * Array which holds default suffocation messages
-     */
+    */
+/**
+ * Array which holds default suffocation messages
+ *//*
+
     private String[] defaultSuffocationMessages;
-    /**
-     * Array which holds default pigzombie messages
-     */
+    */
+/**
+ * Array which holds default pigzombie messages
+ *//*
+
     private String[] defaultPigzombieMessages;
-    /**
-     * Array which holds default void messages
-     */
+    */
+/**
+ * Array which holds default void messages
+ *//*
+
     private String[] defaultVoidMessages;
-    /**
-     * Array which holds default wolf messages
-     */
+    */
+/**
+ * Array which holds default wolf messages
+ *//*
+
     private String[] defaultWolfMessages;
-    /**
-     * Array which holds default Lightning messages
-     */
+    */
+/**
+ * Array which holds default Lightning messages
+ *//*
+
     private String[] defaultLightningMessages;
-    /**
-     * Array which holds default suicide messages
-     */
+    */
+/**
+ * Array which holds default suicide messages
+ *//*
+
     private String[] defaultSuicideMessages;
-    /**
-     * Array which holds default unknown messages
-     */
+    */
+/**
+ * Array which holds default unknown messages
+ *//*
+
     private String[] defaultUnknownMessages;
-    /**
-     * Array which holds default starvation messages
-     */
+    */
+/**
+ * Array which holds default starvation messages
+ *//*
+
     private String[] defaultStarvationMessages;
-    /**
-     * Array which holds default enderman messages
-     */
+    */
+/**
+ * Array which holds default enderman messages
+ *//*
+
     private String[] defaultEndermanMessages;
-    /**
-     * Array which holds default CaveSpider messages
-     */
+    */
+/**
+ * Array which holds default CaveSpider messages
+ *//*
+
     private String[] defaultCaveSpiderMessages;
-    /**
-     * Array which holds default silverfish messages
-     */
+    */
+/**
+ * Array which holds default silverfish messages
+ *//*
+
     private String[] defaultSilverfishMessages;
-    /**
-     * Array which holds default PVP Tamed messages
-     */
+    */
+/**
+ * Array which holds default PVP Tamed messages
+ *//*
+
     private String[] defaultPVPTamedMessages;
-    /**
-     * Array which holds default entity_explosion messages
-     */
+    */
+/**
+ * Array which holds default entity_explosion messages
+ *//*
+
     private String[] defaultEntityExplosionMessages;
-    /**
-     * Array which holds default Giant messages
-     */
+    */
+/**
+ * Array which holds default Giant messages
+ *//*
+
     private String[] defaultGiantMessages;
-    /**
-     * Array which holds default Blaze messages
-     */
+    */
+/**
+ * Array which holds default Blaze messages
+ *//*
+
     private String[] defaultBlazeMessages;
-    /**
-     * Array which holds default Enderdragon messages
-     */
+    */
+/**
+ * Array which holds default Enderdragon messages
+ *//*
+
     private String[] defaultEnderDragonMessages;
-    /**
-     * Array which holds default MagmaCube messages
-     */
+    */
+/**
+ * Array which holds default MagmaCube messages
+ *//*
+
     private String[] defaultMagmaCubeMessages;
 
-    /**
-     * Array which holds default Dispenser messages
-     */
+    */
+/**
+ * Array which holds default Dispenser messages
+ *//*
+
     private String[] defaultDispenserMessages;
 
-    /**
-     * Array which holds default Posion messages
-     */
+    */
+/**
+ * Array which holds default Posion messages
+ *//*
+
     private String[] defaultPosionMessages;
 
-    /**
-     * Array which holds default Magic messages
-     */
+    */
+/**
+ * Array which holds default Magic messages
+ *//*
+
     private String[] defaultMagicMessages;
 
-    /**
-     * Array which holds default IronGolem messages
-     */
+    */
+/**
+ * Array which holds default IronGolem messages
+ *//*
+
     private String[] defaultIronGolemMessages;
+*/
 
 
     // ToDo add new variables on top
@@ -266,7 +336,13 @@ public class VanillaMessages {
      * &e Yellow
      * &f White
      */
-    private static HashMap<VANILLA_DEATH_EVENTS, List<String>> deathMessages = new HashMap<VANILLA_DEATH_EVENTS, List<String>>();
+    private static HashMap<VANILLA_DEATH_EVENTS, Set<String>> vanilla_death_events = new HashMap<VANILLA_DEATH_EVENTS, Set<String>>();
+
+    /**
+     * Temporary List to hold the messages
+     */
+
+    private Set<String> deathMessages;
 
     private MessageChanger main;
 
@@ -317,8 +393,8 @@ public class VanillaMessages {
         // Default Death Messages
 
         /** Creating the default fall messages*/
-        defaultFallMessages = new String[]{
-                "&5%n&7 tripped and fell...down a cliff.",
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList("&5%n&7 tripped and fell...down a cliff.",
                 "&5%n&7 leapt before looking.",
                 "&5%n&7 forgot to bring a parachute!",
                 "&5%n&7 learned to fly...briefly...",
@@ -331,12 +407,11 @@ public class VanillaMessages {
                 "&5%n&7 face planted into the ground!",
                 "&5%n&7 yells, 'Geronimo!'....*thud*",
                 "What goes up must come down, right &5%n&7?",
-                "&5%n&7 must have had their shoelaces tied together."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.FALL, Arrays.asList(defaultFallMessages));
+                "&5%n&7 must have had their shoelaces tied together."));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.FALL, deathMessages);
         /** Creating the default drowning messages*/
-        defaultDrowningMessages = new String[]{
-                "&5%n&7 drowned",
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll( Arrays.asList("&5%n&7 drowned",
                 "&5%n&7 become one with the ocean!",
                 "&5%n&7 sunk to the bottom of the ocean.",
                 "&5%n&7 went diving but forgot the diving gear!",
@@ -346,12 +421,11 @@ public class VanillaMessages {
                 "&5%n&7 is swimming with the fishes!",
                 "&5%n&7 had a surfing accident!",
                 "&5%n&7 tried to walk on water.",
-                "&5%n&7 set a record for holding breath under water."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.DROWNING, Arrays.asList(defaultDrowningMessages));
+                "&5%n&7 set a record for holding breath under water."));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.DROWNING,deathMessages);
         /** Creating the default fire messages*/
-        defaultFireMessages = new String[]{
-                "&5%n&7 burned to death.",
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList("&5%n&7 burned to death.",
                 "&5%n&7 was set on fire!",
                 "&5%n&7 is toast! Literally...",
                 "&5%n&7 just got barbequed!",
@@ -359,12 +433,11 @@ public class VanillaMessages {
                 "&5%n&7 is extra-crispy!",
                 "&5%n&7 spontaneously combusted!",
                 "&5%n&7 put his hands in the toaster!",
-                "&5%n&7 just got burned!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.FIRE, Arrays.asList(defaultFireMessages));
+                "&5%n&7 just got burned!"));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.FIRE, deathMessages);
         /** Creating the default fire_tick messages*/
-        defaultFireTickMessages = new String[]{
-                "&5%n&7 burned to death.",
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList("&5%n&7 burned to death.",
                 "&5%n&7 was set on fire!",
                 "&5%n&7 is toast! Literally...",
                 "&5%n&7 just got barbequed!",
@@ -372,11 +445,11 @@ public class VanillaMessages {
                 "%n&7 likes it extra-crispy!",
                 "&5%n&7 spontaneously combusted!",
                 "&5%n&7 put his hands in the toaster!",
-                "&5%n&7 just got burned!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.FIRE_TICK, Arrays.asList(defaultFireTickMessages));
+                "&5%n&7 just got burned!"));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.FIRE_TICK, deathMessages);
         /** Creating the default lava messages*/
-        defaultLavaMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 became obsidian.",
                 "&5%n&7 was caught in an active volcanic eruption!",
                 "&5%n&7 tried to swim in a pool of lava.",
@@ -386,10 +459,11 @@ public class VanillaMessages {
                 "&5%n&7 found out how to encase himself in carbonite.",
                 "&5%n&7! the floor is lava! The floor is lava!"
 
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.LAVA, Arrays.asList(defaultLavaMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.LAVA, deathMessages);
         /** Creating the default creeper messages*/
-        defaultCreeperMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 was creeper bombed!",
                 "A creeper exploded on &5%n&7!",
                 "A creeper snuck up on &5%n&7!",
@@ -397,38 +471,42 @@ public class VanillaMessages {
                 "&5%n&7 just got the KiSSssss of death!",
                 "&5%n&7 tried to hug a creeper!",
                 "&5%n&7 is frowning like a creeper now!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.CREEPER, Arrays.asList(defaultCreeperMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.CREEPER, deathMessages);
         /** Creating the default skeleton messages*/
-        defaultSkeletonMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "A skeleton shot &5%n&7 to death!",
                 "&5%n&7 was on the wrong end of the bow. ",
                 "&5%n&7 had a skeleton in the closet...",
                 "&5%n&7! strafe the arrows! Strafe the arrows!",
                 "&7A skeleton just got a head shot on &5%n&7!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.SKELETON, Arrays.asList(defaultSkeletonMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SKELETON, deathMessages);
         /** Creating the default spider messages*/
-        defaultSpiderMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 is all webbed up.",
                 "&5%n&7 got trampled by arachnids!",
                 "&5%n&7 got jumped by a spidah!",
                 "Spiders just climbed all over &5%n&7!",
                 "&5%n&7 forgot spiders could climb!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.SPIDER, Arrays.asList(defaultSpiderMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SPIDER, deathMessages);
         /** Creating the default zombie messages*/
-        defaultZombieMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 was punched to death by zombies!",
                 "&5%n&7 was bitten by a zombie!",
                 "&5%n&7 fell to the hunger of the horde!",
                 "&5%n&7 Hasn't played enough L4D2!",
                 "&5%n&7 couldn't run faster than the zombie!",
                 "&5%n&7 should have invested in a shotgun."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.ZOMBIE, Arrays.asList(defaultZombieMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.ZOMBIE, deathMessages);
         /** Creating the default pvp messages*/
-        defaultPVPMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&f%a&7 killed &5%n&7 using a(n) &3%i&7!",
                 "&f%a&7 slays &5%n&7 with a &3%i&7!",
                 "&f%a&7 hunts &5%n&7 down with a &3%i&7!",
@@ -460,16 +538,18 @@ public class VanillaMessages {
                 "&5%n&7 was fragged by %a!",
                 "&5%n&7 needs more practice and was killed by %a!",
                 "&5%n&7 was beheaded by %a!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.PVP, Arrays.asList(defaultPVPMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.PVP, deathMessages);
         /** Creating the default pvp-fists messages*/
-        defaultPVPFistMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&f%a&7 pummeled &5%n&7 to death",
                 "&f%a&7 crusted &5%n&7 with their bare hands"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.PVP_FISTS, Arrays.asList(defaultPVPFistMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.PVP_FISTS, deathMessages);
         /** Creating the default block_explosion messages*/
-        defaultBlockExplosionMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "Careful &5%n&7, TNT goes boom!",
                 "&5%n&7 was last seen playing with dynamite.",
                 "&5%n&7 exploded into a million pieces!",
@@ -478,15 +558,17 @@ public class VanillaMessages {
                 "&5%n&7 attempted to exterminate gophers with dynamite!",
                 "&5%n&7 played land mine hop scotch!",
                 "&5%n&7 stuck his head in a microwave!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.BLOCK_EXPLOSION, Arrays.asList(defaultBlockExplosionMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.BLOCK_EXPLOSION, deathMessages);
         /** Creating the default entity_explosion messages*/
-        defaultEntityExplosionMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "Well... something exploded on &5%n&7!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.ENTITY_EXPLOSION, Arrays.asList(defaultEntityExplosionMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.ENTITY_EXPLOSION, deathMessages);
         /** Creating the default contact messages*/
-        defaultContactMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 got a little too close to a cactus!",
                 "&5%n&7 tried to hug a cactus!",
                 "&5%n&7 needs to be more careful around cactuses!",
@@ -496,66 +578,77 @@ public class VanillaMessages {
                 "&5%n&7 poked himself with a cactus...and died.",
                 "&5%n&7 ran into some pointy green stuff that wasn't grass.",
                 "&5%n&7 was distracted by a tumble weed and died by cactus."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.CONTACT, Arrays.asList(defaultContactMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.CONTACT, deathMessages);
         /** Creating the default ghast messages*/
-        defaultGhastMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 was blown to bits by a ghast.",
                 "Those aren't babies you hear, &5%n&7!",
                 "&5%n&7 was killed by a ghostly hadouken!",
                 "&5%n&7 just got exploded by a fireball!",
                 "&5%n&7 got too comfy in the Nether!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.GHAST, Arrays.asList(defaultGhastMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.GHAST, deathMessages);
         /** Creating the default slime messages*/
-        defaultSlimeMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "A slime found &5%n&7. The slime won.",
                 "&5%n&7 wanted to play with slime. The slime wasn't happy.",
                 "&5%n&7 was killed for saying, \"Eeeeehhhh, he slimed me!\"",
                 "&5%n&7 crossed the streams."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.SLIME, Arrays.asList(defaultSlimeMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SLIME, deathMessages);
         /** Creating the default suffocation messages*/
-        defaultSuffocationMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 suffocated.",
                 "&5%n&7 was looking up while digging!",
                 "&5%n&7 choked to death on earth!",
                 "&5%n&7 choked on a ham sandwich"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.SUFFOCATION, Arrays.asList(defaultSuffocationMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SUFFOCATION, deathMessages);
         /** Creating the default pigzombie messages*/
-        defaultPigzombieMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 lost a fight against a zombie pig.",
                 "&5%n&7, touching a zombie pig is never a good idea.",
                 "&5%n&7, looked at a pigzombie the wrong way."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.PIG_ZOMBIE, Arrays.asList(defaultPigzombieMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.PIG_ZOMBIE, deathMessages);
         /** Creating the default void messages*/
-        defaultVoidMessages = new String[]{
-                "&5%n&7 died in The Void."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.VOID, Arrays.asList(defaultVoidMessages));
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
+                "&5%n&7 died in The Void.",
+                "&5%n&7 fell into nothingness",
+                "Look, &5%n&7, no floor"
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.VOID, deathMessages);
         /** Creating the default Wolfs messages*/
-        defaultWolfMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 became a wolf's lunch.",
                 "&5%n&7 couldn't howl with the wolfs."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.WOLF, Arrays.asList(defaultWolfMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.WOLF, deathMessages);
         /** Creating the default lightning messages*/
-        defaultLightningMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 was struck down by Zeus' bolt.",
                 "&5%n&7 was electrecuted.",
                 "&5%n&7 figured out that it wasn't a pig's nose in the wall."
-        };
+        ));
         /** Creating the default lightning messages*/
-        deathMessages.put(VANILLA_DEATH_EVENTS.LIGHTNING, Arrays.asList(defaultLightningMessages));
-        defaultSuicideMessages = new String[]{
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.LIGHTNING, deathMessages);
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 took matters into his own hands.",
                 "&5%n&7 isn't causing NPE''s anymore."
-        };
+        ));
         /** Creating the default suicide messages*/
-        deathMessages.put(VANILLA_DEATH_EVENTS.SUICIDE, Arrays.asList(defaultSuicideMessages));
-        defaultUnknownMessages = new String[]{
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SUICIDE, deathMessages);
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 died from unknown causes.",
                 "&5%n&7 imploded into nothingness",
                 "&5%n&7 was vaporized",
@@ -563,72 +656,80 @@ public class VanillaMessages {
                 "&5%n&7 was killed by Chuck Norris",
                 "&5%n&7 was running with scissors...now he runs no more",
                 "&5%n&7 was hit by a falling piano",
-                "&5%n&7 was assasinated by a shuriken headshot from the shadow",
+                "&5%n&7 was assassinated by a shuriken headshot from the shadow",
                 "&5%n&7 was barrel rolling...and died",
                 "&5%n&7 was killed by Cthulhu",
                 "&5%n&7 forgot to wear his spacesuit",
                 "&5%n&7 choked on a ham sandwich",
                 "&5%n&7 died at the hands of ninja assassins"
-        };
+        ));
         /** Creating the default unknown messages*/
-        deathMessages.put(VANILLA_DEATH_EVENTS.UNKNOWN, Arrays.asList(defaultUnknownMessages));
-        defaultStarvationMessages = new String[]{
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.UNKNOWN, deathMessages);
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 did forget to eat his lunch.",
                 "&5%n&7 didn't find the next Burger.",
                 "&5%n&7 became a skeleton.",
                 "&5%n&7 TALKS ALL CAPITALS NOW.",
                 "&5%n&7 should have packed a lunch."
-        };
+        ));
         /** Creating the default starvation messages*/
-        deathMessages.put(VANILLA_DEATH_EVENTS.STARVATION, Arrays.asList(defaultStarvationMessages));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.STARVATION, deathMessages);
         /** Creating the default enderman messages*/
-        defaultEndermanMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 looked at a enderman the wrong way.",
                 "An enderman pulled &5%n&7 leg..... off!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.ENDER_MAN, Arrays.asList(defaultEndermanMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.ENDER_MAN, deathMessages);
         /** Creating the default cavespider messages*/
-        defaultCaveSpiderMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 will never sing itsybitsyspider again",
                 "&5%n&7 is all webbed up.",
                 "&5%n&7 was trampled by arachnids!",
                 "&5%n&7 was jumped by a spidah!",
                 "Spiders just climbed all over &5%n&7!",
                 "&5%n&7 forgot spiders could climb!"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.CAVE_SPIDER, Arrays.asList(defaultCaveSpiderMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.CAVE_SPIDER, deathMessages);
         /** Creating the default silverfish messages*/
-        defaultSilverfishMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 was killed by a silverfish!",
                 "&5%n&7 found something hidden below a rock",
                 "&5%n&7 You can't stuff that many fish into your mouth!",
                 "&5%n&7 activated a silverfish trap",
                 "&54%n''s&7 last words  'Oh god they''re coming out of the walls!'"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.SILVERFISH, Arrays.asList(defaultSilverfishMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SILVERFISH, deathMessages);
         /** Creating the default PVP tamed messages*/
-        defaultPVPTamedMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 was mauled by &f%a's&7 &3%i",
                 "&5%n''s&7 hand was bitten by &f%a's&7 &3%i"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.PVP_TAMED, Arrays.asList(defaultPVPTamedMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.PVP_TAMED, deathMessages);
         /** Creating the default Giant messages*/
-        defaultGiantMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 was stomped by a giant!",
                 "&5%n&7 was flattened by a giant!",
                 "&5%n&7 shouldn't have climbed the bean stalk."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.GIANT, Arrays.asList(defaultGiantMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.GIANT,deathMessages);
         /** Creating the default Blaze messages*/
-        defaultBlazeMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 was set on fire at a blaze, well.. by a blaze!",
                 "&5%n&7 was airbombed!",
                 "&5%n&7, not everything on fire is a player!",
                 "&5%n&7 nope, that wasn't a rocket."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.BLAZE, Arrays.asList(defaultBlazeMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.BLAZE, deathMessages);
         /** Creating the default Enderdragon messages*/
-        defaultEnderDragonMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 died at the end... IN the end.",
                 "&5%n&7 looking up would have helped.",
                 "Well, Anne McCaffrey didn't talk about that kind of Dragon, right &5%n&7?",
@@ -636,55 +737,59 @@ public class VanillaMessages {
                 "&5%n&7 took the easy way out of \"The End\".",
                 "&5%n&7 will never get to read that end poem!",
                 "&5%n&7 made a generous donation to the Ender Dragon's hoard."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.ENDER_DRAGON, Arrays.asList(defaultEnderDragonMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.ENDER_DRAGON,deathMessages);
         /** Creating the default MagmaCube messages*/
-        defaultMagmaCubeMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 didn't expect this kind of slinky!",
                 "&5%n&7 got eaten by a cube.",
-                "&5%n&7 got coombad by a cube."
-
-
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.MAGMA_CUBE, Arrays.asList(defaultMagmaCubeMessages));
+                "&5%n&7 got coombad by a cube.",
+                "Well, technically &5%n&7, it was a slime"
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.MAGMA_CUBE, deathMessages);
         /** Creating the default Dispenser Kill messages*/
-        defaultDispenserMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 got shot in the back by a dispenser!",
                 "Again the wrong weight Indi? well. &5%n&7",
                 "&5%n&7 thinks he is Indiana Jones.",
                 "&5%n&7 felt for the booby trap."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.DISPENSER, Arrays.asList(defaultDispenserMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.DISPENSER, deathMessages);
 
         /** Creating the default Posion Kill messages*/
-        defaultPosionMessages = new String[]{
-                "&5%n&7 swalloed the wrong stuff!",
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
+                "&5%n&7 swallowed the wrong stuff!",
                 "There was a reason the bottle had a skull on it, &5%n&7",
                 "&5%n&7 should have asked Flavia de Luce before taking that.",
                 "&5%n&7 shouldn't drink tea with the Brewsters.",
                 "&5%n&7 is now part of the locks of Panama.",
                 "&5%n&7 said: aarrgghhhh."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.POISON, Arrays.asList(defaultPosionMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.POISON, deathMessages);
 
         /** Creating the default Magic Kill messages*/
-        defaultMagicMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 got killed by a Harry Potter lookalike!",
                 "It was: Klaatu barada nikto. &5%n&7",
                 "&5%n&7 felt the force.",
                 "&5%n&7 thinks that there should be more to magic than just shizzle",
                 "&5%n&7 should ask Rincewind the next time"
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.MAGIC, Arrays.asList(defaultMagicMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.MAGIC, deathMessages);
 
         /** Creating the default IronGolem Kill messages*/
-        defaultIronGolemMessages = new String[]{
+        deathMessages = new HashSet<String>();
+        deathMessages.addAll(Arrays.asList(
                 "&5%n&7 got killed by an iron fist!",
                 "A thing born from a pumpkin killed &5%n&7",
                 "&5%n&7 thought hitting a villager was a good idea.",
                 "&5%n&7 shouldn't underestimate the local police force."
-        };
-        deathMessages.put(VANILLA_DEATH_EVENTS.IRON_GOLEM, Arrays.asList(defaultIronGolemMessages));
+        ));
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.IRON_GOLEM, deathMessages);
 
         // ToDo add new messages on top
     }
@@ -699,68 +804,66 @@ public class VanillaMessages {
         // DeathTp Messages
 
         Logger.config("Loading Vanilla death messages...");
-        deathMessages.put(VANILLA_DEATH_EVENTS.FALL, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.FALL.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.DROWNING, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.DROWNING.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.FIRE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.FIRE.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.FIRE_TICK, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.FIRE_TICK.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.LAVA, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.LAVA.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.CREEPER, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.CREEPER.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.SKELETON, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SKELETON.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.SPIDER, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SPIDER.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.ZOMBIE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.ZOMBIE.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.PVP, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.PVP.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.PVP_FISTS, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.PVP_FISTS.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.BLOCK_EXPLOSION, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.BLOCK_EXPLOSION.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.CONTACT, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.CONTACT.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.GHAST, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.GHAST.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.SLIME, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SLIME.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.SUFFOCATION, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SUFFOCATION.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.PIG_ZOMBIE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.PIG_ZOMBIE.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.VOID, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.VOID.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.WOLF, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.WOLF.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.LIGHTNING, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.LIGHTNING.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.SUICIDE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SUICIDE.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.UNKNOWN, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.UNKNOWN.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.STARVATION, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.STARVATION.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.ENDER_MAN, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.ENDER_MAN.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.CAVE_SPIDER, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.CAVE_SPIDER.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.SILVERFISH, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SILVERFISH.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.PVP_TAMED, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.PVP_TAMED.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.GIANT, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.GIANT.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.BLAZE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.BLAZE.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.ENDER_DRAGON, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.ENDER_DRAGON.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.MAGMA_CUBE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.MAGMA_CUBE.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.DISPENSER, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.DISPENSER.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.POISON, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.POISON.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.MAGIC, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.MAGIC.toString()).getList());
-        deathMessages.put(VANILLA_DEATH_EVENTS.IRON_GOLEM, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.IRON_GOLEM.toString()).getList());
 
-        //ToDo add new deathMessages to the top
+        for (String eventString : vanillaDeathMessagesConfig.getNode("Messages").getKeys(false)){
+            VANILLA_DEATH_EVENTS event = VANILLA_DEATH_EVENTS.valueOf(eventString.toLowerCase());
+            vanilla_death_events.put(event, new HashSet<String>((List<String>) vanillaDeathMessagesConfig.getNode("Messages."+eventString).getList()));
+        }
+
+
+        /*
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.FALL, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.FALL.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.DROWNING, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.DROWNING.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.FIRE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.FIRE.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.FIRE_TICK, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.FIRE_TICK.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.LAVA, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.LAVA.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.CREEPER, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.CREEPER.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SKELETON, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SKELETON.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SPIDER, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SPIDER.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.ZOMBIE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.ZOMBIE.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.PVP, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.PVP.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.PVP_FISTS, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.PVP_FISTS.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.BLOCK_EXPLOSION, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.BLOCK_EXPLOSION.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.CONTACT, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.CONTACT.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.GHAST, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.GHAST.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SLIME, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SLIME.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SUFFOCATION, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SUFFOCATION.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.PIG_ZOMBIE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.PIG_ZOMBIE.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.VOID, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.VOID.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.WOLF, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.WOLF.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.LIGHTNING, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.LIGHTNING.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SUICIDE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SUICIDE.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.UNKNOWN, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.UNKNOWN.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.STARVATION, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.STARVATION.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.ENDER_MAN, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.ENDER_MAN.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.CAVE_SPIDER, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.CAVE_SPIDER.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.SILVERFISH, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.SILVERFISH.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.PVP_TAMED, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.PVP_TAMED.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.GIANT, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.GIANT.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.BLAZE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.BLAZE.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.ENDER_DRAGON, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.ENDER_DRAGON.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.MAGMA_CUBE, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.MAGMA_CUBE.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.DISPENSER, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.DISPENSER.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.POISON, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.POISON.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.MAGIC, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.MAGIC.toString()).getList());
+        vanilla_death_events.put(VANILLA_DEATH_EVENTS.IRON_GOLEM, (List<String>) (List<?>) vanillaDeathMessagesConfig.getNode(VANILLA_DEATH_EVENTS.IRON_GOLEM.toString()).getList());
+*/
+        //ToDo add new vanilla_death_events to the top
         for (VANILLA_DEATH_EVENTS deathEventType : VANILLA_DEATH_EVENTS.VALUES) {
             Logger.debug("deathEventType", deathEventType);
-            Logger.config(deathMessages.get(deathEventType).size() + " messages loaded for " + deathEventType);
+            try {
+                Logger.config(vanilla_death_events.get(deathEventType).size() + " messages loaded for " + deathEventType);
+            } catch (NullPointerException e){
+                Logger.config("There where no events for: " + deathEventType);
+            }
         }
         // Debugging
 
-        Logger.debug("deathMessages", deathMessages);
+        Logger.debug("vanilla_death_events", vanilla_death_events);
 
     }
 
     // And than we write it....
-
-
-    /**
-     * Method to write the custom vanillaDeathMessagesConfig variables into the vanillaDeathMessagesConfig file
-     *
-     * @param stream will be handed over by  writeConfig
-     */
-
-    private void writeCustomDeathMessages(PrintWriter stream) {
-        //Start here writing your vanillaDeathMessagesConfig variables into the vanillaDeathMessagesConfig file inkl. all comments
-
-
-
-    }
 
 
     // *******************************************************************************************************
@@ -771,29 +874,29 @@ public class VanillaMessages {
     // The plugin specific getters start here!
 
 
-    public static String getDeathMessage(DeathDetailDTP deathDetail) {
+    public static String getDeathMessage(VanillaDeathDetail vanillaDeathDetail) {
         String message;
-        List<String> messages = deathMessages.get(deathDetail.getCauseOfDeath());
+        List<String> messages = new ArrayList<String>(vanilla_death_events.get(vanillaDeathDetail.getCauseOfDeath()));
 
         if (messages == null) {
             message = DEFAULT_DEATH_MESSAGE;
         } else {
-            if (config.isUseDisplayNameforBroadcasts()) {
-                message = messages.get(random.nextInt(messages.size())).replace("%n", deathDetail.getPlayer().getDisplayName());
+            if (CONFIG.USE_DISPLAYNAME_FOR_BROADCAST.getBoolean()) {
+                message = messages.get(random.nextInt(messages.size())).replace("%n", vanillaDeathDetail.getPlayer().getDisplayName());
             } else {
-                message = messages.get(random.nextInt(messages.size())).replace("%n", deathDetail.getPlayer().getName());
+                message = messages.get(random.nextInt(messages.size())).replace("%n", vanillaDeathDetail.getPlayer().getName());
             }
         }
 
-        if (deathDetail.isPVPDeath()) {
-            if (config.isUseDisplayNameforBroadcasts()) {
-                message = message.replace("%i", deathDetail.getMurderWeapon()).replace("%a", deathDetail.getKiller().getDisplayName());
+        if (vanillaDeathDetail.isPVPDeath()) {
+            if (CONFIG.USE_DISPLAYNAME_FOR_BROADCAST.getBoolean()) {
+                message = message.replace("%i", vanillaDeathDetail.getMurderWeapon()).replace("%a", vanillaDeathDetail.getKiller().getDisplayName());
             } else {
-                message = message.replace("%i", deathDetail.getMurderWeapon()).replace("%a", deathDetail.getKiller().getName());
+                message = message.replace("%i", vanillaDeathDetail.getMurderWeapon()).replace("%a", vanillaDeathDetail.getKiller().getName());
             }
         }
 
-        return UtilsDTP.convertColorCodes(message);
+        return Messenger.convertColorCodes(message);
     }
 
 
@@ -817,18 +920,19 @@ public class VanillaMessages {
 
     /**
      * Method to setup the configuration.
-     * If the configuration file doesn't exist it will be created by {@link #defaultDeathMessages()}
+     * If the configuration file doesn't exist it will be created
      * After that the configuration is loaded {@link #loadDeathMessages()}
      * We than check if an configuration update is necessary {@link #updateNecessary()}
      * and if {@link team.cascade.spout.messagechanger.config.CONFIG#CONFIG_AUTO_UPDATE} is true we update the configuration {@link #updateDeathMessages()}
      *
-     * @see #defaultDeathMessages()
+
      * @see #loadDeathMessages()
      * @see #updateNecessary()
      * @see #updateDeathMessages()
      */
 
     public void init() {
+        success = true;
         setupCustomDefaultVariables();
         // Checking if vanillaDeathMessagesConfig file exists, if not create it
         File tempFile = (new File(messagesPath,VANILLA_DEATHMESSAGES_FILENAME));
@@ -836,12 +940,12 @@ public class VanillaMessages {
 
             if (!writeDeathMessages()){
                 success = false;
-                Logger.config("There was an issue writing the spoutmessages file, using Internal defaults");
+                Logger.config("There was an issue writing the Vanilla Death Messages file, using Internal defaults");
             }
         }
         if (success){
             if (!loadDeathMessages()){
-                Logger.config("There was an issue reading the spoutmessages file, using Internal defaults");
+                Logger.config("There was an issue reading the Vanilla Death Messages file, using Internal defaults");
             }
         }
 
@@ -870,11 +974,11 @@ public class VanillaMessages {
 
     private boolean loadDeathMessages() {
         try {
-                    vanillaDeathMessagesConfig.load();
-                } catch (ConfigurationException e) {
-                    Logger.warning("There where problems loading the Vanilla Death Messages File",e);
-                    return false;
-                }
+            vanillaDeathMessagesConfig.load();
+        } catch (ConfigurationException e) {
+            Logger.warning("There where problems loading the Vanilla Death Messages File",e);
+            return false;
+        }
         // Starting to update the standard configuration
         vanillaDeathMessagesVer = vanillaDeathMessagesConfig.getNode("vanillaDeathMessagesVer").getString();
         // Debug OutPut NOW!
@@ -895,88 +999,86 @@ public class VanillaMessages {
      *
      * @return true if writing the vanillaDeathMessagesConfig was successful
      *
-     * @see #writeCustomDeathMessages(java.io.PrintWriter)
      */
 
     private boolean writeDeathMessages() {
         boolean success = false;
         try {
 
-            File folder = main.getDataFolder();
+            File folder = (new File(messagesPath));
+
             if (folder != null) {
                 folder.mkdirs();
             }
-            String pluginPath = plugin.getDataFolder() + System.getProperty("file.separator");
-            PluginDescriptionFile pdfFile = this.plugin.getDescription();
-            String authors = getAuthors();
-            pluginName = pdfFile.getName();
-            OutputStream outputStream = new FileOutputStream(pluginPath + deathMessageFileName);
-            stream = new PrintWriter(new OutputStreamWriter(outputStream, "utf-8"));
-            //Let's write our vanillaDeathMessagesConfig ;)
-            stream.println("# " + pluginName + " " + pdfFile.getVersion() + " by " + authors);
-            stream.println("#");
-            stream.println("# Deathmessage File for " + pluginName + ".");
-            stream.println("#");
-            stream.println("# DeathMessages Version");
-            stream.println("vanillaDeathMessagesVer: \"" + vanillaDeathMessagesVer + "\"");
-            stream.println();
 
-            stream.println("#--------- Messages  for DeathTpPlus");
-            stream.println();
-            stream.println("# Colors");
-            stream.println("#");
-            stream.println("# &0 Black");
-            stream.println("# &1 Navy");
-            stream.println("# &2 Green");
-            stream.println("# &3 Blue");
-            stream.println("# &4 Red");
-            stream.println("# &5 Purple");
-            stream.println("# &6 Gold");
-            stream.println("# &7 LightGray");
-            stream.println("# &8 Gray");
-            stream.println("# &9 DarkPurple");
-            stream.println("# &a LightGreen");
-            stream.println("# &3 LightBlue");
-            stream.println("# &c Rose");
-            stream.println("# &d LightPurple");
-            stream.println("# &e Yellow");
-            stream.println("# &f White");
-            stream.println("#");
-            stream.println("# Make sure you enclose the messages in \"");
+            File messageFile = new File(messagesPath + VANILLA_DEATHMESSAGES_FILENAME);
 
-            stream.println("#");
-            stream.println();
-            stream.println("#");
-            stream.println("#--------- Deathmessages");
-            stream.println("# Must contain at least 1 line. If there are more, it will appear randomly when a person dies.");
-            stream.println("# %n for player who died");
-            stream.println("# %a name of player who attacked in pvp deaths");
-            stream.println("# %i for item a player was using to kill someone else");
-            stream.println("#");
+            Logger.config("Writing the Vanilla Death Messages");
+            MessagesHeader.saveTranslationHeader(messageFile, "Vanilla Death Messages");
 
-            for (VANILLA_DEATH_EVENTS deathEventType : VANILLA_DEATH_EVENTS.VALUES) {
 
-                stream.println(deathEventType.toString() + ":");
+            UnicodeUtil.saveUTF8File(messageFile, "# DeathMessages Version\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "vanillaDeathMessagesVer: \"" + vanillaDeathMessagesVer + "\"\n",true);
+            UnicodeUtil.saveUTF8File(messageFile,"\n",true);
 
-                for (String msg : deathMessages.get(deathEventType)) {
+            UnicodeUtil.saveUTF8File(messageFile, "#--------- Messages  for DeathTpPlus\n",true);
+            UnicodeUtil.saveUTF8File(messageFile,"\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# Colors\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "#\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &0 Black\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &1 Navy\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &2 Green\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &3 Blue\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &4 Red\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &5 Purple\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &6 Gold\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &7 LightGray\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &8 Gray\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &9 DarkPurple\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &a LightGreen\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &3 LightBlue\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &c Rose\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &d LightPurple\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &e Yellow\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# &f White\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "#\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# Make sure you enclose the messages in \"\n",true);
+
+            UnicodeUtil.saveUTF8File(messageFile, "#\n",true);
+            UnicodeUtil.saveUTF8File(messageFile,"\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "#\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "#--------- Deathmessages\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# Must contain at least 1 line. If there are more, it will appear randomly when a person dies.\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# %n for player who died\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# %a name of player who attacked in pvp deaths\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "# %i for item a player was using to kill someone else\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "#\n",true);
+            UnicodeUtil.saveUTF8File(messageFile, "Messages:\n",true);
+
+            for (VANILLA_DEATH_EVENTS deathEventType : vanilla_death_events.keySet()) {
+
+                UnicodeUtil.saveUTF8File(messageFile, "    " + deathEventType.toString() + ":\n",true);
+
+                for (String msg : vanilla_death_events.get(deathEventType)) {
                     msg = msg.replace("''", "'");
-                    stream.println("    - \"" + msg.replace("\"", "'") + "\"");
+                    UnicodeUtil.saveUTF8File(messageFile, "        - \"" + msg.replace("\"", "'") + "\"\n",true);
                 }
 
             }
 
-            stream.println();
+            UnicodeUtil.saveUTF8File(messageFile,"\n",true);
 
-            stream.close();
 
             success = true;
 
         } catch (FileNotFoundException e) {
-            log.warning("Error saving the " + deathMessageFileName + ".");
+            Logger.warning("Error saving the " + VANILLA_DEATHMESSAGES_FILENAME + ".");
         } catch (UnsupportedEncodingException e) {
-            log.warning("Error saving the " + deathMessageFileName + ".");
+            Logger.warning("Error saving the " + VANILLA_DEATHMESSAGES_FILENAME + ".");
+        } catch (IOException e) {
+            Logger.warning("Error saving the " + VANILLA_DEATHMESSAGES_FILENAME + ".");
         }
-        log.debug("Default DeathMessages written", success);
+        Logger.debug("Vanilla Death Messages written", success);
         return success;
     }
 
@@ -1038,4 +1140,6 @@ public class VanillaMessages {
     public void saveDeathMessages() {
         writeDeathMessages();
     }
+
+
 }

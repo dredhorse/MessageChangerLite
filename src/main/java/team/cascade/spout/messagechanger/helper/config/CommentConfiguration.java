@@ -302,8 +302,6 @@ public abstract  class CommentConfiguration {
         UnicodeUtil.saveUTF8File(stream, "#\n",true);
         UnicodeUtil.saveUTF8File(stream, "# For detailed assistance please visit: " + pluginSlug+"\n",true);
         UnicodeUtil.saveUTF8File(stream,"\n",true );
-        UnicodeUtil.saveUTF8File(stream, "# Configuration Version\n",true);
-        UnicodeUtil.saveUTF8File(stream, "configVer: \"" + configFileVer + "\"\n",true);
         UnicodeUtil.saveUTF8File(stream,"\n",true );
         UnicodeUtil.saveUTF8File(stream, "# ------- Plugin Configuration\n",true);
         UnicodeUtil.saveUTF8File(stream,"\n",true );
@@ -495,7 +493,7 @@ public abstract  class CommentConfiguration {
         for (CONFIG configNode : CONFIG.values()) {
             if (configNode.getConfigOption() != null) {
                 try {
-                    configNode.setConfigOption(config.getNode("configuration." + configNode.toString()).getValue());
+                    configNode.setConfigOption(config.getNode("configuration." + configNode.toString()).getValue() != null ? config.getNode("configuration." + configNode.toString()).getValue() : configNode.getConfigOption());
                 } catch (WrongClassException e) {
                     // if we got a WrongClassException we try to get the right kind of class
                     // todo make sure that we handle all cases correctly, please let me know
@@ -649,12 +647,12 @@ public abstract  class CommentConfiguration {
         }
 
         // limited check if something was written at all into the configuration file
-        if (config.getNode("configVer").getString() == null) {
+        if (config.getNode("configuration.ConfigVersion").getString() == null) {
             Logger.severe("Config is either missing or has wrong syntax!");
             throw new ConfigNotAvailableException();
         }
         // getting the version of the configuration file
-        configVer = config.getNode("configVer").getString();
+        configVer = config.getNode("configuration.ConfigVersion").getString();
 
         // parsing the config back into the enums
         Logger.config(LINE);
@@ -1078,6 +1076,11 @@ public abstract  class CommentConfiguration {
         Logger.config("Loaded version: [" + configVer + "], Current Version: [" + configCurrent + "]");
         Logger.config("You should update the configuration!");
         configFileVer = configCurrent;
+        try {
+            CONFIG.CONFIG_VERSION.setConfigOption(configCurrent);
+        } catch (WrongClassException e) {
+            Logger.debug("Well that shouldn't happen",e);
+        }
         return true;
     }
 

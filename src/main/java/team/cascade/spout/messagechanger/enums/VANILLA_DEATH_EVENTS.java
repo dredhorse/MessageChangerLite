@@ -134,7 +134,7 @@ public class VANILLA_DEATH_EVENTS implements Comparable{
         Iterator iter = VALUES.iterator();
         while (iter.hasNext()) {
             VANILLA_DEATH_EVENTS type = (VANILLA_DEATH_EVENTS)iter.next();
-            if ( aText.equals(type.toString()) ){
+            if ( aText.equals(type.toString().toLowerCase()) ){
                 return type;
             }
         }
