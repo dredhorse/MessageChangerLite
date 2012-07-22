@@ -28,12 +28,14 @@ package team.cascade.spout.messagechanger.spout;
 
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
+import org.spout.api.event.entity.EntityChangedWorldEvent;
 import org.spout.api.event.player.*;
 import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
 import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
 import team.cascade.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.helper.Messenger;
 
 /**
  * Contains all the Spout Player events monitored by this plugin
@@ -43,20 +45,20 @@ import team.cascade.spout.messagechanger.helper.Logger;
  */
 public class SpoutPlayerEvents implements Listener {
 
-	private final MessageChanger plugin;
+    private final MessageChanger plugin;
 
     private final SpoutMessagesHandler spoutMessagesHandler;
 
-	public SpoutPlayerEvents(CommonPlugin plugin) {
+    public SpoutPlayerEvents(CommonPlugin plugin) {
 
-		this.plugin = (MessageChanger) plugin;
+        this.plugin = (MessageChanger) plugin;
         spoutMessagesHandler = SpoutMessagesHandler.getInstance();
         Logger.debug("PlayerEvent Listener Activated");
 
-	}
+    }
 
-	@EventHandler
-	public void onPlayerLogin(PlayerLoginEvent event) {
+    @EventHandler
+    public void onPlayerLogin(PlayerLoginEvent event) {
 
         if (event.isCancelled()){
             Logger.debug("PlayerLoginEvent was cancelled");
@@ -68,19 +70,19 @@ public class SpoutPlayerEvents implements Listener {
         if (!event.isAllowed()){
             event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.KICK_FULL.toString(),event.getPlayer(),message));
         }
-      // todo waiting for PlayerWhiteList event
-    	/*switch (event.g) {
-			case KICK_BANNED:
-				event.setKickMessage(plugin.getMessage("KICK_BANNED", event.getPlayer(), event.getKickMessage()));
-				break;
-			case KICK_WHITELIST:
-				event.setKickMessage(plugin.getMessage("KICK_WHITELIST", event.getPlayer(), event.getKickMessage()));
-				break;
-			case KICK_FULL:
-				event.setKickMessage(plugin.getMessage("KICK_FULL", event.getPlayer(), event.getKickMessage()));
-				break;
-		}*/
-	}
+        // todo waiting for PlayerWhiteList event
+        /*switch (event.g) {
+              case KICK_BANNED:
+                  event.setKickMessage(plugin.getMessage("KICK_BANNED", event.getPlayer(), event.getKickMessage()));
+                  break;
+              case KICK_WHITELIST:
+                  event.setKickMessage(plugin.getMessage("KICK_WHITELIST", event.getPlayer(), event.getKickMessage()));
+                  break;
+              case KICK_FULL:
+                  event.setKickMessage(plugin.getMessage("KICK_FULL", event.getPlayer(), event.getKickMessage()));
+                  break;
+          }*/
+    }
 
     @EventHandler
     public void onPlayerBan(PlayerBanKickEvent event){
@@ -91,58 +93,65 @@ public class SpoutPlayerEvents implements Listener {
     }
 
 
-	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent event) {
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
         if (event.isCancelled()){
             Logger.debug("PlayerJoinEvent was cancelled");
             return;
         }
         Logger.debug("PlayerJoinEvent executed");
         event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_JOIN.toString(),event.getPlayer(),event.getMessage()));
-	}
+    }
 
-	@EventHandler
-	public void onPlayerKick(PlayerKickEvent event) {
+    @EventHandler
+    public void onPlayerKick(PlayerKickEvent event) {
         if (event.isCancelled()){
             Logger.debug("PlayerKickEvent was cancelled");
             return;
         }
         if (plugin.getIgnoreKick()) {
             Logger.debug("PlayerKickEvent was ignored");
-			plugin.disableIgnoreKick();
-			return;
-		}
+            plugin.disableIgnoreKick();
+            return;
+        }
         Logger.debug("PlayerKickEvent executed");
         event.setKickReason(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_REASON.toString(),event.getPlayer(),event.getKickReason()));
-		event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage()));
-	}
+        event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage()));
+    }
 
-	@EventHandler
-	public void onPlayerQuit(PlayerLeaveEvent event) {
+    @EventHandler
+    public void onPlayerQuit(PlayerLeaveEvent event) {
         Logger.debug("PlayerLeaveEvent executed");
         if (plugin.getIgnoreKick()) {
             Logger.debug("PlayerKickEvent was ignored");
             event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.SERVER_STOP.toString(),event.getPlayer(), event.getMessage()));
-			return;
-		}
+            return;
+        }
         event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_QUIT.toString(),event.getPlayer(), event.getMessage()));
-	}
+    }
 
 
-    // todo wait for implementation of PlayerChangedWorldEvent
-/*	@EventHandler
-	public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
-		String msg = plugin.getMessage("CHANGED_WORLD", event.getPlayer(), "");
-		if (msg.equals("")) {
-			return;
-		}
-		String fromWorld = event.getFrom().getName();
-		if (fromWorld == null) {
-			fromWorld = "Unknown Territories";
-		}
-		msg = msg.replace("%fromWorld", fromWorld);
-		event.getPlayer().sendMessage(msg);
-	}*/
+
+    @EventHandler
+    public void onPlayerChangedWorld(EntityChangedWorldEvent event) {
+        if (event.isCancelled()){
+            Logger.debug("EntityChangedWorldEvent was cancelled");
+            return;
+        }
+        if (!(event.getEntity() instanceof Player)){
+            Logger.debug("Entity is not a player");
+            return;
+        }
+        Player player = (Player) event.getEntity();
+
+        String fromWorld = event.getPrevious().getName();
+        if (fromWorld == null) {
+            fromWorld = "Unknown Territories";
+        }
+        String msg = spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.CHANGED_WORLD.toString(), player, "");
+        msg = msg.replace("%(fromWorld)", fromWorld);
+        Messenger.send(player,Messenger.dictFormat(player, msg));
+    }
 
 
     private void ServerDownEvent(){
