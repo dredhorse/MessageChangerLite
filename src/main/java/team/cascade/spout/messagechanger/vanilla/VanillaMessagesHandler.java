@@ -28,6 +28,10 @@ package team.cascade.spout.messagechanger.vanilla;
 
 import org.spout.api.player.Player;
 import team.cascade.spout.messagechanger.MessageChanger;
+import team.cascade.spout.messagechanger.config.CONFIG;
+import team.cascade.spout.messagechanger.enums.GAME_TYPES;
+import team.cascade.spout.messagechanger.enums.TYPES;
+import team.cascade.spout.messagechanger.enums.VANILLA_TYPES;
 import team.cascade.spout.messagechanger.messages.MessagesInterface;
 
 /**
@@ -47,13 +51,29 @@ public class VanillaMessagesHandler implements MessagesInterface {
 
     public VanillaMessagesHandler(MessageChanger main) {
         instance = this;
-        vanillaMessages = new VanillaMessages(main);
-        main.getEngine().getEventManager().registerEvents(new VanillaDeathEvents(main), main);
         this.main = main;
+        init();
     }
 
     public static VanillaMessagesHandler getInstance(){
         return instance;
+    }
+
+    public void init(){
+
+        // let's parse through the found plugins and enable the corresponding classes
+        for (TYPES types : main.getPLUGIN_TYPES(GAME_TYPES.VANILLA)){
+            VANILLA_TYPES vanilla_types = (VANILLA_TYPES) types;
+            if (vanilla_types == VANILLA_TYPES.DEFAULT){
+                if (CONFIG.VANILLA_SHOW_DEATH_MESSAGES.getBoolean() && VanillaDeathEvents.getInstance() != null){
+                    vanillaMessages = new VanillaMessages(main);
+                    main.getEngine().getEventManager().registerEvents(new VanillaDeathEvents(main), main);
+                }
+            }
+
+        }
+
+
     }
 
 

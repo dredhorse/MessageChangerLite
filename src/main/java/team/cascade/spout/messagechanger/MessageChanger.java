@@ -37,6 +37,7 @@ import team.cascade.spout.messagechanger.commands.EnumMessageChanger;
 import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.enums.GAME_TYPES;
 import team.cascade.spout.messagechanger.enums.TYPES;
+import team.cascade.spout.messagechanger.enums.VANILLA_TYPES;
 import team.cascade.spout.messagechanger.events.SpoutPluginEvents;
 import team.cascade.spout.messagechanger.exceptions.ConfigNotAvailableException;
 import team.cascade.spout.messagechanger.helper.Logger;
@@ -352,4 +353,7 @@ public class MessageChanger extends CommonPlugin {
         return types.keySet();
     }
 
+    public HashSet <TYPES> getPLUGIN_TYPES(GAME_TYPES game) {
+        return types.get(game);
+    }
 }

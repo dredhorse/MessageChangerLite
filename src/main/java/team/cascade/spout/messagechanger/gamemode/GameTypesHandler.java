@@ -27,6 +27,7 @@
 package team.cascade.spout.messagechanger.gamemode;
 
 import org.spout.api.plugin.CommonPlugin;
+import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.events.SpoutPluginEvents;
 
 /**
@@ -37,9 +38,9 @@ import team.cascade.spout.messagechanger.events.SpoutPluginEvents;
  */
 public class GameTypesHandler {
 
-    private static CommonPlugin main;
+    private static MessageChanger main;
 
-    public GameTypesHandler(CommonPlugin main){
+    public GameTypesHandler(MessageChanger main){
         this.main = main;
         main.getEngine().getEventManager().registerEvents(new SpoutPluginEvents(main), main);
     }

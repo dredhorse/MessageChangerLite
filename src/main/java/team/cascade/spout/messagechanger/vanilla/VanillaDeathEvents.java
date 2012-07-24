@@ -71,16 +71,22 @@ public class VanillaDeathEvents implements Listener {
 
     private final VanillaMessagesHandler vanillaMessagesHandler;
 
-	public VanillaDeathEvents(CommonPlugin plugin) {
+    private static VanillaDeathEvents instance;
 
+	public VanillaDeathEvents(CommonPlugin plugin) {
+        instance = this;
 		this.plugin = (MessageChanger) plugin;
         vanillaMessagesHandler = VanillaMessagesHandler.getInstance();
         Logger.debug("VanillaDeathEvent Listener Activated");
 
 	}
 
+    public static VanillaDeathEvents getInstance(){
+        return instance;
+    }
+
 	@EventHandler
-	public void onPlayerLogin(PlayerDeathEvent event) {
+	public void onPlayerDeathEvent(PlayerDeathEvent event) {
         if (event.isCancelled()){
             Logger.debug("PlayerDeathEvent was cancelled");
         }
