@@ -43,8 +43,8 @@ import java.util.regex.Pattern;
 * @todo You need to put the messages you want to translate into here, just take a look at the examples.
  */
 public enum MESSAGES {
-    TEMPLATE_MESSAGE(
-            "äöü æåéø Server will be stopped in %m minutes", "Warning Message displayed to announce server stop.");
+    MISSING_FROM_WORLD(
+            "Unknown Territories", "Text which will be shown when we have now idea from which world the player is coming.");
     /* // NO CHANGES BELOW HERE!!!!!
 ;
 

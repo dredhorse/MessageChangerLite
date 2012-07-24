@@ -36,6 +36,7 @@ import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
 import team.cascade.spout.messagechanger.helper.Logger;
 import team.cascade.spout.messagechanger.helper.Messenger;
+import team.cascade.spout.messagechanger.messages.MESSAGES;
 
 /**
  * Contains all the Spout Player events monitored by this plugin
@@ -146,7 +147,7 @@ public class SpoutPlayerEvents implements Listener {
 
         String fromWorld = event.getPrevious().getName();
         if (fromWorld == null) {
-            fromWorld = "Unknown Territories";
+            fromWorld = MESSAGES.MISSING_FROM_WORLD.getMessage();
         }
         String msg = spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.CHANGED_WORLD.toString(), player, "");
         msg = msg.replace("%(fromWorld)", fromWorld);

@@ -47,9 +47,9 @@ import team.cascade.spout.messagechanger.helper.commands.EnumSimpleInjector;
 import team.cascade.spout.messagechanger.helper.config.CommentConfiguration;
 import team.cascade.spout.messagechanger.helper.config.Configuration;
 import team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave;
+import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 import team.cascade.spout.messagechanger.spout.SpoutMessagesHandler;
 import team.cascade.spout.messagechanger.vanilla.VanillaMessagesHandler;
-import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave.commandsInit;
+import static team.cascade.spout.messagechanger.helper.file.MessagesLoadAndSave.messageInit;
 
 //~--- JDK imports ------------------------------------------------------------
 
@@ -174,6 +175,11 @@ public class MessageChanger extends CommonPlugin {
          * Now let's read the translations for the commands in game
          */
         commandsInit(this);
+
+        /**
+         * Now let's read the translations for the messages in game
+         */
+        messageInit(this);
 
         /**
          * Enabling the commands
