@@ -71,11 +71,11 @@ public enum CONFIG {
     GENERIC_PLUGIN_START("Begin of Generic Plugin Configuration\n"),
 
     // <<<====== from here on onwards it is all yours don't forget tor replace the ; on top with a ,
-    USE_DISPLAYNAME_FOR_BROADCAST("Use the displayname for broadcasts, can cause issue with special characters",false),
+    USE_DISPLAYNAME_FOR_BROADCAST("Use the display name for broadcasts, can cause issue with special characters",false),
+    LOG_MESSAGES_ON_CONSOLE("Log on console too",false),
     GENERIC_PLUGIN_END("####################################################################\n"),
     VANILLA_PLUGIN_START("Begin of Vanilla Plugin Configuration\n"),
-    VANILLA_SHOW_DEATH_MESSAGES("Show the default Vanilla Death Messages",false),
-    VANILLA_SHOW_DEATH_MESSAGES_ON_CONSOLE("Show the Death Messages on console too",false),
+    VANILLA_SHOW_DEFAULT_DEATH_MESSAGES("Show the default Vanilla Death Messages",false),
     VANILLA_SHOW_DEATH_MESSAGES_IN_DEATH_WORLD_ONLY("Show the Death Messages only in the world they happened in.",false),
     VANILLA_DISABLE_DEATH_MESSAGES_IN_SPECIFIED_WORLDS("Don't show the Death Messages in the specified worlds",new ArrayList<String>(Arrays.asList("WorldOne", "WorldTwo", "AndAnotherWorld")))
     ;

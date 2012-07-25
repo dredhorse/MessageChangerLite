@@ -54,9 +54,11 @@ package team.cascade.spout.messagechanger.vanilla;
 
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
+import org.spout.api.event.entity.EntityDeathEvent;
+import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
-import org.spout.vanilla.event.player.PlayerDeathEvent;
 import team.cascade.spout.messagechanger.MessageChanger;
+import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.helper.Logger;
 
 /**
@@ -67,31 +69,68 @@ import team.cascade.spout.messagechanger.helper.Logger;
  */
 public class VanillaDeathEvents implements Listener {
 
-	private final MessageChanger plugin;
+    private final MessageChanger plugin;
 
     private final VanillaMessagesHandler vanillaMessagesHandler;
 
     private static VanillaDeathEvents instance;
 
-	public VanillaDeathEvents(CommonPlugin plugin) {
+    public VanillaDeathEvents(CommonPlugin plugin) {
         instance = this;
-		this.plugin = (MessageChanger) plugin;
+        this.plugin = (MessageChanger) plugin;
         vanillaMessagesHandler = VanillaMessagesHandler.getInstance();
         Logger.debug("VanillaDeathEvent Listener Activated");
 
-	}
+    }
 
     public static VanillaDeathEvents getInstance(){
         return instance;
     }
 
-	@EventHandler
-	public void onPlayerDeathEvent(PlayerDeathEvent event) {
+    @EventHandler
+    public void onPlayerDeathEvent(EntityDeathEvent event) {
         if (event.isCancelled()){
-            Logger.debug("PlayerDeathEvent was cancelled");
+            Logger.debug("EntityDeathEvent was cancelled");
+            return;
         }
 
+        if (!(event.getEntity() instanceof Player)) {
+            Logger.debug("Entity is not a player",event.getEntity().getController().getType());
+            return;
+        }
+        String msg ="";
+
+
+        if (!CONFIG.VANILLA_DISABLE_DEATH_MESSAGES_IN_SPECIFIED_WORLDS.getStringList().isEmpty()){
+            for (String world : CONFIG.VANILLA_DISABLE_DEATH_MESSAGES_IN_SPECIFIED_WORLDS.getStringList()){
+                if (world.matches(".*\\b"+event.getEntity().getWorld().getName()+"\\b.*")){
+                    Logger.debug("World is configured to not broadcast too",event.getEntity().getWorld().getName());
+                    return;
+                }
+            }
+        }
+
+        Logger.debug("World is configured to broadcast too",event.getEntity().getWorld().getName());
+        if (CONFIG.VANILLA_SHOW_DEATH_MESSAGES_IN_DEATH_WORLD_ONLY.getBoolean()){
+            for (Player onlinePlayer : plugin.getEngine().getOnlinePlayers()){
+                if (onlinePlayer.getEntity().getWorld() == event.getEntity().getWorld()){
+                    //todo set event message to ""
+                    onlinePlayer.sendMessage(msg);
+                }
+            }
+        } else {
+            // todo event set message needed
+
+        }
+
+        if (CONFIG.LOG_MESSAGES_ON_CONSOLE.getBoolean()){
+            Logger.info(msg.toString());
+        }
+        Logger.debug("DeathMessage",msg);
     }
+
+
+
 
 
 }

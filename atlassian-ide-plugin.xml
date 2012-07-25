@@ -1,5 +1,13 @@
 <atlassian-ide-plugin>
   <project-configuration>
-    <servers />
+    <servers>
+      <jira>
+        <server-id>a1b01d43-335a-4167-8862-cfa190c0effb</server-id>
+        <name>Spout</name>
+        <url>http://issues.spout.org</url>
+        <shared>false</shared>
+      </jira>
+    </servers>
+    <default-jira-server>a1b01d43-335a-4167-8862-cfa190c0effb</default-jira-server>
   </project-configuration>
 </atlassian-ide-plugin>

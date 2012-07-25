@@ -477,9 +477,11 @@ public class Logger {
      * @return formated message, e.g. [PluginName] this is a test
      */
     private static String formatMessage(String message) {
-        if (enableMessageFormatting) {
+        // not really needed anymore I think..
+
+        /*if (enableMessageFormatting) {
             return "[" + pluginName + "] " + message;
-        }
+        }*/
 
         return message;
     }
