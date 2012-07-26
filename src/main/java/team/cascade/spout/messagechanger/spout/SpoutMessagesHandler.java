@@ -75,9 +75,9 @@ public class SpoutMessagesHandler implements MessagesInterface {
     private static SpoutMessagesHandler instance;
 
     public SpoutMessagesHandler(CommonPlugin main){
-         instance = this;
-         spoutMessages = new SpoutMessages(main);
-         main.getEngine().getEventManager().registerEvents(new SpoutPlayerEvents(main), main);
+        instance = this;
+        spoutMessages = new SpoutMessages(main);
+        main.getEngine().getEventManager().registerEvents(new SpoutPlayerEvents(main), main);
     }
 
     public static SpoutMessagesHandler getInstance(){
@@ -113,12 +113,14 @@ public class SpoutMessagesHandler implements MessagesInterface {
 
 
     private String getCategory(Player player) {
-    		for (String category : spoutMessages.getCategoryOrder()) {
-    			if (player.hasPermission("messagechanger.message." + category)) {
-    				return category;
-    			}
-    		}
-    		return "default";
-    	}
+        if (player != null){
+            for (String category : spoutMessages.getCategoryOrder()) {
+                if (player.hasPermission("messagechanger.message." + category)) {
+                    return category;
+                }
+            }
+        }
+        return "default";
+    }
 
 }

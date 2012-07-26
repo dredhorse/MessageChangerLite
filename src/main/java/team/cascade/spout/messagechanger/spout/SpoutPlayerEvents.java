@@ -30,6 +30,7 @@ import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.entity.EntityChangedWorldEvent;
 import org.spout.api.event.player.*;
+import org.spout.api.event.server.ServerStopEvent;
 import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
 import team.cascade.spout.messagechanger.MessageChanger;
@@ -154,31 +155,13 @@ public class SpoutPlayerEvents implements Listener {
         Messenger.send(player,Messenger.dictFormat(player, msg));
     }
 
-
-    private void ServerDownEvent(){
-
-        //todo wait for implementation
-        // There's no easy way :/
-        StackTraceElement[] st = new Throwable().getStackTrace();
-        for (int i = 0; i < st.length; i++) {
-            // Go through the stack trace and look for the stop method
-            if (st[i].getMethodName().equals("stop")) {
-                //this.enableIgnoreKick();
-                // Yay, stop method found
-                Player[] players = plugin.getEngine().getOnlinePlayers();
-                String kickMsg = "";
-                for (Player player : players) {
-                    // Let's kick 'em!
-                    kickMsg = spoutMessagesHandler.getNewMessage ("SERVER_STOP", player, "");
-                    if (!kickMsg.equals("")) {
-                        // We don't want to override the SERVER_STOP message
-                        //this.ignoreKick = true;
-                        // Cya!
-                        player.kick(kickMsg);
-                    }
-                }
-            }
+    @EventHandler
+    public void ServerDownEvent(ServerStopEvent event){
+        if (event.isCancelled()){
+            Logger.debug("ServerStopEvent was cancelled");
+            return;
         }
+        event.setMessage(spoutMessagesHandler.getNewMessage ("SERVER_STOP", null, event.getMessage()));
     }
 
 }
