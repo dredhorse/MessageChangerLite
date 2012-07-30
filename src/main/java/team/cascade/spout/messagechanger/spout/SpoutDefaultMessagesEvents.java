@@ -45,13 +45,13 @@ import team.cascade.spout.messagechanger.messages.MESSAGES;
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public class SpoutPlayerEvents implements Listener {
+public class SpoutDefaultMessagesEvents implements Listener {
 
     private final MessageChanger plugin;
 
     private final SpoutMessagesHandler spoutMessagesHandler;
 
-    public SpoutPlayerEvents(CommonPlugin plugin) {
+    public SpoutDefaultMessagesEvents(CommonPlugin plugin) {
 
         this.plugin = (MessageChanger) plugin;
         spoutMessagesHandler = SpoutMessagesHandler.getInstance();

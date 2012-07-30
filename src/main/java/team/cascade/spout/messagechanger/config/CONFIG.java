@@ -77,7 +77,10 @@ public enum CONFIG {
     VANILLA_PLUGIN_START("Begin of Vanilla Plugin Configuration\n"),
     VANILLA_SHOW_DEFAULT_DEATH_MESSAGES("Show the default Vanilla Death Messages",false),
     VANILLA_SHOW_DEATH_MESSAGES_IN_DEATH_WORLD_ONLY("Show the Death Messages only in the world they happened in.",false),
-    VANILLA_DISABLE_DEATH_MESSAGES_IN_SPECIFIED_WORLDS("Don't show the Death Messages in the specified worlds",new ArrayList<String>(Arrays.asList("WorldOne", "WorldTwo", "AndAnotherWorld")))
+    VANILLA_DISABLE_DEATH_MESSAGES_IN_SPECIFIED_WORLDS("Don't show the Death Messages in the specified worlds",new ArrayList<String>(Arrays.asList("WorldOne", "WorldTwo", "AndAnotherWorld"))),
+    VANILLA_PLUGIN_END("\n####################################################################\n"),
+    UNKNOWN_COMMAND_START("Begin of Unknown Command Configuration\n"),
+    UNKNOWN_COMMAND_ENABLE("Enable replacement of Unknown Command Messages with random ones",true)
     ;
 
 

@@ -71,7 +71,7 @@ public abstract  class CommentConfiguration {
      *
      */
 
-    private static boolean disableOnOlderBuilds = false;
+    private static boolean disableOnOlderBuilds = true;
 
      /**
      * This is the internal config version, which is being used if no Version is supplied from the plugin itself

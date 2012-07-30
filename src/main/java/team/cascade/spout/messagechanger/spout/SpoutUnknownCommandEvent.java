@@ -52,79 +52,69 @@
 
 package team.cascade.spout.messagechanger.spout;
 
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.player.Player;
+import org.spout.api.Engine;
+import org.spout.api.Spout;
+import org.spout.api.chat.ChatSection;
+import org.spout.api.command.CommandExecutor;
+import org.spout.api.event.EventHandler;
+import org.spout.api.event.Listener;
+import org.spout.api.event.server.PreCommandEvent;
 import org.spout.api.plugin.CommonPlugin;
-import team.cascade.spout.messagechanger.config.CONFIG;
-import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
+import org.spout.api.plugin.Platform;
+import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.helper.Logger;
-import team.cascade.spout.messagechanger.helper.Messenger;
-import team.cascade.spout.messagechanger.messages.MessagesInterface;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Contains code to handle the Spout specific messages
+ * Manages the Unknown Command Messages
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
  */
-public class SpoutMessagesHandler implements MessagesInterface {
+public class SpoutUnknownCommandEvent implements Listener {
 
-    private SpoutMessages spoutMessages;
+    private final MessageChanger plugin;
 
-    private static SpoutMessagesHandler instance;
+    private final SpoutMessagesHandler spoutMessagesHandler;
 
-    public SpoutMessagesHandler(CommonPlugin main){
-        instance = this;
-        spoutMessages = new SpoutMessages(main);
-        main.getEngine().getEventManager().registerEvents(new SpoutDefaultMessagesEvents(main), main);
-        if (CONFIG.UNKNOWN_COMMAND_ENABLE.getBoolean()){
-            main.getEngine().getEventManager().registerEvents(new SpoutUnknownCommandEvent(main), main);
+    protected Map<Platform, CommandExecutor> executors = new HashMap<Platform, CommandExecutor>();
+
+    public SpoutUnknownCommandEvent(CommonPlugin plugin) {
+
+        this.plugin = (MessageChanger) plugin;
+        spoutMessagesHandler = SpoutMessagesHandler.getInstance();
+        Logger.debug("UnknownCommand Listener Activated");
+
+    }
+
+    @EventHandler
+    public void onPreCommandEvent (PreCommandEvent event){
+        if (event.isCancelled()){
+            Logger.debug("PreCommandEvent was cancelled");
+        }
+        CommandExecutor executor = getActiveExecutor();
+        List<Object> args = event.getArguments().getArguments();
+        if (executor == null || 0 > args.size()){
+
         }
     }
 
-    public static SpoutMessagesHandler getInstance(){
-        return instance;
-    }
-
-    public void reload(){
-        spoutMessages.init();
-    }
-
-
-    @Override
-    public String getNewMessage(String event, Player player, String defaultMessage) {
-        Logger.debug("NewMessage for: " + event);
-        DEFAULT_EVENTS defaultEvent = DEFAULT_EVENTS.valueOf(event);
-        String message = defaultMessage;
-        if (defaultEvent != null){
-            String category = getCategory(player);
-            Logger.debug("Category",category);
-            message = spoutMessages.getMessage(getCategory(player),defaultEvent);
-            Logger.debug("message",message);
-            if (message == null || message.equals("%(msg)")){
-                message = defaultMessage;
-            }
-
+    public CommandExecutor getActiveExecutor() {
+        final Engine engine = Spout.getEngine();
+        final Platform platform;
+        if (engine == null) {
+            platform = Platform.ALL;
+        } else {
+            platform = engine.getPlatform();
         }
-        return Messenger.dictFormat(player, message);
-    }
-
-    public List<Object> getNewMessageFromObjects(String event, Player player, Object[] defaultMessage){
-        return ChatArguments.fromString(getNewMessage(event, player, Messenger.getStringFromObjects(defaultMessage))).getArguments();
-    }
-
-
-    private String getCategory(Player player) {
-        if (player != null){
-            for (String category : spoutMessages.getCategoryOrder()) {
-                if (player.hasPermission("messagechanger.message." + category)) {
-                    return category;
-                }
-            }
+        CommandExecutor exec = executors.get(platform);
+        if (exec == null) {
+            exec = executors.get(Platform.ALL);
         }
-        return "default";
+        return exec;
     }
 
 }
