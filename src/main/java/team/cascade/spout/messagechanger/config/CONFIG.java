@@ -80,7 +80,8 @@ public enum CONFIG {
     VANILLA_DISABLE_DEATH_MESSAGES_IN_SPECIFIED_WORLDS("Don't show the Death Messages in the specified worlds",new ArrayList<String>(Arrays.asList("WorldOne", "WorldTwo", "AndAnotherWorld"))),
     VANILLA_PLUGIN_END("\n####################################################################\n"),
     UNKNOWN_COMMAND_START("Begin of Unknown Command Configuration\n"),
-    UNKNOWN_COMMAND_ENABLE("Enable replacement of Unknown Command Messages with random ones",true)
+    UNKNOWN_COMMAND_ENABLE("Enable replacement of Unknown Command Messages with random ones",true),
+    UNKNOWN_COMMAND_PREFIX("Prefix the unknown command string","[UC]")
     ;
 
 

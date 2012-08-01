@@ -57,6 +57,7 @@ import org.spout.api.event.Listener;
 import org.spout.api.event.server.PluginEnableEvent;
 import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.enums.GAME_TYPES;
+import team.cascade.spout.messagechanger.enums.VANILLA_TYPES;
 import team.cascade.spout.messagechanger.helper.Logger;
 import team.cascade.spout.messagechanger.vanilla.VanillaMessagesHandler;
 
@@ -86,6 +87,7 @@ public class SpoutPluginEvents implements Listener {
         Logger.debug("PluginLoaded",plugin);
         if (plugin.equals("Vanilla")){
             main.addGameType(GAME_TYPES.VANILLA);
+            main.addPluginType(GAME_TYPES.VANILLA, VANILLA_TYPES.DEFAULT);
             main.setVanillaMessagesHandler(new VanillaMessagesHandler(main));
         }
 

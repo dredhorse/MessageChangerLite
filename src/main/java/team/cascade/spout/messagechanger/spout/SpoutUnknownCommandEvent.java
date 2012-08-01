@@ -54,7 +54,6 @@ package team.cascade.spout.messagechanger.spout;
 
 import org.spout.api.Engine;
 import org.spout.api.Spout;
-import org.spout.api.chat.ChatSection;
 import org.spout.api.command.CommandExecutor;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -63,6 +62,7 @@ import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
 import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.helper.Messenger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,14 +78,14 @@ public class SpoutUnknownCommandEvent implements Listener {
 
     private final MessageChanger plugin;
 
-    private final SpoutMessagesHandler spoutMessagesHandler;
+    private final SpoutUnknownCommandHandler spoutUnknownCommandHandler;
 
     protected Map<Platform, CommandExecutor> executors = new HashMap<Platform, CommandExecutor>();
 
     public SpoutUnknownCommandEvent(CommonPlugin plugin) {
 
         this.plugin = (MessageChanger) plugin;
-        spoutMessagesHandler = SpoutMessagesHandler.getInstance();
+        spoutUnknownCommandHandler = SpoutUnknownCommandHandler.getInstance();
         Logger.debug("UnknownCommand Listener Activated");
 
     }
@@ -94,11 +94,17 @@ public class SpoutUnknownCommandEvent implements Listener {
     public void onPreCommandEvent (PreCommandEvent event){
         if (event.isCancelled()){
             Logger.debug("PreCommandEvent was cancelled");
+            return;
         }
+        if (spoutUnknownCommandHandler.getCommandsToIgnore().contains(event.getCommand())) {
+            Logger.debug("Command is to be ignored",event.getCommand());
+            return;
+        }
+
         CommandExecutor executor = getActiveExecutor();
         List<Object> args = event.getArguments().getArguments();
         if (executor == null || 0 > args.size()){
-
+            Messenger.send(event.getCommandSource(),spoutUnknownCommandHandler.getNewMessage());
         }
     }
 

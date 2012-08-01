@@ -37,7 +37,6 @@ import team.cascade.spout.messagechanger.commands.EnumMessageChanger;
 import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.enums.GAME_TYPES;
 import team.cascade.spout.messagechanger.enums.TYPES;
-import team.cascade.spout.messagechanger.enums.VANILLA_TYPES;
 import team.cascade.spout.messagechanger.events.SpoutPluginEvents;
 import team.cascade.spout.messagechanger.exceptions.ConfigNotAvailableException;
 import team.cascade.spout.messagechanger.helper.Logger;
@@ -50,6 +49,7 @@ import team.cascade.spout.messagechanger.helper.config.Configuration;
 import team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave;
 import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 import team.cascade.spout.messagechanger.spout.SpoutMessagesHandler;
+import team.cascade.spout.messagechanger.spout.SpoutUnknownCommandHandler;
 import team.cascade.spout.messagechanger.vanilla.VanillaMessagesHandler;
 
 import java.io.IOException;
@@ -81,7 +81,11 @@ public class MessageChanger extends CommonPlugin {
      */
     private boolean ignoreKick = false;
 
+    // The different handlers being used
+
     SpoutMessagesHandler spoutMessagesHandler;
+
+    SpoutUnknownCommandHandler spoutUnknownCommandHandler;
 
     VanillaMessagesHandler vanillaMessagesHandler;
 
@@ -167,6 +171,13 @@ public class MessageChanger extends CommonPlugin {
         spoutMessagesHandler = new SpoutMessagesHandler(this);
 
         /**
+         * Let's init unknown command if needed
+         */
+        if (CONFIG.UNKNOWN_COMMAND_ENABLE.getBoolean()){
+                    spoutUnknownCommandHandler = new SpoutUnknownCommandHandler(this);
+                }
+
+        /**
          * Let's init the Plugin Listener to handle the rest of the messages
          */
 
@@ -229,6 +240,7 @@ public class MessageChanger extends CommonPlugin {
             } else {
                 Logger.config("There was a problem saving the commands.");
             }
+
             if (types.containsKey(GAME_TYPES.VANILLA)){
                 vanillaMessagesHandler.save();
             }
