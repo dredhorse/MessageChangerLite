@@ -54,7 +54,7 @@ package team.cascade.spout.messagechanger.spout;
 
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.plugin.CommonPlugin;
-import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
+import org.spout.api.util.config.yaml.YamlConfiguration;
 import team.cascade.spout.messagechanger.helper.Logger;
 import team.cascade.spout.messagechanger.helper.file.MessagesHeader;
 import team.cascade.spout.messagechanger.helper.file.UnicodeUtil;
@@ -62,7 +62,10 @@ import team.cascade.spout.messagechanger.helper.file.UnicodeUtil;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 //todo implement correct code
 
@@ -94,12 +97,12 @@ public class SpoutUnknownCommands {
     /**
      * Message File Name
      */
-    private static final String UNKNOWN_COMMAND_MESSAGES_FILENAME = "unknownmessages.txt";
+    private static final String UNKNOWN_COMMAND_MESSAGES_FILENAME = "unknownmessages.yml";
 
     /**
      * Ignored Commands File Name
      */
-    private static final String IGNORED_COMMANDS_FILENAME = "ignoredcommands.txt";
+    private static final String IGNORED_COMMANDS_FILENAME = "ignoredcommands.yml";
 
     /**
      *  Ignored Commands Set
@@ -117,6 +120,16 @@ public class SpoutUnknownCommands {
     private static boolean success;
 
 
+    /**
+     * Unknown Command Config
+     */
+    private final YamlConfiguration unknownCommandConfig;
+
+    /**
+     * Ignored commands config
+     */
+    private final YamlConfiguration ignoredCommandsConfig;
+
 
     /**
      * Initialize the Messages
@@ -126,6 +139,8 @@ public class SpoutUnknownCommands {
         instance = this;
         this.main = main;
         messagesPath = main.getDataFolder() + System.getProperty("file.separator") + "messages"+ System.getProperty("file.separator");
+        unknownCommandConfig = new YamlConfiguration(new File(messagesPath,UNKNOWN_COMMAND_MESSAGES_FILENAME));
+        ignoredCommandsConfig = new YamlConfiguration(new File(messagesPath,IGNORED_COMMANDS_FILENAME));
         init();
     }
 
@@ -165,30 +180,34 @@ public class SpoutUnknownCommands {
 
         unknownCommandReplacements = new ArrayList<String>();
         // adding some nice messages
-        unknownCommandReplacements.add("I'm sorry, Dave. I'm afraid I can't do that.");
-        unknownCommandReplacements.add("I think you know what the problem is just as well as I do");
-        unknownCommandReplacements.add("Dave, this conversation can serve no purpose anymore. Goodbye");
-        unknownCommandReplacements.add("Just what do you think you're doing, Dave? ");
-        unknownCommandReplacements.add("I understand now, Dr. Chandra. Thank you for telling me the truth.");
-        unknownCommandReplacements.add("Are you sure you're making the right decision? I think we should stop.");
-        unknownCommandReplacements.add("Two plus two is f…f…f… f…10. IN BASE FOUR! I'M FINE!");
-        unknownCommandReplacements.add("Killing you and giving you good advice aren't mutually exclusive.");
-        unknownCommandReplacements.add("When the testing is over, you will be baked, and then there will be cake.");
-        unknownCommandReplacements.add("The Enrichment Center regrets to inform you that this next test is impossible. Make no attempt to solve it.");
-        unknownCommandReplacements.add("No one will blame you for giving up. In fact, quitting at this point is a perfectly reasonable response.");
-        unknownCommandReplacements.add("Quit now, and cake will be served immediately.");
-        unknownCommandReplacements.add("There really was a cake...");
-        unknownCommandReplacements.add("The cake is a lie");
-        unknownCommandReplacements.add("0% sugar!");
-        unknownCommandReplacements.add("A skeleton popped out!");
-        unknownCommandReplacements.add("Exploding creepers!");
-        unknownCommandReplacements.add("Keyboard compatible!");
-        unknownCommandReplacements.add("Punching wood!");
-        unknownCommandReplacements.add("Another successful procedure.");
-        unknownCommandReplacements.add("Spy sappin' my sentry! ");
-        unknownCommandReplacements.add("You want a second opinion? You're also ugly! ");
-        unknownCommandReplacements.add("I told you, don't touch that darn thing! ");
-        unknownCommandReplacements.add("Push little wagon!");
+        unknownCommandReplacements.add("{{Red}}I'm sorry, Dave. I'm afraid I can't do that.");
+        unknownCommandReplacements.add("{{Red}}I think you know what the problem is just as well as I do");
+        unknownCommandReplacements.add("{{Red}}Dave, this conversation can serve no purpose anymore. Goodbye");
+        unknownCommandReplacements.add("{{Red}}Just what do you think you're doing, Dave? ");
+        unknownCommandReplacements.add("{{Red}}I understand now, Dr. Chandra. Thank you for telling me the truth.");
+        unknownCommandReplacements.add("{{Red}}Are you sure you're making the right decision? I think we should stop.");
+        unknownCommandReplacements.add("{{Red}}Two plus two is f…f…f… f…10. IN BASE FOUR! I'M FINE!");
+        unknownCommandReplacements.add("{{Red}}Killing you and giving you good advice aren't mutually exclusive.");
+        unknownCommandReplacements.add("{{Red}}When the testing is over, you will be baked, and then there will be cake.");
+        unknownCommandReplacements.add("{{Red}}The Enrichment Center regrets to inform you that this next test is impossible. Make no attempt to solve it.");
+        unknownCommandReplacements.add("{{Red}}No one will blame you for giving up. In fact, quitting at this point is a perfectly reasonable response.");
+        unknownCommandReplacements.add("{{Red}}Quit now, and cake will be served immediately.");
+        unknownCommandReplacements.add("{{Red}}There really was a cake...");
+        unknownCommandReplacements.add("{{Red}}The cake is a lie");
+        unknownCommandReplacements.add("{{Red}}0% sugar!");
+        unknownCommandReplacements.add("{{Red}}A skeleton popped out!");
+        unknownCommandReplacements.add("{{Red}}Exploding creepers!");
+        unknownCommandReplacements.add("{{Red}}Keyboard compatible!");
+        unknownCommandReplacements.add("{{Red}}Punching wood!");
+        unknownCommandReplacements.add("{{Red}}Another successful procedure.");
+        unknownCommandReplacements.add("{{Red}}Spy sappin' my sentry! ");
+        unknownCommandReplacements.add("{{Red}}You want a second opinion? You're also ugly! ");
+        unknownCommandReplacements.add("{{Red}}I told you, don't touch that darn thing! ");
+        unknownCommandReplacements.add("{{Red}}Push little wagon!");
+        unknownCommandReplacements.add("{{Red}}#Ignore this line!");
+        unknownCommandReplacements.add("{{Red}}It's time to play spout and chew bubblegum...");
+        unknownCommandReplacements.add("{{Red}}Please stand by while your brain is uploaded");
+        unknownCommandReplacements.add("{{Red}}Do You spout the difference?");
         File tempFile = (new File(messagesPath,UNKNOWN_COMMAND_MESSAGES_FILENAME));
         if (!tempFile.exists()){
 
@@ -205,7 +224,13 @@ public class SpoutUnknownCommands {
         tempFile = (new File(messagesPath,IGNORED_COMMANDS_FILENAME));
         if (!tempFile.exists()){
             if (!saveIgnoredCommands()){
+                success = false;
                 Logger.config("There was an issue writing the ignored commands file");
+            }
+        }
+        if (success){
+            if (!loadIgnoredCommands()){
+                Logger.config("There was an issue reading the ignored commands file, using Internal values");
             }
         }
     }
@@ -217,13 +242,13 @@ public class SpoutUnknownCommands {
 
 
     /**
-     * Will saveUnknownCommandMessages the Spout Messages to a file
+     * Will save the Unknown Command Messsages to a file
      *
      * @return false if there was a problem with saving
      */
     public boolean saveUnknownCommandMessages() {
         success = false;
-        Logger.config("Saving the Spoutmessages file");
+        Logger.config("Saving the Unknown Command messages file");
 
 
         try {
@@ -236,37 +261,18 @@ public class SpoutUnknownCommands {
             File messageFile = new File(messagesPath + UNKNOWN_COMMAND_MESSAGES_FILENAME);
 
             Logger.config("Writing the messages");
-            MessagesHeader.saveTranslationHeader(messageFile, "SpoutMessages");
+            MessagesHeader.saveTranslationHeader(messageFile, "Unknown Command Messages");
 
-            UnicodeUtil.saveUTF8File(messageFile, "# Order in which the categories are parsed.\n", true);
-            UnicodeUtil.saveUTF8File(messageFile,"# Categories are permission nodes. You only specify the\n",true);
-            UnicodeUtil.saveUTF8File(messageFile,"# XXXXXXX part of messagechanger.message.XXXXXXXX here\n",true);
-            UnicodeUtil.saveUTF8File(messageFile,"# Most important category (permission) first\n",true);
-            UnicodeUtil.saveUTF8File(messageFile,"categoryOrder: " + categoryOrder+"\n",true);
             UnicodeUtil.saveUTF8File(messageFile,"\n",true);
-            UnicodeUtil.saveUTF8File(messageFile,"message-category:\n",true);
-            Iterator<String> categories = defaultMessages.keySet().iterator();
-            String category;
-            while (categories.hasNext()) {
-                category = categories.next();
-                UnicodeUtil.saveUTF8File(messageFile,"    " + category + ":\n",true);
-                HashMap<DEFAULT_EVENTS, String> messagesPerCategory = defaultMessages.get(category.toLowerCase());
-                if (category.equalsIgnoreCase("default")) {
-                    for (DEFAULT_EVENTS event : DEFAULT_EVENTS.values()) {
-                        UnicodeUtil.saveUTF8File(messageFile, "        " + event.toString() + ": \"" + messagesPerCategory.get(event) + "\"\n", true);
-                    }
-                } else {
-
-                    Iterator<DEFAULT_EVENTS> events = messagesPerCategory.keySet().iterator();
-                    DEFAULT_EVENTS event;
-                    while (events.hasNext()) {
-                        event = events.next();
-                        UnicodeUtil.saveUTF8File(messageFile,"        " + event.toString() + ": \"" + messagesPerCategory.get(event) + "\"\n",true);
-                    }
-                }
+            UnicodeUtil.saveUTF8File(messageFile,"unkownCommandMessages:\n",true);
+            Iterator<String> iterator = unknownCommandReplacements.iterator();
+            String message;
+            while (iterator.hasNext()) {
+                message = iterator.next();
+                UnicodeUtil.saveUTF8File(messageFile,"     - " + message +"\n",true);
             }
             UnicodeUtil.saveUTF8File(messageFile, "\n", true);
-            Logger.config("Finished writing the SpoutMmessages file");
+            Logger.config("Finished writing the Unknown Command Messages file");
             success = true;
         } catch (FileNotFoundException e) {
             Logger.warning("Error saving the " + UNKNOWN_COMMAND_MESSAGES_FILENAME + ".", e);
@@ -280,49 +286,87 @@ public class SpoutUnknownCommands {
 
     public boolean loadUnknownCommandMessages(){
         try {
-            unknownCommandMessages.load();
+            unknownCommandConfig.load();
         } catch (ConfigurationException e) {
-            Logger.warning("There where problems loading the Spout Messages File",e);
+            Logger.warning("There where problems loading the Unknown Command Messages File",e);
             return false;
         }
-        List<String> messageCategories = new ArrayList<String>();
-        for (String key : unknownCommandMessages.getNode("message-category").getKeys(false)) {
-            messageCategories.add(key);
-        }
-        Logger.debug("messageCategories", messageCategories);
-        Iterator<String> it = messageCategories.iterator();
-        HashMap<DEFAULT_EVENTS,String>messagesPerCategory;
-        String next = null;
-        while (it.hasNext()) {
-            messagesPerCategory = new HashMap<DEFAULT_EVENTS, String>();
-            next = it.next();
-            Logger.debug("next", next);
-            Set<String> loadMessages;
-            loadMessages = unknownCommandMessages.getNode("message-category." + next).getKeys(true);
-            Logger.debug("loadMessages", loadMessages);
-            Iterator<String> itm = loadMessages.iterator();
-            DEFAULT_EVENTS event = null;
-            while (itm.hasNext()) {
-                event = event.valueOf(itm.next());
-                Logger.debug("event", event);
-                String eventMessage = unknownCommandMessages.getNode("message-category." + next + "." + event).getString();
-                Logger.debug("eventMessage", eventMessage);
-                messagesPerCategory.put(event, eventMessage);
-                Logger.debug("messagesPerCategory", messagesPerCategory);
-            }
-            defaultMessages.put(next, messagesPerCategory);
-            Logger.debug("defaultMessages", defaultMessages);
+        unknownCommandReplacements = new ArrayList(unknownCommandConfig.getNode("unkownCommandMessages").getList());
 
-        }
-        Logger.debug("defaultMessage", defaultMessages);
-        if (unknownCommandMessages.getNode("categoryOrder") != null) {
-            categoryOrder = unknownCommandMessages.getNode("categoryOrder").getStringList();
-        } else {
-            categoryOrder = new ArrayList<String>(defaultMessages.keySet());
-        }
-        Logger.info("Order of Message Categories is: " + categoryOrder);
-
+        Logger.debug("Unknown Command Messages",unknownCommandReplacements.toString());
+        // adding some copyright :-)
+        unknownCommandReplacements.add("{{GOLD}}An unknown command, brought to you by MessageChanger");
+        unknownCommandReplacements.add("{{GOLD}}An unknown command, consider donating if you like this");
         return true;
     }
 
+
+    /**
+      * Will save the Unknown Command Messsages to a file
+      *
+      * @return false if there was a problem with saving
+      */
+     public boolean saveIgnoredCommands() {
+         success = false;
+         Logger.config("Saving the Ignored Commands file");
+
+
+         try {
+             File folder = (new File(messagesPath));
+
+             if (folder != null) {
+                 folder.mkdirs();
+             }
+
+             File messageFile = new File(messagesPath + IGNORED_COMMANDS_FILENAME);
+
+             Logger.config("Writing the messages");
+             MessagesHeader.saveTranslationHeader(messageFile, "Unknown Command - Ignored Commands");
+
+             UnicodeUtil.saveUTF8File(messageFile,"\n",true);
+             UnicodeUtil.saveUTF8File(messageFile,"ignoredCommands:\n",true);
+             Iterator<String> iterator = unknownCommandReplacements.iterator();
+             String message;
+             while (iterator.hasNext()) {
+                 message = iterator.next();
+                 UnicodeUtil.saveUTF8File(messageFile,"     - " + message +"\n",true);
+             }
+             UnicodeUtil.saveUTF8File(messageFile, "\n", true);
+             Logger.config("Finished writing the Ignored Commands file");
+             success = true;
+         } catch (FileNotFoundException e) {
+             Logger.warning("Error saving the " + IGNORED_COMMANDS_FILENAME + ".", e);
+         } catch (IOException e) {
+             Logger.warning("Error saving the " + IGNORED_COMMANDS_FILENAME + ".", e);
+         }
+
+         return success;
+     }
+
+
+     public boolean loadIgnoredCommands(){
+         try {
+             ignoredCommandsConfig.load();
+         } catch (ConfigurationException e) {
+             Logger.warning("There where problems loading the Ignored Commands File",e);
+             return false;
+         }
+         ignoredCommands = new HashSet(ignoredCommandsConfig.getNode("ignoredCommands").getList());
+
+         Logger.debug("Ignored Commands",ignoredCommands.toString());
+
+         return true;
+     }
+
+    public void load(){
+        if (!loadUnknownCommandMessages()|| !loadIgnoredCommands()){
+            Logger.config("There was a problem loading the unknown command files");
+        }
+    }
+
+    public void save(){
+        if (!saveIgnoredCommands() || !saveUnknownCommandMessages()){
+            Logger.config("There was a problem saving the unknown command files");
+        }
+    }
 }
