@@ -28,6 +28,7 @@ package team.cascade.spout.messagechanger.spout;
 
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
+import org.spout.api.event.Order;
 import org.spout.api.event.entity.EntityChangedWorldEvent;
 import org.spout.api.event.player.*;
 import org.spout.api.event.server.ServerStopEvent;
@@ -59,13 +60,8 @@ public class SpoutDefaultMessagesEvents implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler (order = Order.LATEST_IGNORE_CANCELLED)
     public void onPlayerLogin(PlayerLoginEvent event) {
-
-        if (event.isCancelled()){
-            Logger.debug("PlayerLoginEvent was cancelled");
-            return;
-        }
         Logger.debug("PlayerLoginEvent executed");
         String message = event.getMessage();
         // Is the server full?
@@ -117,16 +113,18 @@ public class SpoutDefaultMessagesEvents implements Listener {
             return;
         }
         Logger.debug("PlayerKickEvent executed");
+        // spout creates a KickEvent first than it does the LeaveEvent
+        plugin.enableIgnoreKick();
         event.setKickReason(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_REASON.toString(),event.getPlayer(),event.getKickReason()));
         event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage()));
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerLeaveEvent event) {
+    public void onPlayerLeave(PlayerLeaveEvent event) {
         Logger.debug("PlayerLeaveEvent executed");
         if (plugin.getIgnoreKick()) {
             Logger.debug("PlayerKickEvent was ignored");
-            event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.SERVER_STOP.toString(),event.getPlayer(), event.getMessage()));
+            plugin.disableIgnoreKick();
             return;
         }
         event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_QUIT.toString(),event.getPlayer(), event.getMessage()));
@@ -156,7 +154,7 @@ public class SpoutDefaultMessagesEvents implements Listener {
     }
 
     @EventHandler
-    public void ServerDownEvent(ServerStopEvent event){
+    public void ServerStopEvent(ServerStopEvent event){
         if (event.isCancelled()){
             Logger.debug("ServerStopEvent was cancelled");
             return;

@@ -269,7 +269,7 @@ public class SpoutUnknownCommands {
             String message;
             while (iterator.hasNext()) {
                 message = iterator.next();
-                UnicodeUtil.saveUTF8File(messageFile,"     - " + message +"\n",true);
+                UnicodeUtil.saveUTF8File(messageFile,"     - \"" + message +"\"\n",true);
             }
             UnicodeUtil.saveUTF8File(messageFile, "\n", true);
             Logger.config("Finished writing the Unknown Command Messages file");
@@ -325,11 +325,11 @@ public class SpoutUnknownCommands {
 
              UnicodeUtil.saveUTF8File(messageFile,"\n",true);
              UnicodeUtil.saveUTF8File(messageFile,"ignoredCommands:\n",true);
-             Iterator<String> iterator = unknownCommandReplacements.iterator();
+             Iterator<String> iterator = ignoredCommands.iterator();
              String message;
              while (iterator.hasNext()) {
                  message = iterator.next();
-                 UnicodeUtil.saveUTF8File(messageFile,"     - " + message +"\n",true);
+                 UnicodeUtil.saveUTF8File(messageFile,"     - \"" + message +"\"\n",true);
              }
              UnicodeUtil.saveUTF8File(messageFile, "\n", true);
              Logger.config("Finished writing the Ignored Commands file");
