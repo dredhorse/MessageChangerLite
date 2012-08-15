@@ -24,21 +24,22 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.spout;
+package team.cascade.spout.messagechanger.spout.DefaultMessages;
 
+import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.entity.EntityChangedWorldEvent;
 import org.spout.api.event.player.*;
 import org.spout.api.event.server.ServerStopEvent;
-import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
 import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
 import team.cascade.spout.messagechanger.helper.Logger;
 import team.cascade.spout.messagechanger.helper.Messenger;
 import team.cascade.spout.messagechanger.messages.MESSAGES;
+import team.cascade.spout.messagechanger.spout.SpoutMessagesHandler;
 
 /**
  * Contains all the Spout Player events monitored by this plugin

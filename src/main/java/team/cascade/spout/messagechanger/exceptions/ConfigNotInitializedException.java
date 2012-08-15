@@ -27,8 +27,8 @@
 package team.cascade.spout.messagechanger.exceptions;
 
 
-import team.cascade.spout.messagechanger.helper.Logger;
 import org.spout.api.exception.SpoutException;
+import team.cascade.spout.messagechanger.helper.Logger;
 
 /**
  * Exception which is thrown by the CommentConfiguration when the configuration is not initialized.

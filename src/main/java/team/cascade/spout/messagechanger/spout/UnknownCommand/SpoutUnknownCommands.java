@@ -50,7 +50,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.spout;
+package team.cascade.spout.messagechanger.spout.UnknownCommand;
 
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.plugin.CommonPlugin;

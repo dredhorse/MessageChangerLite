@@ -53,13 +53,14 @@
 package team.cascade.spout.messagechanger.spout;
 
 import org.spout.api.chat.ChatArguments;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 import org.spout.api.plugin.CommonPlugin;
-import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.enums.DEFAULT_EVENTS;
 import team.cascade.spout.messagechanger.helper.Logger;
 import team.cascade.spout.messagechanger.helper.Messenger;
 import team.cascade.spout.messagechanger.messages.MessagesInterface;
+import team.cascade.spout.messagechanger.spout.DefaultMessages.SpoutDefaultMessages;
+import team.cascade.spout.messagechanger.spout.DefaultMessages.SpoutDefaultMessagesEvents;
 
 import java.util.List;
 
@@ -71,13 +72,13 @@ import java.util.List;
  */
 public class SpoutMessagesHandler implements MessagesInterface {
 
-    private SpoutMessages spoutMessages;
+    private SpoutDefaultMessages spoutDefaultMessages;
 
     private static SpoutMessagesHandler instance;
 
     public SpoutMessagesHandler(CommonPlugin main){
         instance = this;
-        spoutMessages = new SpoutMessages(main);
+        spoutDefaultMessages = new SpoutDefaultMessages(main);
         main.getEngine().getEventManager().registerEvents(new SpoutDefaultMessagesEvents(main), main);
 
     }
@@ -87,7 +88,7 @@ public class SpoutMessagesHandler implements MessagesInterface {
     }
 
     public void reload(){
-        spoutMessages.init();
+        spoutDefaultMessages.init();
     }
 
 
@@ -99,7 +100,7 @@ public class SpoutMessagesHandler implements MessagesInterface {
         if (defaultEvent != null){
             String category = getCategory(player);
             Logger.debug("Category",category);
-            message = spoutMessages.getMessage(getCategory(player),defaultEvent);
+            message = spoutDefaultMessages.getMessage(getCategory(player),defaultEvent);
             Logger.debug("message",message);
             if (message == null || message.equals("%(msg)")){
                 message = defaultMessage;
@@ -116,7 +117,7 @@ public class SpoutMessagesHandler implements MessagesInterface {
 
     private String getCategory(Player player) {
         if (player != null){
-            for (String category : spoutMessages.getCategoryOrder()) {
+            for (String category : spoutDefaultMessages.getCategoryOrder()) {
                 if (player.hasPermission("messagechanger.message." + category)) {
                     return category;
                 }

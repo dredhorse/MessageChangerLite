@@ -26,8 +26,8 @@
 
 package team.cascade.spout.messagechanger.exceptions;
 
-import team.cascade.spout.messagechanger.config.CONFIG;
 import org.spout.api.exception.SpoutException;
+import team.cascade.spout.messagechanger.config.CONFIG;
 
 /**
  * Exception which is thrown by the Config enum when the class which is being set is different to the

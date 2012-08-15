@@ -26,7 +26,7 @@
 
 package team.cascade.spout.messagechanger.messages;
 
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 
 /**
  * All classes handling messages implement this interface

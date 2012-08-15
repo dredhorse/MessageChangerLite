@@ -26,12 +26,12 @@
 
 package team.cascade.spout.messagechanger.commands;
 
-import team.cascade.spout.messagechanger.helper.commands.EnumCommand;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.NestedCommand;
 import org.spout.api.exception.CommandException;
 import org.spout.api.plugin.CommonPlugin;
+import team.cascade.spout.messagechanger.helper.commands.EnumCommand;
 
 /**
  * Set of default commands which are normally useful for plugin management. As this is a nested command <br>

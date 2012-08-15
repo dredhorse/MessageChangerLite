@@ -26,7 +26,6 @@
 
 package team.cascade.spout.messagechanger.gamemode;
 
-import org.spout.api.plugin.CommonPlugin;
 import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.events.SpoutPluginEvents;
 

@@ -26,9 +26,9 @@
 
 package team.cascade.spout.messagechanger.commands;
 
+import org.spout.api.plugin.CommonPlugin;
 import team.cascade.spout.messagechanger.helper.Logger;
 import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
-import org.spout.api.plugin.CommonPlugin;
 
 import java.io.File;
 import java.io.FileNotFoundException;

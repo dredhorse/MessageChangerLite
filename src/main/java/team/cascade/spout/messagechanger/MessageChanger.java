@@ -49,7 +49,7 @@ import team.cascade.spout.messagechanger.helper.config.Configuration;
 import team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave;
 import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 import team.cascade.spout.messagechanger.spout.SpoutMessagesHandler;
-import team.cascade.spout.messagechanger.spout.SpoutUnknownCommandHandler;
+import team.cascade.spout.messagechanger.spout.UnknownCommand.SpoutUnknownCommandHandler;
 import team.cascade.spout.messagechanger.vanilla.VanillaMessagesHandler;
 
 import java.io.IOException;

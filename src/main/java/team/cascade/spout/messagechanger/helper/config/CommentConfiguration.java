@@ -27,6 +27,12 @@
 package team.cascade.spout.messagechanger.helper.config;
 
 
+import org.spout.api.Spout;
+import org.spout.api.exception.ConfigurationException;
+import org.spout.api.plugin.Plugin;
+import org.spout.api.plugin.PluginDescriptionFile;
+import org.spout.api.scheduler.TaskPriority;
+import org.spout.api.util.config.yaml.YamlConfiguration;
 import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.exceptions.ConfigNotAvailableException;
 import team.cascade.spout.messagechanger.exceptions.ConfigNotInitializedException;
@@ -35,12 +41,6 @@ import team.cascade.spout.messagechanger.helper.Logger;
 import team.cascade.spout.messagechanger.helper.Messenger;
 import team.cascade.spout.messagechanger.helper.file.UnicodeUtil;
 import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
-import org.spout.api.Spout;
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.plugin.Plugin;
-import org.spout.api.plugin.PluginDescriptionFile;
-import org.spout.api.scheduler.TaskPriority;
-import org.spout.api.util.config.yaml.YamlConfiguration;
 
 import java.io.*;
 import java.net.MalformedURLException;

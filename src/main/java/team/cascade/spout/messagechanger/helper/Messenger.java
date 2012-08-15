@@ -29,14 +29,14 @@ package team.cascade.spout.messagechanger.helper;
 //~--- non-JDK imports --------------------------------------------------------
 
 import com.google.common.base.Splitter;
-import org.spout.api.chat.style.ChatStyle;
-import team.cascade.spout.messagechanger.messages.MESSAGES;
-import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandSource;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 import org.spout.api.plugin.Plugin;
+import team.cascade.spout.messagechanger.messages.MESSAGES;
+import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -368,10 +368,10 @@ public final class Messenger {
         Hashtable defaultDict = new Hashtable();
         defaultDict.put("%(player)", player.getDisplayName());
         defaultDict.put("%(realName)", player.getName());
-        defaultDict.put("%(world)", player.getEntity().getWorld().getName());
-        int x = player.getEntity().getPosition().getBlockX();
-        int y = player.getEntity().getPosition().getBlockY();
-        int z = player.getEntity().getPosition().getBlockZ();
+        defaultDict.put("%(world)", player.getWorld().getName());
+        int x = player.getPosition().getBlockX();
+        int y = player.getPosition().getBlockY();
+        int z = player.getPosition().getBlockZ();
         defaultDict.put("%(loc)", "x=" + x + ", y=" + y + ", z=" + z);
         return defaultDict;
     }

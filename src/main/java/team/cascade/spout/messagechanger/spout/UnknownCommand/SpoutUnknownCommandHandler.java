@@ -76,9 +76,10 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.spout;
+package team.cascade.spout.messagechanger.spout.UnknownCommand;
 
-import org.spout.api.player.Player;
+
+import org.spout.api.entity.Player;
 import org.spout.api.plugin.CommonPlugin;
 import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.helper.COLOR;

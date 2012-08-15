@@ -52,9 +52,9 @@
 
 package team.cascade.spout.messagechanger.helper.config;
 
+import org.spout.api.plugin.Plugin;
 import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.helper.Logger;
-import org.spout.api.plugin.Plugin;
 
 /**
  * Here you will find all the information you will normally want to change to your liking. If you make changes to the

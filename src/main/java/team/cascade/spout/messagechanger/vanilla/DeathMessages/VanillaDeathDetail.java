@@ -24,11 +24,11 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.vanilla;
+package team.cascade.spout.messagechanger.vanilla.DeathMessages;
 
+import org.spout.api.entity.Player;
 import org.spout.api.event.entity.EntityDeathEvent;
 import org.spout.api.geo.World;
-import org.spout.api.player.Player;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
 import team.cascade.spout.messagechanger.enums.VANILLA_DEATH_EVENTS;
 
@@ -139,7 +139,7 @@ public class VanillaDeathDetail {
    	}
 
    	public World getWorld() {
-   		return player.getEntity().getWorld();
+   		return player.getWorld();
    	}
 
    	public Player getPlayer() {

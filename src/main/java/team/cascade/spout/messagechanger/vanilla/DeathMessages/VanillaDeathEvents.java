@@ -50,16 +50,17 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.vanilla;
+package team.cascade.spout.messagechanger.vanilla.DeathMessages;
 
+import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.entity.EntityDeathEvent;
-import org.spout.api.player.Player;
 import org.spout.api.plugin.CommonPlugin;
 import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.helper.Logger;
+import team.cascade.spout.messagechanger.vanilla.VanillaMessagesHandler;
 
 /**
  * Contains all the Vanilla Death events monitored by this plugin
@@ -113,7 +114,7 @@ public class VanillaDeathEvents implements Listener {
         Logger.debug("World is configured to broadcast too",event.getEntity().getWorld().getName());
         if (CONFIG.VANILLA_SHOW_DEATH_MESSAGES_IN_DEATH_WORLD_ONLY.getBoolean()){
             for (Player onlinePlayer : plugin.getEngine().getOnlinePlayers()){
-                if (onlinePlayer.getEntity().getWorld() == event.getEntity().getWorld()){
+                if (onlinePlayer.getWorld() == event.getEntity().getWorld()){
                     //todo set event message to ""
                     onlinePlayer.sendMessage(msg);
                 }

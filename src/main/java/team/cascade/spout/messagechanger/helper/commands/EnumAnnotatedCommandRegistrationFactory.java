@@ -26,11 +26,11 @@
 
 package team.cascade.spout.messagechanger.helper.commands;
 
-import team.cascade.spout.messagechanger.helper.Logger;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.Injector;
 import org.spout.api.command.annotated.NestedCommand;
 import org.spout.api.util.Named;
+import team.cascade.spout.messagechanger.helper.Logger;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

@@ -26,6 +26,11 @@
 
 package team.cascade.spout.messagechanger.commands;
 
+import org.spout.api.Spout;
+import org.spout.api.command.CommandContext;
+import org.spout.api.command.CommandSource;
+import org.spout.api.exception.CommandException;
+import org.spout.api.plugin.CommonPlugin;
 import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.exceptions.ConfigNotInitializedException;
 import team.cascade.spout.messagechanger.helper.COLOR;
@@ -35,11 +40,6 @@ import team.cascade.spout.messagechanger.helper.commands.EnumCommand;
 import team.cascade.spout.messagechanger.helper.config.CommentConfiguration;
 import team.cascade.spout.messagechanger.helper.file.CommandsLoadAndSave;
 import team.cascade.spout.messagechanger.helper.file.MessagesLoadAndSave;
-import org.spout.api.Spout;
-import org.spout.api.command.CommandContext;
-import org.spout.api.command.CommandSource;
-import org.spout.api.exception.CommandException;
-import org.spout.api.plugin.CommonPlugin;
 
 /**
  * The child commands of the MessageChanger

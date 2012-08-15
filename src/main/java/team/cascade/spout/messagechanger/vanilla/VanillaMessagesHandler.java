@@ -26,14 +26,16 @@
 
 package team.cascade.spout.messagechanger.vanilla;
 
-import org.spout.api.player.Player;
+
+import org.spout.api.entity.Player;
 import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.config.CONFIG;
 import team.cascade.spout.messagechanger.enums.GAME_TYPES;
 import team.cascade.spout.messagechanger.enums.TYPES;
 import team.cascade.spout.messagechanger.enums.VANILLA_TYPES;
-import team.cascade.spout.messagechanger.helper.Logger;
 import team.cascade.spout.messagechanger.messages.MessagesInterface;
+import team.cascade.spout.messagechanger.vanilla.DeathMessages.VanillaDeathEvents;
+import team.cascade.spout.messagechanger.vanilla.DeathMessages.VanillaDeathMessages;
 
 /**
  * Contains code to handle the vanilla specific messages
@@ -45,7 +47,7 @@ public class VanillaMessagesHandler implements MessagesInterface {
 
     private static VanillaMessagesHandler instance;
 
-    private VanillaMessages vanillaMessages;
+    private VanillaDeathMessages vanillaDeathMessages;
 
     private MessageChanger main;
 
@@ -69,7 +71,7 @@ public class VanillaMessagesHandler implements MessagesInterface {
                 // we are vanilla default so let's see what we can do
                 if (!CONFIG.VANILLA_SHOW_DEFAULT_DEATH_MESSAGES.getBoolean() && VanillaDeathEvents.getInstance() != null){
                     // we only do this once, first registering the messages
-                    vanillaMessages = new VanillaMessages(main);
+                    vanillaDeathMessages = new VanillaDeathMessages(main);
                     // than registering the Events
                     main.getEngine().getEventManager().registerEvents(new VanillaDeathEvents(main), main);
                 }
@@ -93,7 +95,7 @@ public class VanillaMessagesHandler implements MessagesInterface {
     // *******************************************************************************************************************
 
     public void reload(){
-        vanillaMessages.reloadDeathMessages();
+        vanillaDeathMessages.reloadDeathMessages();
     }
 
     public void save(){

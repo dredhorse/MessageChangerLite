@@ -31,8 +31,8 @@ package team.cascade.spout.messagechanger.config;
 //~--- enums ------------------------------------------------------------------
 
 
-import team.cascade.spout.messagechanger.exceptions.WrongClassException;
 import org.spout.api.inventory.ItemStack;
+import team.cascade.spout.messagechanger.exceptions.WrongClassException;
 
 import java.util.*;
 import java.util.regex.Pattern;

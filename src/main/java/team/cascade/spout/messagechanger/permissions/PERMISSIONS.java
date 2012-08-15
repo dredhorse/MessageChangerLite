@@ -27,11 +27,11 @@
 package team.cascade.spout.messagechanger.permissions;
 //~--- non-JDK imports --------------------------------------------------------
 
+import org.spout.api.command.CommandSource;
+import org.spout.api.entity.Player;
+import org.spout.api.plugin.Plugin;
 import team.cascade.spout.messagechanger.exceptions.NoPermissionException;
 import team.cascade.spout.messagechanger.helper.Logger;
-import org.spout.api.command.CommandSource;
-import org.spout.api.player.Player;
-import org.spout.api.plugin.Plugin;
 
 import java.io.File;
 import java.io.FileNotFoundException;

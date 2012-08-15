@@ -26,10 +26,10 @@
 
 package team.cascade.spout.messagechanger.exceptions;
 
+import org.spout.api.entity.Player;
+import org.spout.api.exception.SpoutException;
 import team.cascade.spout.messagechanger.helper.Logger;
 import team.cascade.spout.messagechanger.permissions.PERMISSIONS;
-import org.spout.api.exception.SpoutException;
-import org.spout.api.player.Player;
 
 /**
  * Exception which is thrown by the Permissions enum

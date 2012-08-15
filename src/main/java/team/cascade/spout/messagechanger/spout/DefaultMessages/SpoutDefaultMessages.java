@@ -24,7 +24,7 @@
  * including the MIT license.                                                 *
  ******************************************************************************/
 
-package team.cascade.spout.messagechanger.spout;
+package team.cascade.spout.messagechanger.spout.DefaultMessages;
 
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.plugin.CommonPlugin;
@@ -46,12 +46,12 @@ import java.util.*;
  * @version $FullVersion$
  * @todo implement yaml fix
  */
-public class SpoutMessages {
+public class SpoutDefaultMessages {
 
     /**
      * Instance of this class
      */
-    private SpoutMessages instance;
+    private SpoutDefaultMessages instance;
 
     /**
      * Instance of the Plugin
@@ -96,7 +96,7 @@ public class SpoutMessages {
      * Initialize the Messages
      * @param main  instance of the plugin
      */
-    public SpoutMessages(CommonPlugin main){
+    public SpoutDefaultMessages(CommonPlugin main){
         instance = this;
         this.main = main;
         messagesPath = main.getDataFolder() + System.getProperty("file.separator") + "messages"+ System.getProperty("file.separator");

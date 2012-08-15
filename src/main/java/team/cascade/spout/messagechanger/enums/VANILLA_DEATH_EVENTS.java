@@ -35,7 +35,7 @@ import java.util.List;
 
 /**
  * Vanilla Events which messages will be replaced<br>
- * If new Events are added you also need to change the defaultMessages in {@link team.cascade.spout.messagechanger.vanilla.VanillaMessages}
+ * If new Events are added you also need to change the defaultMessages in {@link team.cascade.spout.messagechanger.vanilla.DeathMessages.VanillaDeathMessages}
  *
  * @author $Author: dredhorse$
  * @version $FullVersion$
