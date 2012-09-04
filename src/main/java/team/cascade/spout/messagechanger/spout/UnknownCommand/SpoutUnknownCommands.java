@@ -369,4 +369,28 @@ public class SpoutUnknownCommands {
             Logger.config("There was a problem saving the unknown command files");
         }
     }
+
+    public SpoutUnknownCommands getInstance() {
+        return instance;
+    }
+
+    public void setInstance(SpoutUnknownCommands instance) {
+        this.instance = instance;
+    }
+
+    public Set<String> getIgnoredCommands() {
+        return ignoredCommands;
+    }
+
+    public void setIgnoredCommands(Set<String> ignoredCommands) {
+        this.ignoredCommands = ignoredCommands;
+    }
+
+    public ArrayList<String> getUnknownCommandReplacements() {
+        return unknownCommandReplacements;
+    }
+
+    public void setUnknownCommandReplacements(ArrayList<String> unknownCommandReplacements) {
+        this.unknownCommandReplacements = unknownCommandReplacements;
+    }
 }

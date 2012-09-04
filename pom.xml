@@ -4,7 +4,7 @@
 
     <groupId>team.cascade.spout</groupId>
     <artifactId>MessageChanger</artifactId>
-    <version>0.9.1208-B4</version>
+    <version>0.9.1843-B4</version>
     <name>MessageChanger</name>
     <url>https://github.com/dredhorse/MessageChanger</url>
     <description>MessageChanger is a plugin allowing you to change the default messages of Spout / Vanilla / and other games (hopefully) based on permissions. It also allows changing of the default deathmessages with random ones based on the deathcause.</description>
@@ -227,7 +227,7 @@
             <plugin>
                 <groupId>org.arakhne.afc</groupId>
                 <artifactId>tag-replacer</artifactId>
-                <version>2.3-SNAPSHOT</version>
+                <version>2.5-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <id>property_preparation</id>

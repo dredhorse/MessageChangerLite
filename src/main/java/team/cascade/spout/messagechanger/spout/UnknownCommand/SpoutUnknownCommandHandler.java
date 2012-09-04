@@ -113,6 +113,8 @@ public class SpoutUnknownCommandHandler implements MessagesInterface {
     public SpoutUnknownCommandHandler(CommonPlugin main){
         instance = this;
         spoutUnknownCommands = new SpoutUnknownCommands(main);
+        commandsToIgnore = spoutUnknownCommands.getIgnoredCommands();
+        unknownCommandMessages = spoutUnknownCommands.getUnknownCommandReplacements();
         main.getEngine().getEventManager().registerEvents(new SpoutUnknownCommandEvent(main), main);
 
     }
@@ -122,7 +124,11 @@ public class SpoutUnknownCommandHandler implements MessagesInterface {
     }
 
     public void reload(){
+        spoutUnknownCommands.setIgnoredCommands(commandsToIgnore);
+        spoutUnknownCommands.setUnknownCommandReplacements(unknownCommandMessages);
         spoutUnknownCommands.init();
+        commandsToIgnore = spoutUnknownCommands.getIgnoredCommands();
+        unknownCommandMessages = spoutUnknownCommands.getUnknownCommandReplacements();
     }
 
 

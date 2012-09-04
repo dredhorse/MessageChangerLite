@@ -1006,7 +1006,7 @@ public abstract  class CommentConfiguration {
             }
 
             if (githubSpout < pluginSpout) {
-                Logger.warning("You are running a testbuild for Spout: " + pluginSpout);
+                Logger.warning("You are running a dev-build for Spout: " + pluginSpout);
             }
             if (githubSpout > pluginSpout) {
                 Logger.info("There is a new Version available for Spout: " + githubSpout);

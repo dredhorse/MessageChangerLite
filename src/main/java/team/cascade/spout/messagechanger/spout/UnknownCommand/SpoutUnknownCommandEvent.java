@@ -57,6 +57,7 @@ import org.spout.api.Spout;
 import org.spout.api.command.CommandExecutor;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
+import org.spout.api.event.Order;
 import org.spout.api.event.server.PreCommandEvent;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
@@ -86,13 +87,14 @@ public class SpoutUnknownCommandEvent implements Listener {
 
         this.plugin = (MessageChanger) plugin;
         spoutUnknownCommandHandler = SpoutUnknownCommandHandler.getInstance();
+        Logger.debug("spoutUnknownCommandHandler",spoutUnknownCommandHandler);
         Logger.debug("UnknownCommand Listener Activated");
 
     }
 
-    @EventHandler
+    @EventHandler (order = Order.EARLIEST)
     public void onPreCommandEvent (PreCommandEvent event){
-        if (event.isCancelled()){
+       if (event.isCancelled()){
             Logger.debug("PreCommandEvent was cancelled");
             return;
         }
@@ -100,9 +102,10 @@ public class SpoutUnknownCommandEvent implements Listener {
             Logger.debug("Command is to be ignored",event.getCommand());
             return;
         }
-
         CommandExecutor executor = getActiveExecutor();
         List<Object> args = event.getArguments().getArguments();
+        Logger.debug("executor",executor);
+        Logger.debug("args",args.toString());
         if (executor == null || 0 > args.size()){
             Messenger.send(event.getCommandSource(),spoutUnknownCommandHandler.getNewMessage());
         }
