@@ -26,6 +26,7 @@
 
 package team.cascade.spout.messagechanger.spout.DefaultMessages;
 
+import org.spout.api.chat.ChatArguments;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -64,10 +65,10 @@ public class SpoutDefaultMessagesEvents implements Listener {
     @EventHandler (order = Order.LATEST_IGNORE_CANCELLED)
     public void onPlayerLogin(PlayerLoginEvent event) {
         Logger.debug("PlayerLoginEvent executed");
-        String message = event.getMessage();
+        ChatArguments message = event.getMessage();
         // Is the server full?
         if (!event.isAllowed()){
-            event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.KICK_FULL.toString(),event.getPlayer(),message));
+            event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.KICK_FULL.toString(),event.getPlayer(),message.asString()));
         }
         // todo waiting for PlayerWhiteList event
         /*switch (event.g) {
@@ -88,7 +89,7 @@ public class SpoutDefaultMessagesEvents implements Listener {
         if (event.isCancelled()){
             return;
         }
-        event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.KICK_BANNED.toString(),event.getPlayer(),event.getMessage()));
+        event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.KICK_BANNED.toString(),event.getPlayer(),event.getMessage().asString()));
     }
 
 
@@ -99,7 +100,7 @@ public class SpoutDefaultMessagesEvents implements Listener {
             return;
         }
         Logger.debug("PlayerJoinEvent executed");
-        event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_JOIN.toString(),event.getPlayer(),event.getMessage()));
+        event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.PLAYER_JOIN.toString(),event.getPlayer(),event.getMessage().asString()));
     }
 
     @EventHandler
@@ -116,8 +117,8 @@ public class SpoutDefaultMessagesEvents implements Listener {
         Logger.debug("PlayerKickEvent executed");
         // spout creates a KickEvent first than it does the LeaveEvent
         plugin.enableIgnoreKick();
-        event.setKickReason(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_REASON.toString(),event.getPlayer(),event.getKickReason()));
-        event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage()));
+        event.setKickReason(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.KICK_KICK_REASON.toString(),event.getPlayer(),event.getKickReason().asString()));
+        event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.KICK_KICK_LEAVEMSG.toString(),event.getPlayer(),event.getMessage().asString()));
     }
 
     @EventHandler
@@ -128,7 +129,7 @@ public class SpoutDefaultMessagesEvents implements Listener {
             plugin.disableIgnoreKick();
             return;
         }
-        event.setMessage(spoutMessagesHandler.getNewMessageFromObjects(DEFAULT_EVENTS.PLAYER_QUIT.toString(),event.getPlayer(), event.getMessage()));
+        event.setMessage(spoutMessagesHandler.getNewMessage(DEFAULT_EVENTS.PLAYER_QUIT.toString(),event.getPlayer(), event.getMessage().asString()));
     }
 
 

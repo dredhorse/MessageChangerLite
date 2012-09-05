@@ -28,7 +28,7 @@ package team.cascade.spout.messagechanger.events;
 
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
-import org.spout.api.event.server.PluginEnableEvent;
+import org.spout.api.event.server.plugin.PluginEnableEvent;
 import team.cascade.spout.messagechanger.MessageChanger;
 import team.cascade.spout.messagechanger.enums.GAME_TYPES;
 import team.cascade.spout.messagechanger.enums.VANILLA_TYPES;
