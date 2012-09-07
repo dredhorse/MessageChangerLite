@@ -1,15 +1,13 @@
 package org.simiancage.bukkit.messagechangerlite;
 
+import java.io.IOException;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
-
-
 public class MessageChangerLite extends JavaPlugin {
-
 	private final PlayerListenerMCL playerListener = new PlayerListenerMCL(this);
 	Config config;
 	Log log;
@@ -59,10 +57,8 @@ public class MessageChangerLite extends JavaPlugin {
 			}
 		}
 
-
 		log.disableMsg();
 	}
-
 
 	public String getMessage(String msg, Player player, String defMsg) {
 		if (msg == null) {
@@ -78,9 +74,10 @@ public class MessageChangerLite extends JavaPlugin {
 		log.debug("perm", perm);
 		log.debug("msg", msg);
 		String message = config.getMessages(perm, msg);
+		if (message == null) {
+			message = "";
+		}
 		log.debug("message", message);
 		return message.replace("%pName", pName).replace("%msg", defMsg).replace("%world", world).replaceAll("(&([a-f0-9]))", "\u00A7$2");
 	}
-
-
 }
